@@ -13,7 +13,7 @@ const Paralelos = () => {
                         <div className="col-md-12 col-12">
                             <Form/>
                         </div>
-                        <div class="col-md-12 col-12">
+                        <div className="col-md-12 col-12">
                             <Table/>
                         </div>
                     </div>

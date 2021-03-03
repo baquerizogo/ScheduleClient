@@ -12,7 +12,7 @@ const Form = () => {
                         <div className="col-12">
                             <div className="form-group row">
                                 <div className="col-sm-3 col-form-label">
-                                    <label for="name">Nombre:</label>
+                                    <label htmlFor="name">Nombre:</label>
                                 </div>
                                 <div className="col-sm-9">
                                     <div className="input-group input-group-merge">
@@ -27,7 +27,7 @@ const Form = () => {
                         <div className="col-12">
                             <div className="form-group row">
                                 <div className="col-sm-3 col-form-label">
-                                    <label for="lastName">Apellidos:</label>
+                                    <label htmlFor="lastName">Apellidos:</label>
                                 </div>
                                 <div className="col-sm-9">
                                     <div className="input-group input-group-merge">
@@ -42,7 +42,7 @@ const Form = () => {
                         <div className="col-12">
                             <div className="form-group row">
                                 <div className="col-sm-3 col-form-label">
-                                    <label for="dni">Cédula:</label>
+                                    <label htmlFor="dni">Cédula:</label>
                                 </div>
                                 <div className="col-sm-9">
                                     <div className="input-group input-group-merge">
@@ -57,7 +57,7 @@ const Form = () => {
                         <div className="col-12">
                             <div className="form-group row">
                                 <div className="col-sm-3 col-form-label">
-                                    <label for="email">Correo:</label>
+                                    <label htmlFor="email">Correo:</label>
                                 </div>
                                 <div className="col-sm-9">
                                     <div className="input-group input-group-merge">

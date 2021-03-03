@@ -1,23 +1,13 @@
-import { useContext, useEffect } from "react";
+import {useContext, useEffect, useState} from 'react';
 import { MoreVertical } from "react-feather"
 
-import courseContext from '../../context/courses/courseContext'
+//Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 
-
 const Table = () => {
-    const coursesContext = useContext(courseContext);
+    //obtener el state del formulario
     const schoolyearsContext = useContext(schoolyearContext);
-
-    const { getCourse } = coursesContext; //Funciones Context
-    const { courses } = coursesContext; // Datos Context
-    const { schoolyear } = schoolyearsContext; // Datos Context
-
-    useEffect(() => {
-        getCourse({
-            id_schoolyear : schoolyear[0]._id
-        });
-    }, [schoolyear])
+    const { schoolyears } = schoolyearsContext; // Datos Context
 
     return (  
         <div className="card">
@@ -28,21 +18,25 @@ const Table = () => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Curso</th>
-                            <th>Descripción</th>
+                            <th>Nombre</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>N. Semanas</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            courses
-                            ?
-                                courses.map(course => (
-                                    <tr key={course._id}>
+                            schoolyears
+                            ? 
+                                schoolyears.map((schoolyear) => (
+                                    <tr key={schoolyear._id}>
                                         <td>
-                                            <span className="font-weight-bold">{course.name}</span>
+                                            <span className="font-weight-bold">{schoolyear.name}</span>
                                         </td>
-                                        <td>{course.description}</td>
+                                        <td>{schoolyear.start_date}</td>
+                                        <td>{schoolyear.end_date}</td>
+                                        <td>{schoolyear.n_weeks}</td>
                                         <td>
                                             <div className="dropdown">
                                                 <button type="button" className="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
@@ -64,7 +58,7 @@ const Table = () => {
                                 ))
                             : null
                         }
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>

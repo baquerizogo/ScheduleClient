@@ -1,6 +1,7 @@
 //Components
 import NavHeader from '../Menu/NavHeader';
 import NavItem from '../Menu/NavItem';
+import NewSchoolyear from '../schoolyears/newSchoolyear';
 
 import {
     Home,
@@ -19,16 +20,18 @@ const MenuBar = () => {
         <div className="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
             <div className="navbar-header">
                 <ul className="nav navbar-nav flex-row">
-                    <li className="nav-item mr-auto"><a className="navbar-brand" href="#"><span className="brand-logo"></span>
-                    <Calendar size="30" strokeWidth="3"/>
-                        <h2 className="brand-text">Horarios v0.0.1</h2>
-                        </a></li>
-                    <li className="nav-item nav-toggle"><a className="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i className="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"/><i className="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"/></a></li>
+                    <li className="nav-item mr-auto">
+                        <a className="navbar-brand" href="#">
+                            <Calendar size="30" strokeWidth="3"/>
+                            <h2 className="brand-text">Horarios v0.0.1</h2>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div className="shadow-bottom"></div>
             <div className="main-menu-content">
-                <ul className="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <ul className="navigation">
+                    <NewSchoolyear/>
                     <NavItem path="/" text="Home">
                         <Home/>
                     </NavItem>

@@ -10,10 +10,10 @@ const Table = () => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Cedula</th>
-                            <th>Correo</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>N. Horas</th>
+                            <th>Horas Semanales</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>

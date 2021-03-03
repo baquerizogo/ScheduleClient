@@ -13,7 +13,7 @@ const Cursos = () => {
                         <div className="col-md-6 col-12">
                             <Form/>
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div className="col-md-6 col-12">
                             <Table/>
                         </div>
                     </div>

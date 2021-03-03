@@ -1,12 +1,12 @@
 //Components
 import ContentHeader from '../../components/layout/ContentHeader'
-import Form from '../../components/profesores/Form'
-import Table from '../../components/profesores/Table'
+import Form from '../../components/asignaturas/Form'
+import Table from '../../components/asignaturas/Table'
 
-const Profesores = () => {
+const Asignaturas = () => {
     return (
         <>      
-            <ContentHeader root="Home" section="Administración" path="Profesores"/>
+            <ContentHeader root="Home" section="Administración" path="Asignaturas"/>
             <div className="content-body">
                 <section id="basic-horizontal-layouts">
                     <div className="row">
@@ -23,4 +23,4 @@ const Profesores = () => {
     );
 }
  
-export default Profesores;
+export default Asignaturas;

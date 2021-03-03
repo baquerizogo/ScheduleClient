@@ -9,7 +9,7 @@ const NavItem = (props) => {
             <Link href={props.path}>
                 <a className="d-flex align-items-center" >
                     {props.children}
-                    <span className="menu-title text-truncate" data-i18n={props.text}>{props.text}</span>
+                    <span className="menu-title text-truncate">{props.text}</span>
                 </a>
             </Link>
         </li>
