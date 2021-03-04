@@ -1,15 +1,13 @@
+import { useContext, useEffect, useState } from "react";
 import Select from 'react-select';
 import {Box} from "react-feather";
 import chroma from "chroma-js"
 
-const colourOptions = [
-    { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
-    { value: "blue", label: "Blue", color: "#0052CC", isFixed: true },
-    { value: "purple", label: "Purple", color: "#5243AA", isFixed: true },
-    { value: "red", label: "Red", color: "#FF5630", isFixed: false },
-    { value: "orange", label: "Orange", color: "#FF8B00", isFixed: false },
-    { value: "yellow", label: "Yellow", color: "#FFC400", isFixed: false }
-  ]
+import classContext from '../../context/classes/classContext'
+import teacherContext from '../../context/teachers/teacherContext'
+import schoolyearContext from '../../context/schoolyears/schoolyearContext'
+import parallelContext from '../../context/parallels/parallelContext'
+import courseContext from '../../context/courses/courseContext'
 
 const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: "white" }),
@@ -62,6 +60,169 @@ const colourStyles = {
 }
 
 const Form = () => {
+    const coursesContext = useContext(courseContext);
+    const classesContext = useContext(classContext);
+    const schoolyearsContext = useContext(schoolyearContext);
+    const teachersContext = useContext(teacherContext);
+    const parallelsContext = useContext(parallelContext);
+
+    const { getTeacher, teachers } = teachersContext;   
+    const { getParallel, parallels } = parallelsContext;
+    const { checkForm, createClass, errorForm} = classesContext; 
+    const { getCourse, courses } = coursesContext; 
+    const { schoolyear } = schoolyearsContext; 
+
+    let teacherOptions = [];
+    let parallelOptions = [];
+
+
+    //OBTENER TODOS LOS PROFESORES
+    useEffect(() => {
+        if(schoolyear != '') {
+            getTeacher({
+                id_schoolyear : schoolyear[0]._id
+            });
+        }
+    }, [schoolyear])
+
+    //OBTENER TODOS LOS CURSOS
+    useEffect(() => {
+        if(schoolyear != '') {
+            getCourse({
+                id_schoolyear : schoolyear[0]._id
+            });
+        }
+    }, [schoolyear])
+
+    //SI EXISTEN PROFESORES, AGREGAR A TEACHEROPTIONS
+    if(teachers) {
+        teachers.map(teacher => {
+            teacherOptions = [
+                ...teacherOptions,
+                {
+                    value: teacher._id,
+                    label: `${teacher.name} ${teacher.lastname}`,
+                    color: "#00B8D9", 
+                    isFixed: true
+                }
+            ];
+        })
+    }
+
+    //STATE DEL FORMULARIO
+    const [data, setData] = useState({
+        name: '',
+        description: '',
+        n_hours: 0,
+        hours_week: 0,
+        parallels: [],
+        teachers: [],
+        id_schoolyear: schoolyear[0]._id 
+    });
+
+    const { name, description, n_hours, hours_week } = data;
+
+    //STATE DEL CURSO (Necesario para obtener paralelos)
+    const [course, setCourse] = useState({
+        name: "",
+        id_course: ""
+    });
+
+    //OBTENER PARALELOS DEL CURSO SELECCIONADO
+    useEffect(() => {
+        if(course.id_course != ''){
+            getParallel(course);
+        }
+    }, [course])
+
+    //SELECCIONAR CURSO PARA OBTENER PARALELOS
+    const handleChangeCourse = e => {
+        const data = JSON.parse(e.target.value);
+        setCourse({
+            name: data.name,
+            id_course: data.id
+        })
+    }
+
+    //SI EXISTEN PARALELOS, AGREGAR A PARALLELOPTIONS
+    if(parallels) {
+        parallels.map(parallel => {
+            parallelOptions = [
+                ...parallelOptions,
+                {
+                    value: parallel._id,
+                    label: `${parallel.name}`,
+                    color: "#00B8D9", 
+                    isFixed: true
+                }
+            ];
+        })
+    }
+
+    const handleChangeTeacher = event => {
+        let array = [];
+        for(let i in event) {
+            array = [
+                ...array,
+                {id_teacher: event[i].value}
+            ]
+        }
+        setData({
+            ...data,
+            teachers : array 
+        })
+    }
+
+    const handleChangeParallels = event => {
+        let array = [];
+        for(let i in event) {
+            array = [
+                ...array,
+                {id_parallel: event[i].value}
+            ]
+        }
+        setData({
+            ...data,
+            parallels : array 
+        })
+    }
+
+    //Manipular el state global
+    const handleChange = e => {
+        setData({
+            ...data,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    const submitForm = e => {
+        e.preventDefault();
+
+        //Validar
+        if(name.trim() === '' || n_hours <= 0 ||  hours_week <= 0 || data.parallels.length === 0) {
+            checkForm();
+            return;
+        }
+        
+        //Agregar al context
+        createClass(data);
+
+        //Reiniciar el form
+        reset();
+    }
+
+    const reset = () => {
+        setData({
+            name: '',
+            description: '',
+            n_hours: 0,
+            hours_week: 0,
+            parallels: [],
+            teachers: [],
+            id_schoolyear: schoolyear[0]._id 
+        })
+    }
+
     return (  
         <div className="card">
             <div className="card-header">
@@ -80,7 +241,7 @@ const Form = () => {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text"><Box size="16"/></span>
                                         </div>
-                                        <input type="text" id="name" className="form-control" name="name" placeholder="Nombres" />
+                                        <input type="text" id="name" className="form-control" name="name" placeholder="Nombres" value={name} onChange={handleChange} />
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +254,7 @@ const Form = () => {
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="input-group input-group-merge">
-                                        <input type="number" id="n_hours" className="form-control" name="n_hours" placeholder="10" />
+                                        <input type="number" id="n_hours" className="form-control" name="n_hours"  value={n_hours} onChange={handleChange} />
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +268,7 @@ const Form = () => {
                                 </div>
                                 <div className="col-sm-10">
                                     <div className="input-group input-group-merge">
-                                        <textarea className="form-control" id="description" rows="4" placeholder="Descripción"></textarea>
+                                        <textarea className="form-control" id="description" rows="4" placeholder="Descripción" name="description" value={description} onChange={handleChange}></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +281,7 @@ const Form = () => {
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="input-group input-group-merge">
-                                        <input type="number" id="hours_week" className="form-control" name="hours_week" placeholder="10" />
+                                        <input type="number" id="hours_week" className="form-control" name="hours_week" placeholder="10" value={hours_week} onChange={handleChange} />
                                     </div>
                                 </div>
                             </div>
@@ -135,27 +296,33 @@ const Form = () => {
                                 <div className="col-sm-4">
                                     <div className="input-group input-group-merge">
                                         <div className="input-group-prepend">
-                                            <select className="form-control" id="basicSelect">
-                                                <option>Default</option>
-                                                <option>Blade Runner</option>
-                                                <option>Thor Ragnarok</option>
+                                            <select className="form-control" id="basicSelect" onChange={handleChangeCourse}>
+                                                <option>Seleccione</option>
+                                                {
+                                                    courses
+                                                    ?
+                                                        courses.map(course => (
+                                                            <option key={course._id} value={`{"id":"${course._id}", "name":"${course.name}"}`}>{course.name}</option>
+                                                        ))
+                                                    : null 
+                                                }
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-sm-2 col-form-label">
-                                    <label htmlFor="basicSelect">Paralelo:</label>
+                                    <label htmlFor="basicSelect1">Paralelo:</label>
                                 </div>
-                                <div className="col-sm-4">
-                                    <div className="input-group input-group-merge">
-                                        <div className="input-group-prepend">
-                                            <select className="form-control" disabled="disabled" id="basicSelect">
-                                                <option>Default</option>
-                                                <option>Blade Runner</option>
-                                                <option>Thor Ragnarok</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                <div className="col-sm-4">   
+                                    <Select
+                                        closeMenuOnSelect={false}
+                                        isMulti
+                                        options={parallelOptions}
+                                        styles={colourStyles}
+                                        className="React"
+                                        classNamePrefix="select"
+                                        onChange={handleChangeParallels}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -163,20 +330,29 @@ const Form = () => {
                         <div className="col-4">
                             <div className="form-group row">
                                 <div className="col-sm-3 col-form-label">
-                                    <label htmlFor="basicSelect">Profesores:</label>
+                                    <label>Profesores:</label>
                                 </div>
                                 <div className="col-sm-9 col-md-9">
                                     <Select
                                         closeMenuOnSelect={false}
-                                        defaultValue={[colourOptions[0], colourOptions[1]]}
                                         isMulti
-                                        options={colourOptions}
+                                        options={teacherOptions}
                                         styles={colourStyles}
                                         className="React"
                                         classNamePrefix="select"
+                                        onChange={handleChangeTeacher}
                                     />
                                 </div>
                             </div>
+                        </div>
+                        <div className="col-sm-9 offset-sm-3">
+                            <button type="button" className="btn btn-primary mr-1" onClick={submitForm}>Guardar</button>
+                            <button type="button" className="btn btn-outline-secondary" onClick={reset}>Reiniciar</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-1 offset-sm-3">
+                            {errorForm === true ? <span className="badge badge-pill badge-light-danger mt-1">Todos los campos son obligatorios</span> : null }
                         </div>
                     </div>
                 </form>

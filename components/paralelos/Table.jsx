@@ -37,9 +37,10 @@ const Table = () => {
     });
 
     useEffect(() => {
-        getParallel(course);
+        if(course.id_course != "") {
+            getParallel(course);
+        }
     }, [course])
-
 
     const handleChange = e => {
         const data = JSON.parse(e.target.value);

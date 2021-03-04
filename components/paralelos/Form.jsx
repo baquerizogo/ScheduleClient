@@ -1,4 +1,4 @@
-import { AlignLeft, Box } from "react-feather";
+import { Box } from "react-feather";
 import { useState, useContext, useEffect } from "react";
 
 import courseContext from '../../context/courses/courseContext'
