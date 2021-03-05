@@ -14,7 +14,6 @@ import {
 } from 'react-feather'
 
 const MenuBar = () => {
-    
 
     return (  
         <div className="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">

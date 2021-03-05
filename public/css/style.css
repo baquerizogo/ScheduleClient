@@ -1,3 +1,4 @@
+/*------- FORMATO BASICO DE TABLA ----------*/
 .table-layout {
     table-layout: fixed;
 }
@@ -12,6 +13,7 @@
     text-align: center;
 }
 
+/*------- POSICIONAMIENTO DE ASIGNATURAS ----------*/
 .pos {
     position: relative;
 }
@@ -20,10 +22,11 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: aqua;
+    background-color: rgb(255, 181, 181);
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 5px;
 }
 
 .tdata div {
@@ -31,27 +34,55 @@
 }
 
 
+/*------- ALTURA DE LAS ASIGNATURAS ----------*/
 .tdata-h-1 {
     width: 100%;
-    height: 100%;
+    height: calc(100% + 1px);
 }
 
 .tdata-h-2 {
     width: 100%;
-    height: 200%;
+    height: calc(200% + 2px);
 }
 
 .tdata-h-3 {
     width: 100%;
-    height: 300%;
+    height: calc(300% + 3px);
 }
 
 .tdata-h-4 {
     width: 100%;
-    height: 400%;
+    height: calc(400% + 4px);
 }
 
 .tdata-h-5 {
     width: 100%;
-    height: 500%;
+    height: calc(500% + 5px);
+}
+
+/*------- COLOR DE LAS ASIGNATURAS ----------*/
+.s-green {
+    background-color: rgb(182, 255, 140);
+    border: 1px solid rgb(153, 218, 115);
+}
+
+.s-blue {
+    background-color: rgb(165, 219, 255);
+    border: 1px solid rgb(140, 187, 216);
+}
+
+.s-red {
+    background-color: rgb(255, 181, 181);
+    border: 1px solid rgb(224, 146, 146);
+
+}
+
+.s-yellow {
+    background-color: rgb(255, 254, 181);
+    border: 1px solid rgb(207, 206, 138);
+}
+
+.s-orange {
+    background-color: rgb(255, 212, 255);
+    border: 1px solid rgb(228, 185, 228);
 }
