@@ -82,6 +82,10 @@ const SchoolyearState = props => {
         }
     }
 
+    const getCurrentSchoolyear = () => {
+        if(state.schoolyear) return state.schoolyear;
+    }
+
     return (
         <schoolyearContext.Provider value={{
             schoolyears: state.schoolyears,
@@ -92,7 +96,8 @@ const SchoolyearState = props => {
             checkForm,
             createSchoolyear,
             getSchoolyear,
-            currentSchoolyear
+            currentSchoolyear,
+            getCurrentSchoolyear
         }}>
             {props.children}
         </schoolyearContext.Provider>

@@ -1,46 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
 const Panel = () => {
-    const [dia, setDia] = useState([
-        {name: "Lunes", value: 1},
-        {name: "Martes", value: 2},
-        {name: "Miercoles", value: 3},
-        {name: "Jueves", value: 4},
-        {name: "Viernes", value: 5},
-    ])
-
-    const [inicio, setInicio] = useState([
-        {name: "8:00", value: 0},
-        {name: "8:20", value: 1},
-        {name: "8:40", value: 2},
-        {name: "9:00", value: 3},
-        {name: "9:20", value: 4},
-        {name: "9:40", value: 5},
-        {name: "10:00", value: 6},
-        {name: "10:20", value: 7},
-        {name: "10:40", value: 8},
-        {name: "11:00", value: 9},
-        {name: "11:20", value: 10},
-        {name: "11:40", value: 11},
-    ])
-
-    const [fin, setFin] = useState([
-        {name: "8:20", value: 1},
-        {name: "8:40", value: 2},
-        {name: "9:00", value: 3},
-        {name: "9:20", value: 4},
-        {name: "9:40", value: 5},
-        {name: "10:00", value: 6},
-        {name: "10:20", value: 7},
-        {name: "10:40", value: 8},
-        {name: "11:00", value: 9},
-        {name: "11:20", value: 10},
-        {name: "11:40", value: 11},
-        {name: "12:00", value: 12},
-    ])
-
-    //Datos individuales del formulario
-    const [element, setElement] = useState({})
 
     //Estado para las casillas del horario
     const [data, setData] = useState([]);
@@ -87,7 +47,7 @@ const Panel = () => {
                 asignatura: {
                     name: "Ciencias Naturales"
                 },
-                color: "s-yellow"
+                color: "s-red"
             },
             {
                 x: 1,
@@ -98,9 +58,9 @@ const Panel = () => {
                     min_fin: 5
                 },
                 asignatura: {
-                    name: "Historia"
+                    name: "Ciencias Sociales"
                 },
-                color: "s-red"
+                color: "s-yellow"
             },
             {
                 x: 5,
@@ -111,7 +71,7 @@ const Panel = () => {
                     min_fin: 8
                 },
                 asignatura: {
-                    name: "Lenguaje"
+                    name: "Cultura Física"
                 },
                 color: "s-green"
             }
@@ -131,188 +91,14 @@ const Panel = () => {
         }
     }, [data]);
 
-    const handleChangeA = e => {
-        const data = JSON.parse(e.target.value);
-        setElement({
-            ...element,
-            asignatura: {
-                name: data.name
-            },
-            color: data.color
-        }) 
-    }
-
-    const handleChangeX = e => {
-        setElement({
-            ...element,
-            x: e.target.value
-        })
-    }
-
-    const handleChangeYInicio = e => {
-        const data = JSON.parse(e.target.value);
-        setElement({
-            ...element,
-            y:{
-                ...element.y,
-                h_inicio: data.h_inicio,
-                min_inicio: data.min_inicio,
-            }
-        })
-    }
-
-    const handleChangeYfin = e => {
-        const data = JSON.parse(e.target.value);
-        setElement({
-            ...element,
-            y:{
-                ...element.y,
-                h_fin: data.h_fin,
-                min_fin: data.min_fin
-            }
-        })
-    }
-
-    const onSubmitForm = e => {
-        e.preventDefault();
-        console.log("enviando")
-        setData([
-            ...data,
-            element
-        ])
-    }
 
     return ( 
         <>
         <div className="row">
             <div className="col-6">
-                <div className="card">
-                    <div className="card-header">
-                        <h3>Seleccionar curso</h3>
-                    </div>
-                    <div className="card-body">
-                        <div className="form-group">
-                            <div className="row">
-                                <div className="col-sm-2 col-form-label">
-                                    <label htmlFor="course">Curso:</label>
-                                </div>
-                                <div className="col-sm-10">
-                                    <div className="input-group input-group-merge">
-                                        <select className="form-control" id="course">
-                                            <option>Seleccione</option>                                
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col-sm-2 col-form-label">
-                                    <label htmlFor="parallel">Paralelo:</label>
-                                </div>
-                                <div className="col-sm-10">
-                                    <div className="input-group input-group-merge">
-                                        <select className="form-control" id="parallel">
-                                            <option>Seleccione</option>
-                                        </select>
-                                    </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div className="col-6">
-                <div className="card ">
-                    <div className="card-header">
-                        <h3>Crear horario</h3>
-                    </div>
-                    <div className="card-body">
-                        <div className="form-group">
-                            <div className="row">
-                                <div className="col-2 col-form-label">
-                                    <label htmlFor="basicSelect">Asignatura:</label>
-                                </div>
-                                <div className="col-10">
-                                    <div className="input-group input-group-merge">
-                                        <select className="form-control" id="basicSelect" onChange={handleChangeA}>
-                                            <option>Seleccione</option>
-                                            <option value={`{"color":"s-blue", "name":"Matemáticas"}`}>Matemáticas</option>
-                                            <option value={`{"color":"s-red", "name":"Ciencias Naturales"}`}>Ciencias Naturales</option>        
-                                            <option value={`{"color":"s-yellow", "name":"Ciencias Sociales"}`}>Ciencias Sociales</option>        
-                                            <option value={`{"color":"s-green", "name":"Cultura Física"}`}>Cultura Física</option>        
-                                            <option value={`{"color":"s-orange", "name":"Química Nuclear IV"}`}>Química Nuclear XVI</option>              
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> 
-                            <div className="row mt-1">
-                                <div className="col-2 col-form-label">
-                                    <label htmlFor="basicSelect1">Día:</label>
-                                </div>
-                                <div className="col-10">
-                                    <div className="input-group input-group-merge">
-                                        <select className="form-control" id="basicSelect1" onChange={handleChangeX}>
-                                            <option>Seleccione</option>
-                                            {
-                                                dia
-                                                ? 
-                                                    dia.map((d) => (
-                                                        <option key={d.value} value={d.value}>{d.name}</option>
-                                                    ))
-                                                : null
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row mt-1">
-                                <div className="col-2 col-form-label">
-                                    <label htmlFor="basicSelect2">Hora inicio:</label>
-                                </div>
-                                <div className="col-10">
-                                    <div className="input-group input-group-merge">
-                                        <select className="form-control" id="basicSelect2" name="h_inicio" onChange={handleChangeYInicio}>
-                                            <option>Seleccione</option>
-                                            {
-                                                inicio
-                                                ? 
-                                                    inicio.map((i) => (
-                                                        <option key={i.value} value={`{"h_inicio":"${i.name}", "min_inicio":${i.value}}`}>{i.name}</option>
-                                                    ))
-                                                : null
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-2 col-form-label">
-                                    <label htmlFor="basicSelect3">Hora fin:</label>
-                                </div>
-                                <div className="col-10">
-                                    <div className="input-group input-group-merge">
-                                        <select className="form-control" id="basicSelect3" name="h_fin" onChange={handleChangeYfin}>
-                                            <option>Seleccione</option>
-                                            {
-                                                fin
-                                                ? 
-                                                    fin.map((f) => (
-                                                        <option key={f.value} value={`{"h_fin":"${f.name}", "min_fin":${f.value}}`}>{f.name}</option>
-                                                    ))
-                                                : null
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row mt-1">
-                                <div className="col-2"></div>
-                                <div className="col-3">
-                                    <button type="button" className="btn btn-primary" onClick={onSubmitForm}>Agregar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
             

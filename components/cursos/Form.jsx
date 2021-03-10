@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Box } from "react-feather";
 
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
@@ -10,9 +10,20 @@ const Form = () => {
     const schoolyearsContext = useContext(schoolyearContext);
 
     const { errorForm } = coursesContext; // Datos Context
-    const { schoolyear } = schoolyearsContext; // Datos Context
     const { checkForm, createCourse} = coursesContext; //Funciones Context
+    const { schoolyear } = schoolyearsContext; // Datos Context
+    const { getCurrentSchoolyear } = schoolyearsContext; // Funciones Context
 
+    //Actualizar si el periodo lectivo cambia
+    useEffect(() => {
+
+        const yearAux = getCurrentSchoolyear()
+        setCourse({
+            ...course,
+            id_schoolyear: yearAux[0]._id 
+        })
+        getCurrentSchoolyear();
+    }, [schoolyear])
 
     //state formulario
     const [course, setCourse] = useState({

@@ -1,5 +1,5 @@
 //Components
-import {Heart} from 'react-feather';
+import { Heart } from 'react-feather';
 
 const Footer = () => {
     return (  

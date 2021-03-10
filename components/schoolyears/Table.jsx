@@ -1,8 +1,9 @@
-import {useContext, useEffect, useState} from 'react';
-import { MoreVertical } from "react-feather"
+import { useContext } from 'react';
 
 //Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
+
+import { MoreVertical } from "react-feather"
 
 const Table = () => {
     //obtener el state del formulario

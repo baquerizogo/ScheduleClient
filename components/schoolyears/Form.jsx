@@ -1,8 +1,12 @@
 import React, {useContext, useState} from 'react';
 
-import { Calendar, Hash } from "react-feather";
+//Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 
+import { 
+    Calendar, 
+    Hash 
+} from "react-feather";
 
 const Form = () => {
 
@@ -11,6 +15,7 @@ const Form = () => {
     const { errorForm } = schoolyearsContext; // Datos Context
     const { checkForm, createSchoolyear} = schoolyearsContext; //Funciones Context
 
+    //Local State
     const [schoolyear, setSchoolyear] = useState({
         name: '',
         start_date: '',
@@ -18,7 +23,6 @@ const Form = () => {
         n_weeks: 0
     })
 
-    //Extraer nombre
     const { name, start_date, end_date, n_weeks } = schoolyear;
 
     //registrar cambios en el state
@@ -40,6 +44,7 @@ const Form = () => {
 
         //Agregar al context
         createSchoolyear(schoolyear);
+        
         //Reiniciar form
         reset();
     }

@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
-import { Archive, Mail, User } from "react-feather";
 
+//Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import teacherContext from '../../context/teachers/teacherContext'
+
+import { Archive, Mail, User } from "react-feather";
 
 const Form = () => {
     //obtener el state del formulario

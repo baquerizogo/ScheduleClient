@@ -1,9 +1,11 @@
-import { Box } from "react-feather";
 import { useState, useContext, useEffect } from "react";
 
+//Components
 import courseContext from '../../context/courses/courseContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import parallelContext from '../../context/parallels/parallelContext'
+
+import { Box } from "react-feather";
 
 const Form = () => {
     const coursesContext = useContext(courseContext);
@@ -43,7 +45,6 @@ const Form = () => {
             [e.target.name] : e.target.value
         })
     }
-
     
     const submitForm = e => {
         e.preventDefault();

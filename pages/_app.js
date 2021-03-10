@@ -7,6 +7,7 @@ import CourseState from '../context/courses/courseState'
 import ParallelState from '../context/parallels/parallelState'
 import TeacherState from '../context/teachers/teacherState'
 import ClassState from '../context/classes/classState'
+import ScheduleState from "../context/schedules/scheduleState";
 
 
 
@@ -19,13 +20,15 @@ function MyApp({ Component, pageProps }) {
                 <ParallelState>
                     <TeacherState>
                         <ClassState>
-                            <Head>
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
-                                <title> Gestor de horarios </title>
-                            </Head>
-                            <Layout>
-                                <Component {...pageProps} />
-                            </Layout>
+                            <ScheduleState>
+                                <Head>
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
+                                    <title> Gestor de horarios </title>
+                                </Head>
+                                <Layout>
+                                    <Component {...pageProps} />
+                                </Layout>
+                            </ScheduleState>
                         </ClassState>
                     </TeacherState>
                 </ParallelState>

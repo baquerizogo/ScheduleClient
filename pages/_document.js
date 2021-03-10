@@ -7,12 +7,11 @@ class MyDocument extends Document {
     }
 
     render() {
-        let fparams = {width: 14, height: 14}
         return (
-            <Html class="loading" lang="es" data-textdirection="ltr">
+            <Html className="loading" lang="es" data-textdirection="ltr">
                 <Head>
-                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+                    <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8"/>
+                    <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
                     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities."/>
                     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app"/>
                     <meta name="author" content="PIXINVENT"/>
@@ -59,7 +58,7 @@ class MyDocument extends Document {
                     {/* BEGIN: Theme JS */}
                     <script src="../../../app-assets/js/core/app-menu.js"></script>
                     <script src="../../../app-assets/js/core/app.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha512-7x3zila4t2qNycrtZ31HO0NnJr8kg2VI67YLoRSyi9hGhRN66FHYWr7Axa9Y1J9tGYHVBPqIjSE1ogHrJTz51g==" crossorigin="anonymous"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha512-7x3zila4t2qNycrtZ31HO0NnJr8kg2VI67YLoRSyi9hGhRN66FHYWr7Axa9Y1J9tGYHVBPqIjSE1ogHrJTz51g==" crossOrigin="anonymous"></script>
 
                     <script src="https://kit.fontawesome.com/a04ec12f68.js" crossOrigin="anonymous"></script>
                     <script>

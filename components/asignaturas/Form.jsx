@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import Select from 'react-select';
-import {Box} from "react-feather";
 import chroma from "chroma-js"
 
+// Components
 import classContext from '../../context/classes/classContext'
 import teacherContext from '../../context/teachers/teacherContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import parallelContext from '../../context/parallels/parallelContext'
 import courseContext from '../../context/courses/courseContext'
+
+import Select from 'react-select';
+import { Box } from "react-feather";
 
 const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: "white" }),
@@ -74,7 +76,6 @@ const Form = () => {
 
     let teacherOptions = [];
     let parallelOptions = [];
-
 
     //OBTENER TODOS LOS PROFESORES
     useEffect(() => {

@@ -1,12 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
 
 //Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 
-import {
-    Plus
-} from 'react-feather'
+import { Plus } from 'react-feather'
 
 const NewSchoolyear = () => {
 
@@ -28,15 +26,14 @@ const NewSchoolyear = () => {
             <div className="col-2"></div>
             <div className="col-7 input-group p-0">
                 <select className="form-control" onChange={handleChange}>
-                    <option value="">Seleccione</option>
+                    <option>Seleccione</option>
                     {
                         schoolyears 
                         ?
                             schoolyears.map(schoolyear => (
                                 <option key={schoolyear._id} value={schoolyear._id}>{schoolyear.name}</option>
                             ))
-                        : null
-                        
+                        : null    
                     }
                 </select>
                 <div className="input-group-append">

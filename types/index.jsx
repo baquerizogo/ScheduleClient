@@ -26,3 +26,6 @@ export const GET_CLASS = 'GET_CLASS';
 export const CREATE_CLASS = 'CREATE_CLASS';
 export const CHECK_CLASS = 'CHECK_CLASS';
 export const ERROR_CLASS = 'ERROR_CLASS';
+
+//Para Horarios de clases
+export const SET_DATA = 'SET_DATA';

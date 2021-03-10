@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { MoreVertical } from "react-feather"
 
-
+//Components
 import courseContext from '../../context/courses/courseContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import parallelContext from '../../context/parallels/parallelContext'
 
+import { MoreVertical } from "react-feather"
 
 const Table = () => {
     const coursesContext = useContext(courseContext);
