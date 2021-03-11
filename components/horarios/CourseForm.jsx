@@ -25,7 +25,7 @@ const CourseForm = () => {
     const { getParallel } = parallelsContext; //Funciones Context
 
     //Obtener datos necesarios para los horarios
-    const { setData } = schedulesContext;
+    const { setForm, clearData } = schedulesContext;
 
     
     useEffect(() => {
@@ -35,7 +35,7 @@ const CourseForm = () => {
     }, [schoolyear])
 
     //state formulario
-    const [form, setForm] = useState({
+    const [localForm, setLocalForm] = useState({
         modality: 0,
         id_parallel: {}
     });
@@ -61,25 +61,28 @@ const CourseForm = () => {
 
     //Leer valores del form Modalidad
     const handleChangeMod = e => {
-        setForm({
-            ...form,
+        setLocalForm({
+            ...localForm,
             modality: e.target.value
         })
     }
 
     //Leer valores del form Paralelo
     const handleChangePar = e => {
-        setForm({
-            ...form,
+        setLocalForm({
+            ...localForm,
             id_parallel: e.target.value
         })
     }
     
     const submitForm = e => {
         e.preventDefault();
-        if(form) {
-            if(form.id_parallel) setData(form);
+        if(localForm) {
+            if(localForm.id_parallel) setForm(localForm);
         }
+
+        //Enviar señal para limpiar datos
+        clearData();
     }
 
     return (
@@ -96,8 +99,8 @@ const CourseForm = () => {
                         <div className="col-10">
                             <div className="input-group input-group-merge">
                                 <select className="form-control" id="modalidad" onChange={handleChangeMod}>
-                                    <option value="0">Matutina</option>
-                                    <option value="1">Vespertina</option>              
+                                    <option value={0}>Matutina</option>
+                                    <option value={1}>Vespertina</option>              
                                 </select>
                             </div>
                         </div>

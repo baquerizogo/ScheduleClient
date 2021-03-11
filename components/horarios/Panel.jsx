@@ -1,14 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useContext } from "react";
+
+//Components
+import scheduleContext from '../../context/schedules/scheduleContext'
+
 
 const Panel = () => {
+    const schedulesContext = useContext(scheduleContext);
 
-    //Estado para las casillas del horario
-    const [data, setData] = useState([]);
+    const { data, inicio, fin } = schedulesContext;
 
     // Referencia
     const table = useRef(null);
 
-    useEffect(() => {
+    
+    /*useEffect(() => {
         setData([
             {
                 x: 1,
@@ -22,61 +27,9 @@ const Panel = () => {
                     name: "Matemáticas"
                 },
                 color: "s-blue"
-            },
-            {
-                x: 2,
-                y: {
-                    h_inicio: 0,
-                    h_fin: 0,
-                    min_inicio: 0,
-                    min_fin: 2
-                },
-                asignatura: {
-                    name: "Matemáticas"
-                },
-                color: "s-blue"
-            },
-            {
-                x: 3,
-                y: {
-                    h_inicio: 0,
-                    h_fin: 0,
-                    min_inicio: 2,
-                    min_fin: 3
-                },
-                asignatura: {
-                    name: "Ciencias Naturales"
-                },
-                color: "s-red"
-            },
-            {
-                x: 1,
-                y: {
-                    h_inicio: 0,
-                    h_fin: 0,
-                    min_inicio: 2,
-                    min_fin: 5
-                },
-                asignatura: {
-                    name: "Ciencias Sociales"
-                },
-                color: "s-yellow"
-            },
-            {
-                x: 5,
-                y: {
-                    H_inicio: 0,
-                    H_fin: 0,
-                    min_inicio: 6,
-                    min_fin: 8
-                },
-                asignatura: {
-                    name: "Cultura Física"
-                },
-                color: "s-green"
             }
         ])
-    }, [])
+    }, [])*/
 
     useEffect(() => {
         //                                         Accede a tr/hora [i]        Accede a td/Dia [j]
@@ -87,22 +40,18 @@ const Panel = () => {
             for(let i in data) {
                 const height = data[i].y.min_fin - data[i].y.min_inicio;
                 table.current.childNodes[1].childNodes[data[i].y.min_inicio].childNodes[data[i].x].innerHTML = `<div class="tdata tdata-h-${height} ${data[i].color}"><div><p>${data[i].asignatura.name}</p></div></div>`     
-            }        
+            }
+        } else {
+            for (let i in inicio) {
+                for(let j=1 ; j<=5; j++) {
+                    table.current.childNodes[1].childNodes[i].childNodes[j].innerHTML = ""
+                }
+            }
         }
     }, [data]);
 
 
     return ( 
-        <>
-        <div className="row">
-            <div className="col-6">
-
-            </div>
-            <div className="col-6">
-
-            </div>
-            
-        </div>
         <div className="card">
             <div className="card-body">
                 <div className="row">
@@ -119,102 +68,21 @@ const Panel = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>8:00 - 8:20</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>8:20 - 8:40</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>8:40 - 9:00</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>9:00 - 9:20</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>9:20 - 9:40</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>9:40 - 10:00</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>10:00 - 10:20</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>10:20 - 10:40</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>10:40 - 11:00</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>11:00 - 11:20</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>11:20 - 11:40</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
-                                <tr>
-                                    <td>11:40 - 12:00</td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                    <td className="pos"></td>
-                                </tr>
+                                {
+                                    inicio 
+                                    ?
+                                        inicio.map((element, index) => (
+                                            <tr key={index}>
+                                                <td>{element.name} - {fin[index].name}</td>
+                                                <td className="pos"></td>
+                                                <td className="pos"></td>
+                                                <td className="pos"></td>
+                                                <td className="pos"></td>
+                                                <td className="pos"></td>
+                                            </tr>
+                                        )) 
+                                    : null
+                                }
                             </tbody>
                             
                         </table>
@@ -222,7 +90,6 @@ const Panel = () => {
                 </div>
             </div>
         </div>
-        </>
     );
 }
  

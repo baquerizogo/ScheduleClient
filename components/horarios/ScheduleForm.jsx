@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 
 //Components
 import scheduleContext from '../../context/schedules/scheduleContext'
@@ -13,13 +13,13 @@ const ScheduleForm = () => {
     const schoolyearsContext = useContext(schoolyearContext);
 
     const { getClass, classes } = classesContext;
-    const { modality, id_parallel } = schedulesContext;
+    const { setData, inicio, fin, id_parallel, newForm, msg } = schedulesContext;
     const { getTeacher, teachers } = teachersContext;
     const { schoolyear } = schoolyearsContext; 
 
     //Datos individuales del formulario
     const [element, setElement] = useState({})
-    
+    const colors = ['s-blue', 's-yellow', 's-green', 's-orange', 's-red'];
     const [dia, setDia] = useState([
         {name: "Lunes", value: 1},
         {name: "Martes", value: 2},
@@ -28,80 +28,28 @@ const ScheduleForm = () => {
         {name: "Viernes", value: 5},
     ])
 
-    const [inicio, setInicio] = useState([])
-
-    const [fin, setFin] = useState([])
-
-
-    const colors = ['s-blue', 's-yellow', 's-green', 's-orange', 's-red'];
+    //Referencias del formulario
+    const selectDay = useRef(null);
+    const selectClass = useRef(null);
+    const selectTeacher = useRef(null);
+    const selectHend = useRef(null);
+    const selectHstart = useRef(null);
 
     useEffect(() => {
-        if(modality === 0){
-            setInicio([
-                {name: "8:00", value: 0},
-                {name: "8:20", value: 1},
-                {name: "8:40", value: 2},
-                {name: "9:00", value: 3},
-                {name: "9:20", value: 4},
-                {name: "9:40", value: 5},
-                {name: "10:00", value: 6},
-                {name: "10:20", value: 7},
-                {name: "10:40", value: 8},
-                {name: "11:00", value: 9},
-                {name: "11:20", value: 10},
-                {name: "11:40", value: 11}
-            ])
-
-            setFin([
-                {name: "8:20", value: 1},
-                {name: "8:40", value: 2},
-                {name: "9:00", value: 3},
-                {name: "9:20", value: 4},
-                {name: "9:40", value: 5},
-                {name: "10:00", value: 6},
-                {name: "10:20", value: 7},
-                {name: "10:40", value: 8},
-                {name: "11:00", value: 9},
-                {name: "11:20", value: 10},
-                {name: "11:40", value: 11},
-                {name: "12:00", value: 12}
-            ])
-        } else {
-            setInicio([
-                {name: "13:00", value: 0},
-                {name: "13:20", value: 1},
-                {name: "13:40", value: 2},
-                {name: "14:00", value: 3},
-                {name: "14:20", value: 4},
-                {name: "14:40", value: 5},
-                {name: "15:00", value: 6},
-                {name: "15:20", value: 7},
-                {name: "15:40", value: 8},
-                {name: "16:00", value: 9},
-                {name: "16:20", value: 10},
-                {name: "16:40", value: 11}
-            ])
-
-            setFin([
-                {name: "13:20", value: 1},
-                {name: "13:40", value: 2},
-                {name: "14:00", value: 3},
-                {name: "14:20", value: 4},
-                {name: "14:40", value: 5},
-                {name: "15:00", value: 6},
-                {name: "15:20", value: 7},
-                {name: "15:40", value: 8},
-                {name: "16:00", value: 9},
-                {name: "16:20", value: 10},
-                {name: "16:40", value: 11},
-                {name: "17:00", value: 12}
-            ])
-        }
-
         if(id_parallel) {
             getClass({id_parallel})
         }
     }, [id_parallel])
+
+    useEffect(()=>{
+        selectDay.current.value = "Seleccione";
+        selectTeacher.current.value = "Seleccione";
+        selectClass.current.value = "Seleccione";
+        selectHend.current.value = "Seleccione";
+        selectHstart.current.value = "Seleccione";
+
+        setElement({});
+    },[newForm])
     
     const handleChangeClass = e => {
         const data = JSON.parse(e.target.value);
@@ -158,11 +106,8 @@ const ScheduleForm = () => {
 
     const onSubmitForm = e => {
         e.preventDefault();
-        console.log("enviando")
-        setData([
-            ...data,
-            element
-        ])
+        console.log("enviando");
+        setData(element);
     }
 
     return (
@@ -178,7 +123,7 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect" onChange={handleChangeClass}>
+                                <select className="form-control" id="basicSelect" onChange={handleChangeClass} ref={selectClass}>
                                     <option>Seleccione</option>
                                     {
                                         classes
@@ -198,7 +143,7 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="teacher" onChange={handleChangeTeacher}>
+                                <select className="form-control" id="teacher" onChange={handleChangeTeacher} ref={selectTeacher}>
                                     <option>Seleccione</option>
                                     {
                                         teachers
@@ -218,7 +163,7 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect1" onChange={handleChangeX}>
+                                <select className="form-control" id="basicSelect1" onChange={handleChangeX} ref={selectDay}>
                                     <option>Seleccione</option>
                                     {
                                         dia
@@ -238,7 +183,7 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-4">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect2" name="h_inicio" onChange={handleChangeYInicio}>
+                                <select className="form-control" id="basicSelect2" name="h_inicio" onChange={handleChangeYInicio} ref={selectHstart}>
                                     <option>Seleccione</option>
                                     {
                                         inicio
@@ -256,7 +201,7 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-4">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect3" name="h_fin" onChange={handleChangeYfin}>
+                                <select className="form-control" id="basicSelect3" name="h_fin" onChange={handleChangeYfin} ref={selectHend}>
                                     <option>Seleccione</option>
                                     {
                                         fin
@@ -274,6 +219,11 @@ const ScheduleForm = () => {
                         <div className="col-2"></div>
                         <div className="col-3">
                             <button type="button" className="btn btn-primary" onClick={onSubmitForm}>Agregar</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="offset-2 ">
+                            { msg ? <span className="badge badge-pill badge-light-danger mt-1">{msg}</span> : null }
                         </div>
                     </div>
                 </div>

@@ -28,4 +28,7 @@ export const CHECK_CLASS = 'CHECK_CLASS';
 export const ERROR_CLASS = 'ERROR_CLASS';
 
 //Para Horarios de clases
+export const SET_FORM = 'SET_FORM';
 export const SET_DATA = 'SET_DATA';
+export const CLEAR_DATA = 'CLEAR_DATA';
+export const ERROR_SCHEDULE = 'ERROR_SCHEDULE';
