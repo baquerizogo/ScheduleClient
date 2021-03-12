@@ -8,7 +8,9 @@ import clienteAxios from '../../config/axios'
 //Types
 import { 
     CLEAR_DATA,
+    CREATE_SCHEDULE,
     ERROR_SCHEDULE,
+    GET_SCHEDULE,
     SET_DATA, 
     SET_FORM 
 } from '../../types'
@@ -48,12 +50,26 @@ const ScheduleState = props => {
             {name: "11:40", value: 11},
             {name: "12:00", value: 12}
         ],
+        schedules: []
     }
 
     //Dispatch para ejecutar acciones
     const [state, dispatch] = useReducer(scheduleReducer, initialState)
 
     //funciones
+    const getSchedule = async schoolyear => {
+        try {
+            const resultado = await clienteAxios.get('/api/schedule/all', {params: schoolyear});
+            console.log(resultado);
+            dispatch({
+                type: GET_SCHEDULE,
+                payload: resultado.data.schedule
+            })
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
     const setForm = data => {
         dispatch({
             type: SET_FORM,
@@ -84,8 +100,23 @@ const ScheduleState = props => {
         })
     }
 
+    const createSchedule = async schedule => {
+        try{
+            const resultado = await clienteAxios.post('/api/schedule', schedule);
+            console.log(resultado);
+            dispatch({
+                type: CREATE_SCHEDULE,
+                payload: schedule
+            })
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     const checkData = (element) => {
         const auxData = state.data;
+
+        //Comprobar que no se crucen los horarios de forma local
         if(auxData.length > 0) {
             for(let i in auxData) {
                 //Comprobar que el día se el mismo
@@ -95,7 +126,7 @@ const ScheduleState = props => {
                         console.log("Error");
                         return false;
                     } else {
-                        console.log("Correcto")
+                        console.log("Correcto");
                         return true;
                     }
                 }
@@ -115,7 +146,10 @@ const ScheduleState = props => {
             inicio: state.inicio,
             fin: state.fin,
             msg: state.msg,
+            schedules:  state.schedules,
             
+            getSchedule,
+            createSchedule,
             setForm,
             setData,
             clearData

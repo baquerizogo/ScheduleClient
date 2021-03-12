@@ -13,7 +13,7 @@ const ScheduleForm = () => {
     const schoolyearsContext = useContext(schoolyearContext);
 
     const { getClass, classes } = classesContext;
-    const { setData, inicio, fin, id_parallel, newForm, msg } = schedulesContext;
+    const { setData, createSchedule, clearData, inicio, fin, id_parallel, newForm, msg, data, modality } = schedulesContext;
     const { getTeacher, teachers } = teachersContext;
     const { schoolyear } = schoolyearsContext; 
 
@@ -42,13 +42,7 @@ const ScheduleForm = () => {
     }, [id_parallel])
 
     useEffect(()=>{
-        selectDay.current.value = "Seleccione";
-        selectTeacher.current.value = "Seleccione";
-        selectClass.current.value = "Seleccione";
-        selectHend.current.value = "Seleccione";
-        selectHstart.current.value = "Seleccione";
-
-        setElement({});
+        clear();
     },[newForm])
     
     const handleChangeClass = e => {
@@ -108,6 +102,34 @@ const ScheduleForm = () => {
         e.preventDefault();
         console.log("enviando");
         setData(element);
+    }
+
+    const saveSchedule = e => {
+        e.preventDefault();
+        console.log("Guardando");
+
+        //Construimos el objeto
+        const object = {
+            data,
+            modality,
+            id_parallel,
+            id_schoolyear: schoolyear[0]._id
+        }
+
+        //Enviar datos a la API
+        createSchedule(object);
+        clear();
+        clearData();
+    }
+
+    const clear = () => {
+        selectDay.current.value = "Seleccione";
+        selectTeacher.current.value = "Seleccione";
+        selectClass.current.value = "Seleccione";
+        selectHend.current.value = "Seleccione";
+        selectHstart.current.value = "Seleccione";
+
+        setElement({});
     }
 
     return (
@@ -219,6 +241,9 @@ const ScheduleForm = () => {
                         <div className="col-2"></div>
                         <div className="col-3">
                             <button type="button" className="btn btn-primary" onClick={onSubmitForm}>Agregar</button>
+                        </div>
+                        <div className="col-3">
+                            <button type="button" className="btn btn-success" onClick={saveSchedule}>Guardar</button>
                         </div>
                     </div>
                     <div className="row">

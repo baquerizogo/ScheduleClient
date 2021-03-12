@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 
 //Components
 import courseContext from '../../context/courses/courseContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import parallelContext from '../../context/parallels/parallelContext'
 import scheduleContext from '../../context/schedules/scheduleContext'
-
 
 const CourseForm = () => {
     const coursesContext = useContext(courseContext);
@@ -27,6 +26,11 @@ const CourseForm = () => {
     //Obtener datos necesarios para los horarios
     const { setForm, clearData } = schedulesContext;
 
+    //Referencias
+    const modality = useRef(null);
+    const id_parallel = useRef(null);
+    const id_course = useRef(null);
+
     
     useEffect(() => {
         getCourse({
@@ -39,6 +43,7 @@ const CourseForm = () => {
         modality: 0,
         id_parallel: {}
     });
+
     
     //STATE DEL CURSO (Necesario para obtener paralelos)
     const [course, setCourse] = useState({
@@ -59,19 +64,11 @@ const CourseForm = () => {
         })
     }
 
-    //Leer valores del form Modalidad
-    const handleChangeMod = e => {
+    //Leer valores del form
+    const handleChange = e => {
         setLocalForm({
             ...localForm,
-            modality: e.target.value
-        })
-    }
-
-    //Leer valores del form Paralelo
-    const handleChangePar = e => {
-        setLocalForm({
-            ...localForm,
-            id_parallel: e.target.value
+            [e.target.name]: e.target.value
         })
     }
     
@@ -83,6 +80,16 @@ const CourseForm = () => {
 
         //Enviar señal para limpiar datos
         clearData();
+
+        //Reiniciar form
+        setLocalForm({
+            ...localForm,
+            id_parallel: {}
+        })
+
+        id_parallel.current.value = "Seleccione";
+        id_course.current.value = "Seleccione";
+        
     }
 
     return (
@@ -98,7 +105,7 @@ const CourseForm = () => {
                         </div>
                         <div className="col-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="modalidad" onChange={handleChangeMod}>
+                                <select className="form-control" id="modalidad" name="modality" onChange={handleChange} ref={modality}>
                                     <option value={0}>Matutina</option>
                                     <option value={1}>Vespertina</option>              
                                 </select>
@@ -111,7 +118,7 @@ const CourseForm = () => {
                         </div>
                         <div className="col-sm-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="course" name="id_course" onChange={handleChangeCourse}>
+                                <select className="form-control" id="course" name="id_course" onChange={handleChangeCourse} ref={id_course}>
                                     <option>Seleccione</option>
                                     {
                                         courses
@@ -131,7 +138,7 @@ const CourseForm = () => {
                         </div>
                         <div className="col-sm-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="parallel" onChange={handleChangePar}>
+                                <select className="form-control" id="parallel" name="id_parallel" onChange={handleChange} ref={id_parallel}>
                                     <option>Seleccione</option>
                                     {
                                         parallels

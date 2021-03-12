@@ -1,12 +1,20 @@
 import { 
     CLEAR_DATA,
+    CREATE_SCHEDULE,
     ERROR_SCHEDULE,
+    GET_SCHEDULE,
     SET_DATA, 
     SET_FORM
 } from '../../types'
 
 const scheduleReducer = (state, action) => {
     switch (action.type) {
+        case GET_SCHEDULE:
+            return{
+                ...state,
+                schedules: action.payload
+            }
+
         case SET_FORM:
             let h_start;
             let h_end;
@@ -89,7 +97,14 @@ const scheduleReducer = (state, action) => {
                 ],
                 msg: null
             }
-        
+
+        case CREATE_SCHEDULE:
+            return{
+                ...state,
+                schedules: [...state.schedules, action.payload],
+                msg: null
+            }
+
         case CLEAR_DATA:
             return {
                 ...state,
