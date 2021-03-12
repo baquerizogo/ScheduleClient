@@ -39,7 +39,7 @@ const Panel = () => {
         if(data.length > 0){
             for(let i in data) {
                 const height = data[i].y.min_fin - data[i].y.min_inicio;
-                table.current.childNodes[1].childNodes[data[i].y.min_inicio].childNodes[data[i].x].innerHTML = `<div class="tdata tdata-h-${height} ${data[i].color}"><div><p>${data[i].asignatura.name}</p></div></div>`     
+                table.current.childNodes[1].childNodes[data[i].y.min_inicio].childNodes[data[i].x].innerHTML = `<div class="tdata tdata-h-${height} ${data[i].color}"><div><p>${data[i].asignatura.name}</p><p>${data[i].teacher.name} ${data[i].teacher.lastname}</p></div></div>`     
             }
         } else {
             for (let i in inicio) {

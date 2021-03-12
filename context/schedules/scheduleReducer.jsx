@@ -3,6 +3,7 @@ import {
     CREATE_SCHEDULE,
     ERROR_SCHEDULE,
     GET_SCHEDULE,
+    GET_SCHEDULE_BY_PARALLEL,
     SET_DATA, 
     SET_FORM
 } from '../../types'
@@ -13,6 +14,12 @@ const scheduleReducer = (state, action) => {
             return{
                 ...state,
                 schedules: action.payload
+            }
+
+        case GET_SCHEDULE_BY_PARALLEL:
+            return{
+                ...state,
+                activeSchedule: action.payload
             }
 
         case SET_FORM:

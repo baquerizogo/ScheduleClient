@@ -27,11 +27,15 @@
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.2);
 }
 
 .tdata div {
     max-width: 90%;
+    text-align: center;
 }
+
+
 
 
 /*------- ALTURA DE LAS ASIGNATURAS ----------*/
@@ -62,27 +66,21 @@
 
 /*------- COLOR DE LAS ASIGNATURAS ----------*/
 .s-green {
-    background-color: rgb(182, 255, 140);
-    border: 1px solid rgb(153, 218, 115);
+    background-color: rgb(154, 231, 109);
 }
 
 .s-blue {
-    background-color: rgb(165, 219, 255);
-    border: 1px solid rgb(140, 187, 216);
+    background-color: rgb(127, 204, 255);
 }
 
 .s-red {
-    background-color: rgb(255, 181, 181);
-    border: 1px solid rgb(224, 146, 146);
-
+    background-color: rgb(255, 145, 145);
 }
 
 .s-yellow {
-    background-color: rgb(255, 254, 181);
-    border: 1px solid rgb(207, 206, 138);
+    background-color: rgb(255, 253, 144);
 }
 
 .s-orange {
-    background-color: rgb(255, 212, 255);
-    border: 1px solid rgb(228, 185, 228);
+    background-color: rgb(255, 180, 255);
 }

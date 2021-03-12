@@ -171,7 +171,7 @@ const ScheduleForm = () => {
                                         teachers
                                         ?
                                             teachers.map((teacher)=> (
-                                                <option key={teacher._id} value={JSON.stringify(teacher)}>{teacher.name}</option>
+                                                <option key={teacher._id} value={JSON.stringify(teacher)}>{teacher.name} {teacher.lastname}</option>
                                             ))
                                         : null
                                     }

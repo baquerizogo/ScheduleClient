@@ -11,6 +11,7 @@ import {
     CREATE_SCHEDULE,
     ERROR_SCHEDULE,
     GET_SCHEDULE,
+    GET_SCHEDULE_BY_PARALLEL,
     SET_DATA, 
     SET_FORM 
 } from '../../types'
@@ -50,7 +51,8 @@ const ScheduleState = props => {
             {name: "11:40", value: 11},
             {name: "12:00", value: 12}
         ],
-        schedules: []
+        schedules: [],
+        activeSchedule: []
     }
 
     //Dispatch para ejecutar acciones
@@ -70,6 +72,19 @@ const ScheduleState = props => {
         }
     }
 
+    const getScheduleByParallel = async id_parallel => {
+        try {
+            const resultado = await clienteAxios.get('/api/schedule', {params: id_parallel});
+            console.log(resultado);
+            dispatch({
+                type: GET_SCHEDULE_BY_PARALLEL,
+                payload: resultado.data.schedule
+            })
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
     const setForm = data => {
         dispatch({
             type: SET_FORM,
@@ -78,8 +93,9 @@ const ScheduleState = props => {
     }
 
     const setData = element => {
+        const ans = checkData(element);
 
-        if (checkData(element)) {
+        if (ans.value) {
             dispatch({
                 type: SET_DATA,
                 payload: element
@@ -87,7 +103,7 @@ const ScheduleState = props => {
         } else {
             dispatch({
                 type: ERROR_SCHEDULE,
-                payload: "No puede cruzar materias"
+                payload: ans.msg
             })   
         }   
     }
@@ -114,27 +130,65 @@ const ScheduleState = props => {
     }
 
     const checkData = (element) => {
-        const auxData = state.data;
+        const data = state.data;
+        const schedules = state.schedules;
+        let ans;
 
         //Comprobar que no se crucen los horarios de forma local
-        if(auxData.length > 0) {
-            for(let i in auxData) {
+        if(data.length > 0) {
+            for(let i in data) {
                 //Comprobar que el día se el mismo
-                if(auxData[i].x == element.x) {
+                if(data[i].x == element.x) {
                     //Comprobar que se sobrepongan
-                    if((element.y.min_inicio >= auxData[i].y.min_inicio && element.y.min_inicio < auxData[i].y.min_fin) || (element.y.min_fin > auxData[i].y.min_inicio && element.y.min_fin <= auxData[i].y.min_fin) || (element.y.min_inicio <= auxData[i].y.min_inicio && element.y.min_fin >= auxData[i].y.min_fin)) {
+                    if((element.y.min_inicio >= data[i].y.min_inicio && element.y.min_inicio < data[i].y.min_fin) || (element.y.min_fin > data[i].y.min_inicio && element.y.min_fin <= data[i].y.min_fin) || (element.y.min_inicio <= data[i].y.min_inicio && element.y.min_fin >= data[i].y.min_fin)) {
                         console.log("Error");
-                        return false;
-                    } else {
-                        console.log("Correcto");
-                        return true;
+                        ans = {
+                            value: false,
+                            msg: "No puede cruzar materias"
+                        }
+                        return ans;
                     }
                 }
             }
-            return true;
-        } else {
-            return true;
         }
+
+        //Comprobar con los demas cursos
+        if(schedules.length > 0) {
+            console.log("1")
+            //Recorrer todos los horarios
+            for(let i in schedules) {
+                if(schedules[i].data.length > 0) {
+                    console.log("2")
+                    //Recorrer la data de cada horario
+                    for(let j in schedules[i].data) {
+                        //Comprobar si el profesor coincide
+                        if((schedules[i].data[j].teacher._id === element.teacher._id) && (schedules[i].modality == state.modality)) {
+                            console.log("Coincide profe y modalidad")
+                            //Comprobar si el dia es el mismo
+                            if(schedules[i].data[j].x == element.x) {
+                                console.log("Coincide dia")
+                                //Comprobar que se sobrepongan
+                                if((element.y.min_inicio >= schedules[i].data[j].y.min_inicio && element.y.min_inicio < schedules[i].data[j].y.min_fin) || (element.y.min_fin > schedules[i].data[j].y.min_inicio && element.y.min_fin <= schedules[i].data[j].y.min_fin) || (element.y.min_inicio <= schedules[i].data[j].y.min_inicio && element.y.min_fin >= schedules[i].data[j].y.min_fin)) {
+                                    console.log("Error");
+                                    ans = {
+                                        value: false,
+                                        msg: "El profesor ya tiene esta hora ocupada en otro curso"
+                                    }
+                                    return ans;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        ans = {
+            value: true,
+            msg: ""
+        }
+
+        return ans;
     }
 
     return (
@@ -147,7 +201,9 @@ const ScheduleState = props => {
             fin: state.fin,
             msg: state.msg,
             schedules:  state.schedules,
+            activeSchedule: state.activeSchedule,
             
+            getScheduleByParallel,
             getSchedule,
             createSchedule,
             setForm,
