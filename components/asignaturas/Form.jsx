@@ -77,17 +77,14 @@ const Form = () => {
     let teacherOptions = [];
     let parallelOptions = [];
 
-    //OBTENER TODOS LOS PROFESORES
+    //OBTENER TODOS LOS PROFESORES Y CURSOS
     useEffect(() => {
         if(schoolyear != '') {
             getTeacher({
                 id_schoolyear : schoolyear[0]._id
             });
         }
-    }, [schoolyear])
 
-    //OBTENER TODOS LOS CURSOS
-    useEffect(() => {
         if(schoolyear != '') {
             getCourse({
                 id_schoolyear : schoolyear[0]._id

@@ -6,7 +6,7 @@ import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import parallelContext from '../../context/parallels/parallelContext'
 import scheduleContext from '../../context/schedules/scheduleContext'
 
-const CourseForm = () => {
+const CourseForm = ({dataCallback}) => {
     const coursesContext = useContext(courseContext);
     const schoolyearsContext = useContext(schoolyearContext);
     const parallelsContext = useContext(parallelContext);
@@ -24,7 +24,7 @@ const CourseForm = () => {
     const { getParallel } = parallelsContext; //Funciones Context
 
     //Obtener datos necesarios para los horarios
-    const { getScheduleByParallel } = schedulesContext;
+    const { getScheduleByParallel, schedules } = schedulesContext;
     
     useEffect(() => {
         getCourse({
@@ -51,15 +51,20 @@ const CourseForm = () => {
 
     //SELECCIONAR CURSO PARA OBTENER PARALELOS
     const handleChangeCourse = e => {
+        let index = e.nativeEvent.target.selectedIndex; //Para obtener el texto de la opción marcada
         setCourse({
+            "name" : e.nativeEvent.target[index].text,
             [e.target.name]: e.target.value
         })
     }
 
     //Leer valores del form
     const handleChange = e => {
+        let index = e.nativeEvent.target.selectedIndex; //Para obtener el texto de la opción marcada
+
         setLocalForm({
             ...localForm,
+            "name": e.nativeEvent.target[index].text,
             [e.target.name]: e.target.value
         })
     }
@@ -68,6 +73,11 @@ const CourseForm = () => {
         e.preventDefault();
         if(localForm) {
             if(localForm.id_parallel) getScheduleByParallel({id_parallel: localForm.id_parallel});
+            let data = {
+                "curso": course.name ,
+                "paralelo": localForm.name
+            }
+            dataCallback(data);
         }
     }
 
@@ -106,9 +116,13 @@ const CourseForm = () => {
                                     {
                                         parallels
                                         ?
-                                            parallels.map(parallel => (
-                                                <option key={parallel._id} value={parallel._id}>{parallel.name}</option>
-                                            ))
+                                            parallels.map(parallel => {
+                                                for(let i in schedules) {
+                                                    if(parallel._id == schedules[i].id_parallel) {
+                                                        return(<option key={parallel._id} value={parallel._id}>{parallel.name}</option>)
+                                                    };
+                                                }
+                                            })
                                         : null
                                     }
                                 </select>

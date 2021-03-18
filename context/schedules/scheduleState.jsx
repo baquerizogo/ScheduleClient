@@ -18,11 +18,11 @@ import {
 
 const ScheduleState = props => {
     const initialState = {
-        modality: 0,
-        id_parallel: '',
-        data: [],
-        newForm: false,
-        msg: null,
+        modality: 0,                // 0 => Matutino // 1 => Vespertino
+        id_parallel: '',            // Id del paralelo y curso al que pertenece
+        data: [],                   // Asignaturas colocadas en el horario (Staging)
+        newForm: false,             // Switch para resetear formularios cuando se creen horarios nuevos
+        msg: null,                  // Mensaje que se muestra en caso de advertencias
         inicio: [
             {name: "8:00", value: 0},
             {name: "8:20", value: 1},
@@ -36,7 +36,7 @@ const ScheduleState = props => {
             {name: "11:00", value: 9},
             {name: "11:20", value: 10},
             {name: "11:40", value: 11}
-        ],
+        ],                          // Horas de inicio
         fin: [
             {name: "8:20", value: 1},
             {name: "8:40", value: 2},
@@ -50,9 +50,9 @@ const ScheduleState = props => {
             {name: "11:20", value: 10},
             {name: "11:40", value: 11},
             {name: "12:00", value: 12}
-        ],
-        schedules: [],
-        activeSchedule: []
+        ],                          // Horas de fin
+        schedules: [],              // Todos los horarios de clases en el periodo lectivo
+        activeSchedule: []          // Horario de clase seleccionado por paralelo
     }
 
     //Dispatch para ejecutar acciones

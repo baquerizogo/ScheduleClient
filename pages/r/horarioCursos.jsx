@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 
 //Components
 import CourseForm from '../../components/horarioCursos/CourseForm'
@@ -18,9 +18,16 @@ const horarioCurso = () => {
     //Obtener datos necesarios para los horarios
     const { getSchedule } = schedulesContext;
 
+    //Estate del horario
+    const [state, setState] = useState();
+
     useEffect(() => {
         getSchedule({id_schoolyear: schoolyear[0]._id});
     }, [])
+
+    const dataCallback = (data) => {
+        setState(data);
+    }
 
     return (
         <>      
@@ -29,12 +36,12 @@ const horarioCurso = () => {
                 <section id="basic-horizontal-layouts">
                     <div className="row">
                         <div className="col-12">
-                            <CourseForm/>
+                            <CourseForm dataCallback={dataCallback}/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12 col-12">
-                            <Panel/>
+                            <Panel state={state}/>
                         </div>
                     </div>
                 </section>
