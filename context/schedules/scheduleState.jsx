@@ -20,7 +20,9 @@ const ScheduleState = props => {
     const initialState = {
         modality: 0,                // 0 => Matutino // 1 => Vespertino
         id_parallel: '',            // Id del paralelo y curso al que pertenece
-        data: [],                   // Asignaturas colocadas en el horario (Staging)
+        courseName: '',             // Nombre del curso seleccionado
+        parallelName: '',           // Nombre del paralelo seleccionado
+        data: [],                   // Asignaturas colocadas en el hora rio (Staging)
         newForm: false,             // Switch para resetear formularios cuando se creen horarios nuevos
         msg: null,                  // Mensaje que se muestra en caso de advertencias
         inicio: [
@@ -144,7 +146,9 @@ const ScheduleState = props => {
                         console.log("Error");
                         ans = {
                             value: false,
-                            msg: "No puede cruzar materias"
+                            msg: {
+                                text: "No puede cruzar materias"
+                            }
                         }
                         return ans;
                     }
@@ -172,8 +176,14 @@ const ScheduleState = props => {
                                     console.log("Error");
                                     ans = {
                                         value: false,
-                                        msg: "El profesor ya tiene esta hora ocupada en otro curso"
+                                        msg: {
+                                            text: "El profesor ya tiene esta hora ocupada en otro curso",
+                                            data: schedules[i]
+                                        }
+                                        
                                     }
+
+                                    console.log(ans);
                                     return ans;
                                 }
                             }
@@ -202,6 +212,8 @@ const ScheduleState = props => {
             msg: state.msg,
             schedules:  state.schedules,
             activeSchedule: state.activeSchedule,
+            courseName: state.courseName,
+            parallelName: state.parallelName,
             
             getScheduleByParallel,
             getSchedule,

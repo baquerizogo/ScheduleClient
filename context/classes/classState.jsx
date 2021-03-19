@@ -9,13 +9,15 @@ import clienteAxios from '../../config/axios'
 import { 
     CHECK_CLASS, 
     CREATE_CLASS, 
+    GET_ALL_CLASSES, 
     GET_CLASS 
 } from '../../types'
 
 const ClassState = props => {
     const initialState = {
         classes: [],
-        errorForm: false
+        errorForm: false,
+        allClasses: []
     }
 
     //Dispatch para ejecutar acciones
@@ -29,6 +31,20 @@ const ClassState = props => {
             console.log(resultado);
             dispatch({
                 type: GET_CLASS,
+                payload: resultado.data.classes
+            })
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    const getAllClasses = async id_schoolyear => {
+        try {
+            //Puede ser un profesor o un paralelo
+            const resultado = await clienteAxios.get('/api/class/all', {params: id_schoolyear});
+            console.log(resultado);
+            dispatch({
+                type: GET_ALL_CLASSES,
                 payload: resultado.data.classes
             })
         } catch(error) {
@@ -59,11 +75,13 @@ const ClassState = props => {
     return (
         <classContext.Provider value={{
             classes: state.classes,
+            allClasses: state.allClasses,
             errorForm: state.errorForm,
 
             checkForm,
             getClass,
-            createClass
+            createClass,
+            getAllClasses
         }}>
             {props.children}
         </classContext.Provider>

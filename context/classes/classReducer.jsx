@@ -1,6 +1,7 @@
 import {  
     CHECK_CLASS,
     CREATE_CLASS,
+    GET_ALL_CLASSES,
     GET_CLASS
 } from '../../types'
 
@@ -16,6 +17,12 @@ const classReducer = (state, action) => {
             return{
                 ...state,
                 errorForm: true
+            }
+
+        case GET_ALL_CLASSES:
+            return{
+                ...state,
+                allClasses: action.payload
             }
         
         case CREATE_CLASS:

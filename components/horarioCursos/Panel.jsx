@@ -33,7 +33,7 @@ const Panel = ({state}) => {
             if(activeSchedule[0].data.length > 0){
                 for(let i in activeSchedule[0].data) {
                     const height = activeSchedule[0].data[i].y.min_fin - activeSchedule[0].data[i].y.min_inicio;
-                    table.current.childNodes[1].childNodes[activeSchedule[0].data[i].y.min_inicio].childNodes[activeSchedule[0].data[i].x].innerHTML = `<div className="tdata tdata-h-${height} ${activeSchedule[0].data[i].color}"><div><p>${activeSchedule[0].data[i].asignatura.name}</p><p>${activeSchedule[0].data[i].teacher.name} ${activeSchedule[0].data[i].teacher.lastname}</p></div></div>`     
+                    table.current.childNodes[1].childNodes[activeSchedule[0].data[i].y.min_inicio].childNodes[activeSchedule[0].data[i].x].innerHTML = `<div class="tdata tdata-h-${height} ${activeSchedule[0].data[i].color}"><div><p>${activeSchedule[0].data[i].asignatura.name}</p><p>${activeSchedule[0].data[i].teacher.name} ${activeSchedule[0].data[i].teacher.lastname}</p></div></div>`     
                 }
             } else {
                 for (let i in inicio) {

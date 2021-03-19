@@ -41,7 +41,9 @@ const CourseForm = () => {
     //state formulario
     const [localForm, setLocalForm] = useState({
         modality: 0,
-        id_parallel: {}
+        id_parallel: {},
+        courseName: '',
+        parallelName: ''
     });
 
     
@@ -59,15 +61,24 @@ const CourseForm = () => {
 
     //SELECCIONAR CURSO PARA OBTENER PARALELOS
     const handleChangeCourse = e => {
+        let index = e.nativeEvent.target.selectedIndex; //Para obtener el texto de la opción marcada
+
         setCourse({
             [e.target.name]: e.target.value
+        })
+        setLocalForm({
+            ...localForm,
+            'courseName': e.nativeEvent.target[index].text,
         })
     }
 
     //Leer valores del form
     const handleChange = e => {
+        let index = e.nativeEvent.target.selectedIndex; //Para obtener el texto de la opción marcada
+
         setLocalForm({
             ...localForm,
+            'parallelName': e.nativeEvent.target[index].text,
             [e.target.name]: e.target.value
         })
     }
@@ -84,7 +95,9 @@ const CourseForm = () => {
         //Reiniciar form
         setLocalForm({
             ...localForm,
-            id_parallel: {}
+            id_parallel: {},
+            courseName: '',
+            parallelName: ''
         })
 
         id_parallel.current.value = "Seleccione";

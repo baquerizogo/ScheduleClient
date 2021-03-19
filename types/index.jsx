@@ -26,6 +26,7 @@ export const GET_CLASS = 'GET_CLASS';
 export const CREATE_CLASS = 'CREATE_CLASS';
 export const CHECK_CLASS = 'CHECK_CLASS';
 export const ERROR_CLASS = 'ERROR_CLASS';
+export const GET_ALL_CLASSES = 'GET_ALL_CLASSES';
 
 //Para Horarios de clases
 export const SET_FORM = 'SET_FORM';
@@ -35,3 +36,7 @@ export const ERROR_SCHEDULE = 'ERROR_SCHEDULE';
 export const CREATE_SCHEDULE = 'CREATE_SCHEDULE';
 export const GET_SCHEDULE = 'GET_SCHEDULE';
 export const GET_SCHEDULE_BY_PARALLEL = 'GET_SCHEDULE_BY_PARALLEL';
+
+
+//Para reportes
+export const GET_GROUP_REPORT = 'GET_GROUP_REPORT';

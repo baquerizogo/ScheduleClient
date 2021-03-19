@@ -13,7 +13,7 @@ const ScheduleForm = () => {
     const schoolyearsContext = useContext(schoolyearContext);
 
     const { getClass, classes } = classesContext;
-    const { setData, createSchedule, clearData, inicio, fin, id_parallel, newForm, msg, data, modality } = schedulesContext;
+    const { setData, createSchedule, clearData, inicio, fin, id_parallel, newForm, data, modality, courseName, parallelName } = schedulesContext;
     const { getTeacher, teachers } = teachersContext;
     const { schoolyear } = schoolyearsContext; 
 
@@ -113,9 +113,12 @@ const ScheduleForm = () => {
             data,
             modality,
             id_parallel,
-            id_schoolyear: schoolyear[0]._id
+            id_schoolyear: schoolyear[0]._id,
+            courseName,
+            parallelName
         }
 
+        console.log(object);
         //Enviar datos a la API
         createSchedule(object);
         clear();
@@ -244,11 +247,6 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-3">
                             <button type="button" className="btn btn-success" onClick={saveSchedule}>Guardar</button>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="offset-2 ">
-                            { msg ? <span className="badge badge-pill badge-light-danger mt-1">{msg}</span> : null }
                         </div>
                     </div>
                 </div>
