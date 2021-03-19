@@ -55,7 +55,7 @@ const GroupReport = () => {
             ...data,
             labels: groupReport.names,
             datasets: [{
-                label: 'Cantidad de minutos asignados',
+                label: 'Cantidad de horas asignadas',
                 data: groupReport.data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.5)',

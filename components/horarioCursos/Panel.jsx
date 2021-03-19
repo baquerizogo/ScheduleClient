@@ -53,7 +53,7 @@ const Panel = ({state}) => {
             <div className="card-body">
                 <div className="row">
                     <div className="col-3 offset-md-9">
-                        <button className="btn btn-primary" onClick={generateImage}>Get PDF using image</button>
+                        <button className="btn btn-primary" onClick={generateImage}>Exportar como PDF</button>
                     </div>
                 </div>
                 <div className="row" ref={exportArea}>

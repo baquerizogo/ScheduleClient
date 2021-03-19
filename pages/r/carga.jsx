@@ -1,10 +1,12 @@
 //Components
 import ContentHeader from '../../components/layout/ContentHeader'
 
+import Statistics from '../../components/cargaHoraria/Statistics';
 import GroupReport from '../../components/cargaHoraria/GroupReport';
+import IndividualReport from '../../components/cargaHoraria/IndividualReport';
 
 import { Doughnut } from 'react-chartjs-2'
-import { Settings, User } from 'react-feather';
+import { User } from 'react-feather';
 
 const carga = () => {
 
@@ -31,9 +33,16 @@ const carga = () => {
             <div className="content-body">
                 <section id="basic-horizontal-layouts">
                     <div className="row">
+                        <Statistics/>
+                    </div>
+                    <div className="row">
                         <div className="col-6">
                             <GroupReport/>
                         </div>
+                        <div className="col-6">
+                            <IndividualReport/>
+                        </div>
+                        {/*
                         <div className="col-6">
                             <div class="card">
                                 <div class="card-header">
@@ -78,7 +87,7 @@ const carga = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                 </section>
             </div>
