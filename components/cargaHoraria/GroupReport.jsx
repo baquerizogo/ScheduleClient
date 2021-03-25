@@ -79,15 +79,15 @@ const GroupReport = () => {
     },[groupReport])
 
     useEffect(() => {
-            getGroupReport({
-                id_schoolyear: schoolyear[0]._id,
-                option: localForm.option,
-                id: localForm.id
-            })
+        getGroupReport({
+            id_schoolyear: schoolyear[0]._id,
+            option: localForm.option,
+            id: localForm.id
+        })
     }, [localForm])
 
     const handleChange = e => {
-        let index = e.nativeEvent.target.selectedIndex; //Para obtener el texto de la opción marcada
+        let index = e.nativeEvent.target.selectedIndex;
 
         setLocalForm({
             [e.target.name]: e.target.value,
@@ -116,7 +116,7 @@ const GroupReport = () => {
                             {
                                 allClasses 
                                 ? allClasses.map(xclass => (
-                                    <option value="Asignatura" data-id={xclass._id}>{xclass.name}</option>
+                                    <option key={xclass._id} value="Asignatura" data-id={xclass._id}>{xclass.name}</option>
                                 ))
                                 : null
                             }

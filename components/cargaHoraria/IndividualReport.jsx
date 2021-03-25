@@ -7,384 +7,83 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import reportContext from '../../context/reports/reportContext'
-import classContext from '../../context/classes/classContext'
+import teacherContext from '../../context/teachers/teacherContext'
+import courseContext from '../../context/courses/courseContext'
+import parallelContext from '../../context/parallels/parallelContext'
 
 const IndividualReport = () => {
     const schoolyearsContext = useContext(schoolyearContext);
     const reportsContext = useContext(reportContext);
-    const classesContext = useContext(classContext);
-    const { schoolyear } = schoolyearsContext; // Datos Context
-    const { getGroupReport , groupReport } = reportsContext; // Datos Context
-    const { allClasses , getAllClasses } = classesContext; // Datos Context
+    const teachersContext = useContext(teacherContext);
+    const coursesContext = useContext(courseContext);
+    const parallelsContext = useContext(parallelContext);
+    
+    const { schoolyear } = schoolyearsContext;
+    const { getTeacher, teachers } = teachersContext;
+    const { getCourse, courses } = coursesContext;
+    const { getParallel, parallels } = parallelsContext;
+    const { getIndividualReport , individualReport } = reportsContext; // Datos Context
 
-    const [data, setData] = useState({
-        series: [
-            {
-                name: "Sociales",
-                data: [44, 55, 41, 67, 22],
-            },
-            {
-                name: "Ciencias",
-                data: [13, 23, 20, 8, 13],
-            },
-            {
-                name: "Matemáticas",
-                data: [11, 17, 15, 15, 21],
-            },
-            {
-                name: "Física",
-                data: [21, 7, 25, 13, 22],
-            },
-        ],
-        options: {
-            chart: {
-                type: "bar",
-                height: 350,
-                stacked: true,
-                toolbar: {
-                    show: true,
-                },
-                zoom: {
-                    enabled: true,
-                },
-            },
-            responsive: [
-                {
-                    breakpoint: 480,
-                    options: {
-                        legend: {
-                            position: "bottom",
-                            offsetX: -10,
-                            offsetY: 0,
-                        },
-                    },
-                },
-            ],
-            plotOptions: {
-                bar: {
-                    borderRadius: 0,
-                    horizontal: false,
-                },
-            },
-            xaxis: {
-                type: "text",
-                categories: [
-                    "Lunes",
-                    "Martes",
-                    "Miercoles",
-                    "Jueves",
-                    "Viernes"
-                ],
-            },
-            legend: {
-                position: "right",
-                offsetY: 40,
-            },
-            fill: {
-                opacity: 0.8,
-            },
-        }
-    });
+    const [data, setData] = useState({});
 
     const [localForm, setLocalForm] = useState({
-        option: ""
+        option: "Semanal",
+        id: "",
+        id_teacher: "",
+        courses: []
     });
 
-    const [teacher, setTeacher] = useState({});
-
-    
-    /*
     useEffect(() => {
-        getGroupReport({id_schoolyear: schoolyear[0]._id, option: "Semanal"});
-        getAllClasses({id_schoolyear: schoolyear[0]._id})
+        getTeacher({id_schoolyear: schoolyear[0]._id})
+        getCourse({id_schoolyear: schoolyear[0]._id})
     }, [schoolyear])
-    
+ 
     useEffect(() => {
-        setData({
-            ...data,
-            labels: groupReport.names,
-            datasets: [{
-                label: 'Cantidad de minutos asignados',
-                data: groupReport.data,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        })
-    },[groupReport])
-    */
+        setTimeout(() => {
+            console.log("Esperando")
+            if(teachers.length > 0) {
+                getIndividualReport({id_schoolyear: schoolyear[0]._id, option: "Semanal", id_teacher: teachers[0]._id});
+            }
+        }, 2000);
+    }, [teachers])
 
     useEffect(() => {
-        if(localForm.option === "Semanal") {
-            setData({
-                series: [
-                    {
-                        name: "Ciencias Naturales",
-                        data: [0, 2.66, 0, 0, 1.33],
-                    },
-                    {
-                        name: "Matemáticas",
-                        data: [1.33, 0, 0, 0, 0],
+        //Si hay cursos obtenemos los paralelos para cada curso
+        if(courses) {
+            for(let i in courses) {
+                getParallel({id_course: courses[i]._id});
+            }
+        }
+    }, [courses])
+    
+    useEffect(() => {
+        if(parallels) {
+            // -- Creamos una copia local de los paralelos y 
+            // -- le añadimos el nombre del curso a cada paralelo
+            let localParallels = parallels;
+            for(let i in localParallels) {
+                for(let j in courses) {
+                    if( localParallels[i].id_course == courses[j]._id ) {
+                        localParallels[i].courseName = courses[j].name;
                     }
-                ],
-                options: {
-                    chart: {
-                        type: "bar",
-                        height: 350,
-                        stacked: true,
-                        toolbar: {
-                            show: true,
-                        },
-                        zoom: {
-                            enabled: true,
-                        },
-                    },
-                    responsive: [
-                        {
-                            breakpoint: 480,
-                            options: {
-                                legend: {
-                                    position: "bottom",
-                                    offsetX: -10,
-                                    offsetY: 0,
-                                },
-                            },
-                        },
-                    ],
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 0,
-                            horizontal: false,
-                        },
-                    },
-                    xaxis: {
-                        type: "text",
-                        categories: [
-                            "Lunes",
-                            "Martes",
-                            "Miercoles",
-                            "Jueves",
-                            "Viernes"
-                        ],
-                    },
-                    legend: {
-                        position: "right",
-                        offsetY: 40,
-                    },
-                    fill: {
-                        opacity: 0.8,
-                    },
                 }
+            }
+
+            //Enviamos los paralelos y cursos al state
+            setLocalForm({
+                ...localForm,
+                courses: [
+                    ...localForm.courses,
+                    ...localParallels
+                ]
             })
-        } else if (localForm.option === "Semanal-diurno") {
+        }
+    }, [parallels])
+
+    useEffect(() => {
+        if(individualReport){
             setData({
-                series: [
-                    {
-                        name: "Ciencias Naturales",
-                        data: [0, 1.33, 0, 0, 1.33],
-                    },
-                    {
-                        name: "Matemáticas",
-                        data: [0, 0, 0, 0, 0],
-                    }
-                ],
-                options: {
-                    chart: {
-                        type: "bar",
-                        height: 350,
-                        stacked: true,
-                        toolbar: {
-                            show: true,
-                        },
-                        zoom: {
-                            enabled: true,
-                        },
-                    },
-                    responsive: [
-                        {
-                            breakpoint: 480,
-                            options: {
-                                legend: {
-                                    position: "bottom",
-                                    offsetX: -10,
-                                    offsetY: 0,
-                                },
-                            },
-                        },
-                    ],
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 0,
-                            horizontal: false,
-                        },
-                    },
-                    xaxis: {
-                        type: "text",
-                        categories: [
-                            "Lunes",
-                            "Martes",
-                            "Miercoles",
-                            "Jueves",
-                            "Viernes"
-                        ],
-                    },
-                    legend: {
-                        position: "right",
-                        offsetY: 40,
-                    },
-                    fill: {
-                        opacity: 0.8,
-                    },
-                }
-            })
-        } else if (localForm.option === "Semanal-vespertino") {
-            setData({
-                series: [
-                    {
-                        name: "Ciencias Naturales",
-                        data: [0, 1.33, 0, 0, 0],
-                    },
-                    {
-                        name: "Matemáticas",
-                        data: [1.33, 0, 0, 0, 0],
-                    }
-                ],
-                options: {
-                    chart: {
-                        type: "bar",
-                        height: 350,
-                        stacked: true,
-                        toolbar: {
-                            show: true,
-                        },
-                        zoom: {
-                            enabled: true,
-                        },
-                    },
-                    responsive: [
-                        {
-                            breakpoint: 480,
-                            options: {
-                                legend: {
-                                    position: "bottom",
-                                    offsetX: -10,
-                                    offsetY: 0,
-                                },
-                            },
-                        },
-                    ],
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 0,
-                            horizontal: false,
-                        },
-                    },
-                    xaxis: {
-                        type: "text",
-                        categories: [
-                            "Lunes",
-                            "Martes",
-                            "Miercoles",
-                            "Jueves",
-                            "Viernes"
-                        ],
-                    },
-                    legend: {
-                        position: "right",
-                        offsetY: 40,
-                    },
-                    fill: {
-                        opacity: 0.8,
-                    },
-                }
-            })
-        } else if (localForm.option === "1") {
-            setData({
-                series: [
-                    {
-                        name: "Ciencias Naturales",
-                        data: [0, 1.33, 0, 0, 1.33],
-                    },
-                    {
-                        name: "Matemáticas",
-                        data: [0, 0, 0, 0, 0],
-                    }
-                ],
-                options: {
-                    chart: {
-                        type: "bar",
-                        height: 350,
-                        stacked: true,
-                        toolbar: {
-                            show: true,
-                        },
-                        zoom: {
-                            enabled: true,
-                        },
-                    },
-                    responsive: [
-                        {
-                            breakpoint: 480,
-                            options: {
-                                legend: {
-                                    position: "bottom",
-                                    offsetX: -10,
-                                    offsetY: 0,
-                                },
-                            },
-                        },
-                    ],
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 0,
-                            horizontal: false,
-                        },
-                    },
-                    xaxis: {
-                        type: "text",
-                        categories: [
-                            "Lunes",
-                            "Martes",
-                            "Miercoles",
-                            "Jueves",
-                            "Viernes"
-                        ],
-                    },
-                    legend: {
-                        position: "right",
-                        offsetY: 40,
-                    },
-                    fill: {
-                        opacity: 0.8,
-                    },
-                }
-            })
-        } else if (localForm.option === "2") {
-            setData({
-                series: [
-                    {
-                        name: "Ciencias Naturales",
-                        data: [0, 1.33, 0, 0, 0],
-                    },
-                    {
-                        name: "Matemáticas",
-                        data: [1.33, 0, 0, 0, 0],
-                    }
-                ],
+                series: individualReport,
                 options: {
                     chart: {
                         type: "bar",
@@ -435,22 +134,93 @@ const IndividualReport = () => {
                 }
             })
         }
-    },[localForm])
+    }, [individualReport])
+
+    useEffect(() => {
+        if(localForm.id_teacher != "") {
+            getIndividualReport({
+                id_schoolyear: schoolyear[0]._id,
+                option: localForm.option,
+                id_teacher: localForm.id_teacher
+            })
+        }
+
+        setData({
+            series: [
+                {
+                    name: "Sociales",
+                    data: [44, 55, 41, 67, 22],
+                },
+                {
+                    name: "Ciencias",
+                    data: [13, 23, 20, 8, 13],
+                },
+                {
+                    name: "Matemáticas",
+                    data: [11, 17, 15, 15, 21],
+                },
+                {
+                    name: "Física",
+                    data: [21, 7, 25, 13, 22],
+                },
+            ],
+            options: {
+                chart: {
+                    type: "bar",
+                    height: 350,
+                    stacked: true,
+                    toolbar: {
+                        show: true,
+                    },
+                    zoom: {
+                        enabled: true,
+                    },
+                },
+                responsive: [
+                    {
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: "bottom",
+                                offsetX: -10,
+                                offsetY: 0,
+                            },
+                        },
+                    },
+                ],
+                plotOptions: {
+                    bar: {
+                        borderRadius: 0,
+                        horizontal: false,
+                    },
+                },
+                xaxis: {
+                    type: "text",
+                    categories: [
+                        "Lunes",
+                        "Martes",
+                        "Miercoles",
+                        "Jueves",
+                        "Viernes"
+                    ],
+                },
+                legend: {
+                    position: "right",
+                    offsetY: 40,
+                },
+                fill: {
+                    opacity: 0.8,
+                },
+            }
+        })
+    }, [localForm])
 
     const handleChange = e => {
         setLocalForm({
+            ...localForm,
             [e.target.name]: e.target.value,
         })
     } 
-
-    const handleChangeTeacher = e => {
-        setTeacher({
-            [e.target.name]: e.target.value,
-        })
-        setLocalForm({
-            "option": "Semanal",
-        })
-    }
 
     return (  
         <div className="card">
@@ -462,12 +232,27 @@ const IndividualReport = () => {
                     <span className="mr-1"><Settings/></span>
                     <select className="form-control " name="option" onChange={handleChange}>
                         <option value="Semanal">Semanal</option>
-                        <option value="Semanal-diurno">Semanal Diurno</option>
-                        <option value="Semanal-vespertino">Semanal Vespertino</option>
+                        <option value="Diurno">Semanal Diurno</option>
+                        <option value="Vespertino">Semanal Vespertino</option>
 
                         <optgroup label="Curso">
-                            <option value="1">Sexto paralelo A</option>
-                            <option value="2">Sexto paralelo B</option>
+                            {
+                                localForm.courses ?
+                                    localForm.courses.map((course, index) => {
+                                        for(let i in teachers) {
+                                            if(teachers[i]._id == localForm.id_teacher) {
+                                                for(let j in teachers[i].classes) {
+                                                    for(let k in course.classes) {
+                                                        if(teachers[i].classes[j].id_class === course.classes[k].id_class) {
+                                                            return (<option key={index} value="1">{course.courseName} {course.name}</option>)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }) 
+                                : null
+                            }
                         </optgroup>
                     </select>
                 </div>
@@ -486,13 +271,14 @@ const IndividualReport = () => {
             <div className="row">
                 <div className="col-5 ml-3 mb-3 offset-4">
                     <label htmlFor="option">Docente:</label>
-                    <select className="form-control " name="teacher" onChange={handleChangeTeacher}>
-                        <option value="1">Seleccionar</option>
-                        <option value="2">José Baquerizo</option>
-                        <option value="3">Jesse Gómez</option>
-                        <option value="4">Karina</option>
-                        <option value="5">Brenda Panchana</option>
-
+                    <select className="form-control " name="id_teacher" onChange={handleChange}>
+                        {
+                            teachers ?
+                                teachers.map(teacher => (
+                                    <option key={teacher._id} value={teacher._id}>{teacher.name} {teacher.lastname}</option>
+                                )) 
+                            : null
+                        }
                     </select>
                 </div>
             </div>
