@@ -5,7 +5,8 @@ import {
     GET_SCHEDULE,
     GET_SCHEDULE_BY_PARALLEL,
     SET_DATA, 
-    SET_FORM
+    SET_FORM,
+    CHECK_SCHEDULE
 } from '../../types'
 
 const scheduleReducer = (state, action) => {
@@ -176,14 +177,16 @@ const scheduleReducer = (state, action) => {
                     ...state.data,
                     action.payload
                 ],
-                msg: null
+                msg: null,
+                errorForm: false
             }
 
         case CREATE_SCHEDULE:
             return{
                 ...state,
                 schedules: [...state.schedules, action.payload],
-                msg: null
+                msg: null,
+                errorForm: false
             }
 
         case CLEAR_DATA:
@@ -198,6 +201,12 @@ const scheduleReducer = (state, action) => {
             return {
                 ...state,
                 msg: action.payload
+            }
+
+        case CHECK_SCHEDULE:
+            return{
+                ...state,
+                errorForm: true
             }
 
         default:

@@ -26,7 +26,7 @@ const NewSchoolyear = () => {
             <div className="col-2"></div>
             <div className="col-7 input-group p-0">
                 <select className="form-control" onChange={handleChange}>
-                    <option>Seleccione</option>
+                    <option disabled>Seleccione</option>
                     {
                         schoolyears 
                         ?

@@ -13,7 +13,8 @@ import {
     GET_SCHEDULE,
     GET_SCHEDULE_BY_PARALLEL,
     SET_DATA, 
-    SET_FORM 
+    SET_FORM,
+    CHECK_SCHEDULE
 } from '../../types'
 
 const ScheduleState = props => {
@@ -25,6 +26,7 @@ const ScheduleState = props => {
         data: [],                   // Asignaturas colocadas en el hora rio (Staging)
         newForm: false,             // Switch para resetear formularios cuando se creen horarios nuevos
         msg: null,                  // Mensaje que se muestra en caso de advertencias
+        errorForm: false,
         inicio: [
             {name: "8:00", value: 0},
             {name: "8:20", value: 1},
@@ -201,6 +203,12 @@ const ScheduleState = props => {
         return ans;
     }
 
+    const checkForm = () => {
+        dispatch({
+            type: CHECK_SCHEDULE
+        })
+    }
+
     return (
         <scheduleContext.Provider value={{
             modality: state.modality,
@@ -214,13 +222,15 @@ const ScheduleState = props => {
             activeSchedule: state.activeSchedule,
             courseName: state.courseName,
             parallelName: state.parallelName,
+            errorForm: state.errorForm,
             
             getScheduleByParallel,
             getSchedule,
             createSchedule,
             setForm,
             setData,
-            clearData
+            clearData,
+            checkForm
         }}>
             {props.children}
         </scheduleContext.Provider>

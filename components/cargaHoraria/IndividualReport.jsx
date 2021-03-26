@@ -1,15 +1,30 @@
 import { useContext, useEffect, useState } from 'react';
+import { Bar } from 'react-chartjs-2'
 import { Settings } from 'react-feather';
-
-
-import dynamic from 'next/dynamic';
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import reportContext from '../../context/reports/reportContext'
 import teacherContext from '../../context/teachers/teacherContext'
 import courseContext from '../../context/courses/courseContext'
 import parallelContext from '../../context/parallels/parallelContext'
+
+const options = {
+scales: {
+    yAxes: [
+    {
+        stacked: true,
+        ticks: {
+        beginAtZero: true,
+        },
+    },
+    ],
+    xAxes: [
+    {
+        stacked: true,
+    },
+    ],
+},
+}
 
 const IndividualReport = () => {
     const schoolyearsContext = useContext(schoolyearContext);
@@ -24,7 +39,26 @@ const IndividualReport = () => {
     const { getParallel, parallels } = parallelsContext;
     const { getIndividualReport , individualReport } = reportsContext; // Datos Context
 
-    const [data, setData] = useState({});
+    const [data, setData] = useState({
+        labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"],
+        datasets: [
+            {
+                label: "# of Red Votes",
+                data: [12, 19, 3, 5, 2],
+                backgroundColor: "rgb(255, 99, 132)",
+            },
+            {
+                label: "# of Blue Votes",
+                data: [2, 3, 20, 5, 1],
+                backgroundColor: "rgb(54, 162, 235)",
+            },
+            {
+                label: "# of Green Votes",
+                data: [3, 10, 13, 15, 22],
+                backgroundColor: "rgb(75, 192, 192)",
+            },
+        ],
+    });
 
     const [localForm, setLocalForm] = useState({
         option: "Semanal",
@@ -39,12 +73,13 @@ const IndividualReport = () => {
     }, [schoolyear])
  
     useEffect(() => {
-        setTimeout(() => {
-            console.log("Esperando")
-            if(teachers.length > 0) {
-                getIndividualReport({id_schoolyear: schoolyear[0]._id, option: "Semanal", id_teacher: teachers[0]._id});
-            }
-        }, 2000);
+        if(teachers.length > 0) {
+            getIndividualReport({id_schoolyear: schoolyear[0]._id, option: "Semanal", id_teacher: teachers[0]._id});
+            setLocalForm({
+                ...localForm,
+                id_teacher: teachers[0]._id
+            })
+        }
     }, [teachers])
 
     useEffect(() => {
@@ -79,59 +114,12 @@ const IndividualReport = () => {
             })
         }
     }, [parallels])
-
+    
     useEffect(() => {
         if(individualReport){
             setData({
-                series: individualReport,
-                options: {
-                    chart: {
-                        type: "bar",
-                        height: 350,
-                        stacked: true,
-                        toolbar: {
-                            show: true,
-                        },
-                        zoom: {
-                            enabled: true,
-                        },
-                    },
-                    responsive: [
-                        {
-                            breakpoint: 480,
-                            options: {
-                                legend: {
-                                    position: "bottom",
-                                    offsetX: -10,
-                                    offsetY: 0,
-                                },
-                            },
-                        },
-                    ],
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 0,
-                            horizontal: false,
-                        },
-                    },
-                    xaxis: {
-                        type: "text",
-                        categories: [
-                            "Lunes",
-                            "Martes",
-                            "Miercoles",
-                            "Jueves",
-                            "Viernes"
-                        ],
-                    },
-                    legend: {
-                        position: "right",
-                        offsetY: 40,
-                    },
-                    fill: {
-                        opacity: 0.8,
-                    },
-                }
+                ...data,
+                datasets: individualReport
             })
         }
     }, [individualReport])
@@ -141,84 +129,18 @@ const IndividualReport = () => {
             getIndividualReport({
                 id_schoolyear: schoolyear[0]._id,
                 option: localForm.option,
-                id_teacher: localForm.id_teacher
+                id_teacher: localForm.id_teacher,
+                id: localForm.id ? localForm.id : null
             })
         }
-
-        setData({
-            series: [
-                {
-                    name: "Sociales",
-                    data: [44, 55, 41, 67, 22],
-                },
-                {
-                    name: "Ciencias",
-                    data: [13, 23, 20, 8, 13],
-                },
-                {
-                    name: "Matemáticas",
-                    data: [11, 17, 15, 15, 21],
-                },
-                {
-                    name: "Física",
-                    data: [21, 7, 25, 13, 22],
-                },
-            ],
-            options: {
-                chart: {
-                    type: "bar",
-                    height: 350,
-                    stacked: true,
-                    toolbar: {
-                        show: true,
-                    },
-                    zoom: {
-                        enabled: true,
-                    },
-                },
-                responsive: [
-                    {
-                        breakpoint: 480,
-                        options: {
-                            legend: {
-                                position: "bottom",
-                                offsetX: -10,
-                                offsetY: 0,
-                            },
-                        },
-                    },
-                ],
-                plotOptions: {
-                    bar: {
-                        borderRadius: 0,
-                        horizontal: false,
-                    },
-                },
-                xaxis: {
-                    type: "text",
-                    categories: [
-                        "Lunes",
-                        "Martes",
-                        "Miercoles",
-                        "Jueves",
-                        "Viernes"
-                    ],
-                },
-                legend: {
-                    position: "right",
-                    offsetY: 40,
-                },
-                fill: {
-                    opacity: 0.8,
-                },
-            }
-        })
     }, [localForm])
 
     const handleChange = e => {
+        let index = e.nativeEvent.target.selectedIndex;
         setLocalForm({
             ...localForm,
             [e.target.name]: e.target.value,
+            "id": e.nativeEvent.target[index].getAttribute("data-id")
         })
     } 
 
@@ -244,7 +166,7 @@ const IndividualReport = () => {
                                                 for(let j in teachers[i].classes) {
                                                     for(let k in course.classes) {
                                                         if(teachers[i].classes[j].id_class === course.classes[k].id_class) {
-                                                            return (<option key={index} value="1">{course.courseName} {course.name}</option>)
+                                                            return (<option key={index} value="Curso" data-id={course._id}>{course.courseName} {course.name}</option>)
                                                         }
                                                     }
                                                 }
@@ -258,13 +180,9 @@ const IndividualReport = () => {
                 </div>
             </div>
             <div className="card-body">
-            <div className="row">
-                <div className="col-12">
-                    <Chart 
-                        options={data.options} 
-                        series={data.series} 
-                        type="bar" 
-                        height={350} />
+                <div className="row">
+                    <div className="col-12">
+                        <Bar data={data} options={options} />
                     </div>
                 </div>
             </div>

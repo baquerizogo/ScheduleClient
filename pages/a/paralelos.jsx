@@ -2,10 +2,11 @@
 import ContentHeader from '../../components/layout/ContentHeader'
 import Form from '../../components/paralelos/Form'
 import Table from '../../components/paralelos/Table'
+import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear'
 
 const Paralelos = () => {
     return (
-        <>      
+        <RedirectSchoolyear>      
             <ContentHeader root="Home" section="Administración" path="Paralelos"/>
             <div className="content-body">
                 <section id="basic-horizontal-layouts">
@@ -19,7 +20,7 @@ const Paralelos = () => {
                     </div>
                 </section>
             </div>
-        </>
+        </RedirectSchoolyear>
     );
 }
  

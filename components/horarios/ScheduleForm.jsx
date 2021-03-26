@@ -13,7 +13,7 @@ const ScheduleForm = () => {
     const schoolyearsContext = useContext(schoolyearContext);
 
     const { getClass, classes } = classesContext;
-    const { setData, createSchedule, clearData, inicio, fin, id_parallel, newForm, data, modality, courseName, parallelName } = schedulesContext;
+    const { checkForm, setData, createSchedule, clearData, inicio, fin, id_parallel, newForm, data, modality, courseName, parallelName, errorForm } = schedulesContext;
     const { getTeacher, teachers } = teachersContext;
     const { schoolyear } = schoolyearsContext; 
 
@@ -100,6 +100,11 @@ const ScheduleForm = () => {
 
     const onSubmitForm = e => {
         e.preventDefault();
+        //Validar
+        if(!element.asignatura || !element.teacher || !element.x || !element.y || element.y.min_inicio === null || !element.y.min_fin === null) {
+            checkForm();
+            return;
+        }
         console.log("enviando");
         setData(element);
     }
@@ -136,7 +141,7 @@ const ScheduleForm = () => {
     }
 
     return (
-        <div className="card ">
+        <div className="card">
             <div className="card-header">
                 <h3>Crear horario</h3>
             </div>
@@ -148,8 +153,8 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect" onChange={handleChangeClass} ref={selectClass}>
-                                    <option>Seleccione</option>
+                                <select disabled={classes.length === 0 ? true : null} className="form-control" id="basicSelect" onChange={handleChangeClass} ref={selectClass}>
+                                    <option disabled>Seleccione</option>
                                     {
                                         classes
                                         ?
@@ -168,8 +173,8 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-10">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="teacher" onChange={handleChangeTeacher} ref={selectTeacher}>
-                                    <option>Seleccione</option>
+                                <select disabled={teachers.length === 0 ? true : null} className="form-control" id="teacher" onChange={handleChangeTeacher} ref={selectTeacher}>
+                                    <option disabled>Seleccione</option>
                                     {
                                         teachers
                                         ?
@@ -189,7 +194,7 @@ const ScheduleForm = () => {
                         <div className="col-10">
                             <div className="input-group input-group-merge">
                                 <select className="form-control" id="basicSelect1" onChange={handleChangeX} ref={selectDay}>
-                                    <option>Seleccione</option>
+                                    <option disabled>Seleccione</option>
                                     {
                                         dia
                                         ? 
@@ -208,8 +213,8 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-4">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect2" name="h_inicio" onChange={handleChangeYInicio} ref={selectHstart}>
-                                    <option>Seleccione</option>
+                                <select disabled={inicio.length === 0 ? true : null} className="form-control" id="basicSelect2" name="h_inicio" onChange={handleChangeYInicio} ref={selectHstart}>
+                                    <option disabled>Seleccione</option>
                                     {
                                         inicio
                                         ? 
@@ -226,14 +231,16 @@ const ScheduleForm = () => {
                         </div>
                         <div className="col-4">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="basicSelect3" name="h_fin" onChange={handleChangeYfin} ref={selectHend}>
-                                    <option>Seleccione</option>
+                                <select disabled={fin.length === 0 ? true : null} className="form-control" id="basicSelect3" name="h_fin" onChange={handleChangeYfin} ref={selectHend}>
+                                    <option disabled>Seleccione</option>
                                     {
                                         fin
                                         ? 
-                                            fin.map((f) => (
-                                                <option key={f.value} value={`{"h_fin":"${f.name}", "min_fin":${f.value}}`}>{f.name}</option>
-                                            ))
+                                            fin.map((f) => {
+                                                if( element.y && element.y.min_inicio < f.value && (element.y.min_inicio + 4) >= f.value ){
+                                                    return <option key={f.value} value={`{"h_fin":"${f.name}", "min_fin":${f.value}}`}>{f.name}</option>
+                                                }
+                                            })
                                         : null
                                     }
                                 </select>
@@ -246,7 +253,12 @@ const ScheduleForm = () => {
                             <button type="button" className="btn btn-primary" onClick={onSubmitForm}>Agregar</button>
                         </div>
                         <div className="col-3">
-                            <button type="button" className="btn btn-success" onClick={saveSchedule}>Guardar</button>
+                            <button type="button" className="btn btn-success" onClick={saveSchedule} disabled={data.length === 0 ? true : null } >Guardar</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-3 offset-sm-2">
+                            {errorForm == true ? <span className="badge badge-pill badge-light-danger mt-1">Todos los campos son obligatorios</span> : null }
                         </div>
                     </div>
                 </div>

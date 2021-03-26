@@ -7,6 +7,7 @@ import ContentHeader from '../../components/layout/ContentHeader'
 
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import scheduleContext from '../../context/schedules/scheduleContext'
+import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear'
 
 const horarioCurso = () => {
     const schoolyearsContext = useContext(schoolyearContext);
@@ -30,7 +31,7 @@ const horarioCurso = () => {
     }
 
     return (
-        <>      
+        <RedirectSchoolyear>      
             <ContentHeader root="Home" section="Reportes" path="Visualización de horarios"/>
             <div className="content-body">
                 <section id="basic-horizontal-layouts">
@@ -46,7 +47,7 @@ const horarioCurso = () => {
                     </div>
                 </section>
             </div>
-        </>
+        </RedirectSchoolyear>
     );
 }
  

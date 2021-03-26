@@ -295,7 +295,7 @@ const Form = () => {
                                     <div className="input-group input-group-merge">
                                         <div className="input-group-prepend">
                                             <select className="form-control" id="basicSelect" onChange={handleChangeCourse}>
-                                                <option>Seleccione</option>
+                                                <option disabled>Seleccione</option>
                                                 {
                                                     courses
                                                     ?

@@ -7,6 +7,7 @@ import IndividualReport from '../../components/cargaHoraria/IndividualReport';
 
 import { Doughnut } from 'react-chartjs-2'
 import { User } from 'react-feather';
+import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear';
 
 const carga = () => {
 
@@ -28,7 +29,7 @@ const carga = () => {
     };
 
     return (  
-        <>      
+        <RedirectSchoolyear>      
             <ContentHeader root="Home" section="Reportes" path="Carga horaria"/>
             <div className="content-body">
                 <section id="basic-horizontal-layouts">
@@ -91,7 +92,7 @@ const carga = () => {
                     </div>
                 </section>
             </div>
-        </>
+        </RedirectSchoolyear>
     );
 }
  
