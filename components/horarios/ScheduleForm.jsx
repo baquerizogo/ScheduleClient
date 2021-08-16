@@ -13,7 +13,7 @@ const ScheduleForm = () => {
     const schoolyearsContext = useContext(schoolyearContext);
 
     const { getClass, classes } = classesContext;
-    const { checkForm, setData, createSchedule, clearData, inicio, fin, id_parallel, newForm, data, modality, courseName, parallelName, errorForm } = schedulesContext;
+    const { checkForm, setData, createSchedule, clearData, inicio, fin, id_parallel, id_course, newForm, data, modality, courseName, parallelName, errorForm } = schedulesContext;
     const { getTeacher, teachers } = teachersContext;
     const { schoolyear } = schoolyearsContext; 
 
@@ -36,10 +36,10 @@ const ScheduleForm = () => {
     const selectHstart = useRef(null);
 
     useEffect(() => {
-        if(id_parallel) {
-            getClass({id_parallel})
+        if(id_course) {
+            getClass({id_course})
         }
-    }, [id_parallel])
+    }, [id_course])
 
     useEffect(()=>{
         clear();
@@ -143,7 +143,7 @@ const ScheduleForm = () => {
     return (
         <div className="card">
             <div className="card-header">
-                <h3>Crear horario</h3>
+                <h3>Añadir elementos</h3>
             </div>
             <div className="card-body">
                 <div className="form-group"> 

@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import classContext from '../../context/classes/classContext'
 import teacherContext from '../../context/teachers/teacherContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
-import parallelContext from '../../context/parallels/parallelContext'
 import courseContext from '../../context/courses/courseContext'
 
 
@@ -13,14 +12,13 @@ const Table = () => {
     const classesContext = useContext(classContext);
     const schoolyearsContext = useContext(schoolyearContext);
     const teachersContext = useContext(teacherContext);
-    const parallelsContext = useContext(parallelContext);
 
     const { getTeacher, teachers } = teachersContext;   
-    const { getParallel, parallels } = parallelsContext;
     const { getClass, classes} = classesContext; 
     const { getCourse, courses } = coursesContext; 
     const { schoolyear } = schoolyearsContext; 
 
+    //Obtener profesores
     useEffect(() => {
         if(schoolyear != '') {
             getTeacher({
@@ -29,6 +27,7 @@ const Table = () => {
         }
     }, [schoolyear])
 
+    //Obtener cursos
     useEffect(() => {
         if(schoolyear != '') {
             getCourse({
@@ -43,11 +42,6 @@ const Table = () => {
         id_course: ""
     });
 
-    const [parallel, setParallel] = useState({
-        name: "",
-        id_parallel: ""
-    });
-
     const [teacher, setTeacher] = useState({
         name: "",
         id_teacher: ""
@@ -55,15 +49,9 @@ const Table = () => {
 
     useEffect(() => {
         if(course.id_course != ''){
-            getParallel(course);
+            getClass(course)
         }
-    }, [course])
-
-    useEffect(() => {
-        if(parallel.id_parallel != ''){
-            getClass(parallel)
-        }
-    },[parallel])
+    },[course])
 
     useEffect(() => {
         if(teacher.id_teacher != '')
@@ -87,14 +75,6 @@ const Table = () => {
         })
     }
 
-    const handleChangeParallel = e => {
-        const data = JSON.parse(e.target.value);
-        setParallel({
-            name: data.name,
-            id_parallel: data.id
-        })
-    }
-
     return ( 
         <div className="card">
             <div className="card-header">
@@ -112,20 +92,6 @@ const Table = () => {
                                     ?
                                         courses.map(course => (
                                             <option key={course._id} value={`{"id":"${course._id}", "name":"${course.name}"}`}>{course.name}</option>
-                                        ))
-                                    : null 
-                                }
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="SelectList1">Seleccione un paralelo:</label>
-                            <select className="form-control" id="SelectList1" onChange={handleChangeParallel}>
-                                <option value="">Seleccione</option>
-                                {
-                                    parallels
-                                    ?
-                                        parallels.map(parallel => (
-                                            <option key={parallel._id} value={`{"id":"${parallel._id}", "name":"${parallel.name}"}`}>{parallel.name}</option>
                                         ))
                                     : null 
                                 }
@@ -156,8 +122,7 @@ const Table = () => {
                         <tr>
                             <th>Nombre</th>
                             <th>Descripción</th>
-                            <th>N. Horas</th>
-                            <th>Horas Semanales</th>
+                            <th>N. Horas Semanales</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -171,8 +136,7 @@ const Table = () => {
                                             <span className="font-weight-bold">{xclass.name}</span>
                                         </td>
                                         <td>{xclass.description}</td>
-                                        <td>{xclass.n_hours}</td>
-                                        <td>{xclass.hours_week}</td>
+                                        <td className="text-center">{xclass.hours_week}</td>
                                         <td>
                                             <div className="dropdown">
                                                 <button type="button" className="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">

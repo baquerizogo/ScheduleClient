@@ -5,7 +5,6 @@ import chroma from "chroma-js"
 import classContext from '../../context/classes/classContext'
 import teacherContext from '../../context/teachers/teacherContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
-import parallelContext from '../../context/parallels/parallelContext'
 import courseContext from '../../context/courses/courseContext'
 
 import Select from 'react-select';
@@ -66,16 +65,14 @@ const Form = () => {
     const classesContext = useContext(classContext);
     const schoolyearsContext = useContext(schoolyearContext);
     const teachersContext = useContext(teacherContext);
-    const parallelsContext = useContext(parallelContext);
 
     const { getTeacher, teachers } = teachersContext;   
-    const { getParallel, parallels } = parallelsContext;
     const { checkForm, createClass, errorForm} = classesContext; 
     const { getCourse, courses } = coursesContext; 
     const { schoolyear } = schoolyearsContext; 
 
     let teacherOptions = [];
-    let parallelOptions = [];
+    let courseOptions = [];
 
     //OBTENER TODOS LOS PROFESORES Y CURSOS
     useEffect(() => {
@@ -107,55 +104,34 @@ const Form = () => {
         })
     }
 
-    //STATE DEL FORMULARIO
-    const [data, setData] = useState({
-        name: '',
-        description: '',
-        n_hours: 0,
-        hours_week: 0,
-        parallels: [],
-        teachers: [],
-        id_schoolyear: schoolyear[0]._id 
-    });
-
-    const { name, description, n_hours, hours_week } = data;
-
-    //STATE DEL CURSO (Necesario para obtener paralelos)
-    const [course, setCourse] = useState({
-        name: "",
-        id_course: ""
-    });
-
-    //OBTENER PARALELOS DEL CURSO SELECCIONADO
-    useEffect(() => {
-        if(course.id_course != ''){
-            getParallel(course);
-        }
-    }, [course])
-
-    //SELECCIONAR CURSO PARA OBTENER PARALELOS
-    const handleChangeCourse = e => {
-        const data = JSON.parse(e.target.value);
-        setCourse({
-            name: data.name,
-            id_course: data.id
-        })
-    }
-
-    //SI EXISTEN PARALELOS, AGREGAR A PARALLELOPTIONS
-    if(parallels) {
-        parallels.map(parallel => {
-            parallelOptions = [
-                ...parallelOptions,
+    //SI EXISTEN CURSOS, AGREGAR A COURSEOPTIONS
+    if(courses) {
+        courses.map(course => {
+            courseOptions = [
+                ...courseOptions,
                 {
-                    value: parallel._id,
-                    label: `${parallel.name}`,
+                    value: course._id,
+                    label: course.name,
                     color: "#00B8D9", 
                     isFixed: true
                 }
             ];
         })
     }
+
+    //STATE DEL FORMULARIO
+    const [data, setData] = useState({
+        name: '',
+        description: '',
+        n_hours: 0,
+        hours_week: 0,
+        courses: [],
+        teachers: [],
+        id_schoolyear: schoolyear[0]._id 
+    });
+
+    const { name, description, n_hours, hours_week } = data;
+
 
     const handleChangeTeacher = event => {
         let array = [];
@@ -171,17 +147,17 @@ const Form = () => {
         })
     }
 
-    const handleChangeParallels = event => {
+    const handleChangeCourses = event => {
         let array = [];
         for(let i in event) {
             array = [
                 ...array,
-                {id_parallel: event[i].value}
+                {id_course: event[i].value}
             ]
         }
         setData({
             ...data,
-            parallels : array 
+            courses : array 
         })
     }
 
@@ -197,7 +173,7 @@ const Form = () => {
         e.preventDefault();
 
         //Validar
-        if(name.trim() === '' || n_hours <= 0 ||  hours_week <= 0 || data.parallels.length === 0) {
+        if(name.trim() === '' ||  hours_week <= 0) {
             checkForm();
             return;
         }
@@ -248,11 +224,11 @@ const Form = () => {
                         <div className="col-4">
                             <div className="form-group row">
                                 <div className="col-sm-5 col-form-label">
-                                    <label htmlFor="n_hours">Numero de horas:</label>
+                                    <label htmlFor="hours_week">Horas semanales:</label>
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="input-group input-group-merge">
-                                        <input type="number" id="n_hours" className="form-control" name="n_hours"  value={n_hours} onChange={handleChange} />
+                                        <input type="number" id="hours_week" className="form-control" name="hours_week" placeholder="10" value={hours_week} onChange={handleChange} />
                                     </div>
                                 </div>
                             </div>
@@ -274,59 +250,6 @@ const Form = () => {
                         <div className="col-1"></div>
                         <div className="col-4">
                             <div className="form-group row">
-                                <div className="col-sm-5 col-form-label">
-                                    <label htmlFor="hours_week">Horas semanales:</label>
-                                </div>
-                                <div className="col-sm-4">
-                                    <div className="input-group input-group-merge">
-                                        <input type="number" id="hours_week" className="form-control" name="hours_week" placeholder="10" value={hours_week} onChange={handleChange} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-6">
-                            <div className="form-group row">
-                                <div className="col-sm-2 col-form-label">
-                                    <label htmlFor="basicSelect">Curso:</label>
-                                </div>
-                                <div className="col-sm-4">
-                                    <div className="input-group input-group-merge">
-                                        <div className="input-group-prepend">
-                                            <select className="form-control" id="basicSelect" onChange={handleChangeCourse}>
-                                                <option disabled>Seleccione</option>
-                                                {
-                                                    courses
-                                                    ?
-                                                        courses.map(course => (
-                                                            <option key={course._id} value={`{"id":"${course._id}", "name":"${course.name}"}`}>{course.name}</option>
-                                                        ))
-                                                    : null 
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-2 col-form-label">
-                                    <label htmlFor="basicSelect1">Paralelo:</label>
-                                </div>
-                                <div className="col-sm-4">   
-                                    <Select
-                                        closeMenuOnSelect={false}
-                                        isMulti
-                                        options={parallelOptions}
-                                        styles={colourStyles}
-                                        className="React"
-                                        classNamePrefix="select"
-                                        onChange={handleChangeParallels}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-4">
-                            <div className="form-group row">
                                 <div className="col-sm-3 col-form-label">
                                     <label>Profesores:</label>
                                 </div>
@@ -340,6 +263,26 @@ const Form = () => {
                                         classNamePrefix="select"
                                         onChange={handleChangeTeacher}
                                     />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-6">
+                            <div className="form-group row">
+                                <div className="col-sm-2 col-form-label">
+                                    <label htmlFor="basicSelect">Curso:</label>
+                                </div>
+                                <div className="col-sm-10">
+                                    <Select
+                                        closeMenuOnSelect={false}
+                                        isMulti
+                                        options={courseOptions}
+                                        styles={colourStyles}
+                                        className="React"
+                                        classNamePrefix="select"
+                                        onChange={handleChangeCourses}
+                                    />    
                                 </div>
                             </div>
                         </div>

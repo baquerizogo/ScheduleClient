@@ -14,13 +14,15 @@ import {
     GET_SCHEDULE_BY_PARALLEL,
     SET_DATA, 
     SET_FORM,
-    CHECK_SCHEDULE
+    CHECK_SCHEDULE,
+    CREATE_AUTO
 } from '../../types'
 
 const ScheduleState = props => {
     const initialState = {
         modality: 0,                // 0 => Matutino // 1 => Vespertino
-        id_parallel: '',            // Id del paralelo y curso al que pertenece
+        id_course: '',              // Id del curso al que pertenece
+        id_parallel: '',            // Id del paralelo
         courseName: '',             // Nombre del curso seleccionado
         parallelName: '',           // Nombre del paralelo seleccionado
         data: [],                   // Asignaturas colocadas en el hora rio (Staging)
@@ -56,13 +58,28 @@ const ScheduleState = props => {
             {name: "12:00", value: 12}
         ],                          // Horas de fin
         schedules: [],              // Todos los horarios de clases en el periodo lectivo
-        activeSchedule: []          // Horario de clase seleccionado por paralelo
+        activeSchedule: [],         // Horario de clase seleccionado por paralelo
+    
+        auto: {msg: "", status: 0}
     }
 
     //Dispatch para ejecutar acciones
     const [state, dispatch] = useReducer(scheduleReducer, initialState)
 
     //funciones
+    const createAuto = async data => {
+        try{
+            const resultado = await clienteAxios.post('/api/schedule/alg', data);
+            console.log(resultado);
+            dispatch({
+                type: CREATE_AUTO,
+                payload: resultado.data
+            })
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     const getSchedule = async schoolyear => {
         try {
             const resultado = await clienteAxios.get('/api/schedule/all', {params: schoolyear});
@@ -212,6 +229,7 @@ const ScheduleState = props => {
     return (
         <scheduleContext.Provider value={{
             modality: state.modality,
+            id_course: state.id_course,
             id_parallel: state.id_parallel,
             data: state.data,
             newForm: state.newForm,
@@ -223,6 +241,7 @@ const ScheduleState = props => {
             courseName: state.courseName,
             parallelName: state.parallelName,
             errorForm: state.errorForm,
+            auto: state.auto,
             
             getScheduleByParallel,
             getSchedule,
@@ -230,7 +249,8 @@ const ScheduleState = props => {
             setForm,
             setData,
             clearData,
-            checkForm
+            checkForm,
+            createAuto,
         }}>
             {props.children}
         </scheduleContext.Provider>

@@ -41,6 +41,7 @@ const CourseForm = () => {
     //state formulario
     const [localForm, setLocalForm] = useState({
         modality: 0,
+        id_course: {},
         id_parallel: {},
         courseName: '',
         parallelName: ''
@@ -68,6 +69,7 @@ const CourseForm = () => {
         })
         setLocalForm({
             ...localForm,
+            [e.target.name]: e.target.value,
             'courseName': e.nativeEvent.target[index].text,
         })
     }
@@ -95,6 +97,7 @@ const CourseForm = () => {
         //Reiniciar form
         setLocalForm({
             ...localForm,
+            id_course: {},
             id_parallel: {},
             courseName: '',
             parallelName: ''
@@ -108,7 +111,7 @@ const CourseForm = () => {
     return (
         <div className="card">
             <div className="card-header">
-                <h3>Ajustes</h3>
+                <h3>Configuración</h3>
             </div>
             <div className="card-body">
                 <div className="form-group">

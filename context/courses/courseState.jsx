@@ -8,6 +8,7 @@ import clienteAxios from '../../config/axios'
 //Types
 import { 
     GET_COURSE,
+    GET_COURSE_INFO,
     CREATE_COURSE,
     CHECK_COURSE
 } from '../../types'
@@ -15,7 +16,8 @@ import {
 const CourseState = props => {
     const initialState = {
         courses: [],
-        errorForm: false
+        errorForm: false,
+        courseInfo: [],
     }
 
     //Dispatch para ejecutar acciones
@@ -29,6 +31,19 @@ const CourseState = props => {
             dispatch({
                 type: GET_COURSE,
                 payload: resultado.data.courses
+            })
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    const getCourseInfo = async schoolyear => {
+        try {
+            const resultado = await clienteAxios.get('/api/course/all', {params: schoolyear});
+            console.log(resultado);
+            dispatch({
+                type: GET_COURSE_INFO,
+                payload: resultado.data.ans
             })
         } catch(error) {
             console.log(error);
@@ -57,9 +72,11 @@ const CourseState = props => {
     return (
         <courseContext.Provider value={{
             courses: state.courses,
+            courseInfo: state.courseInfo,
             errorForm: state.errorForm,
 
             getCourse,
+            getCourseInfo,
             createCourse,
             checkForm
         }}>

@@ -84,3 +84,61 @@
 .s-orange {
     background-color: rgb(255, 180, 255);
 }
+
+
+/*---------------------- ACCORDION ------------------*/
+#main {
+    margin: 0px 0;
+  }
+  
+  #main #faq .card {
+    margin-bottom: 30px;
+    border: 0;
+  }
+  
+  #main #faq .card .card-header {
+    border: 0;
+    border-radius: 2px;
+    padding: 0;
+  }
+  
+  #main #faq .card .card-header .btn-header-link {
+    color: #fff;
+    display: block;
+    text-align: left;
+    background: #fafafa;
+    color: rgb(49, 49, 49);
+    padding: 20px;
+  }
+  
+  #main #faq .card .card-header .btn-header-link:after {
+    content: "\f107";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    float: right;
+    margin-left: 50px;
+  }
+  
+  #main #faq .card .card-header .btn-header-link.collapsed {
+    background: #ffffff;
+    color: rgb(61, 61, 61);
+  }
+  
+  #main #faq .card .card-header .btn-header-link.collapsed:after {
+    content: "\f106";
+  }
+  
+  #main #faq .card .collapsing {
+    background: #fafafa;
+    line-height: 30px;
+  }
+  
+  #main #faq .card .collapse {
+    border: 0;
+  }
+  
+  #main #faq .card .collapse.show {
+    background: #fafafa;
+    line-height: 30px;
+    color: rgb(61, 61, 61);
+  }

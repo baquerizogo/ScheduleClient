@@ -51,6 +51,9 @@ const MenuBar = () => {
                     <NavItem path="/g/horarios" text="Administrar horarios">
                         <Calendar/>
                     </NavItem>
+                    <NavItem path="/g/auto" text="Creación automática">
+                        <Calendar/>
+                    </NavItem>
                     <NavHeader text="Reportes"/>
                     <NavItem path="/r/carga" text="Cargas horarias">
                         <BarChart2/>

@@ -26,7 +26,7 @@ const ClassState = props => {
     //funciones para el CRUD
     const getClass = async object => {
         try {
-            //Puede ser un profesor o un paralelo
+            //Puede ser un profesor o un curso
             const resultado = await clienteAxios.get('/api/class', {params: object});
             console.log(resultado);
             dispatch({
@@ -40,7 +40,6 @@ const ClassState = props => {
 
     const getAllClasses = async id_schoolyear => {
         try {
-            //Puede ser un profesor o un paralelo
             const resultado = await clienteAxios.get('/api/class/all', {params: id_schoolyear});
             console.log(resultado);
             dispatch({

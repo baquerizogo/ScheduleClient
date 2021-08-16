@@ -6,7 +6,8 @@ import {
     GET_SCHEDULE_BY_PARALLEL,
     SET_DATA, 
     SET_FORM,
-    CHECK_SCHEDULE
+    CHECK_SCHEDULE,
+    CREATE_AUTO
 } from '../../types'
 
 const scheduleReducer = (state, action) => {
@@ -163,6 +164,7 @@ const scheduleReducer = (state, action) => {
             return {
                 ...state,
                 modality: action.payload.modality,
+                id_course: action.payload.id_course,
                 id_parallel: action.payload.id_parallel,
                 inicio: h_start,
                 fin: h_end,
@@ -207,6 +209,15 @@ const scheduleReducer = (state, action) => {
             return{
                 ...state,
                 errorForm: true
+            }
+
+        case CREATE_AUTO:
+            return{
+                ...state,
+                auto: {
+                    msg: action.payload.msg,
+                    status: action.payload.status
+                }
             }
 
         default:

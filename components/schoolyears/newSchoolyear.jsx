@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 //Components
@@ -12,9 +12,12 @@ const NewSchoolyear = () => {
     const schoolyearsContext = useContext(schoolyearContext);
     const { getSchoolyear, currentSchoolyear } = schoolyearsContext; //Funciones Context
     const { schoolyears } = schoolyearsContext; // Datos Context
+    
+    const select = useRef(null);
 
     useEffect(() => {
         getSchoolyear();
+        select.current.value = "Seleccione";
     }, [])
 
     const handleChange = (e) => {
@@ -25,7 +28,7 @@ const NewSchoolyear = () => {
         <div className="row mt-2 mb-1">
             <div className="col-2"></div>
             <div className="col-7 input-group p-0">
-                <select className="form-control" onChange={handleChange}>
+                <select className="form-control" onChange={handleChange} ref={select}>
                     <option disabled>Seleccione</option>
                     {
                         schoolyears 

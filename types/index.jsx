@@ -7,6 +7,7 @@ export const CURRENT_SCHOOLYEAR = 'CURRENT_SCHOOLYEAR';
 
 // Para cursos
 export const GET_COURSE = 'GET_COURSE';
+export const GET_COURSE_INFO = 'GET_COURSE_INFO';
 export const CREATE_COURSE = 'CREATE_COURSE';
 export const CHECK_COURSE = 'CHECK_COURSE';
 
@@ -34,6 +35,7 @@ export const SET_DATA = 'SET_DATA';
 export const CLEAR_DATA = 'CLEAR_DATA';
 export const ERROR_SCHEDULE = 'ERROR_SCHEDULE';
 export const CREATE_SCHEDULE = 'CREATE_SCHEDULE';
+export const CREATE_AUTO = 'CREATE_AUTO';
 export const GET_SCHEDULE = 'GET_SCHEDULE';
 export const GET_SCHEDULE_BY_PARALLEL = 'GET_SCHEDULE_BY_PARALLEL';
 export const CHECK_SCHEDULE = 'CHECK_SCHEDULE';

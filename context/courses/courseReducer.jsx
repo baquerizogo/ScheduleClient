@@ -1,5 +1,6 @@
 import { 
     CHECK_COURSE,
+    GET_COURSE_INFO,
     CREATE_COURSE, 
     GET_COURSE 
 } from '../../types'
@@ -11,6 +12,12 @@ const courseReducer = (state, action) => {
                 ...state,
                 courses: action.payload
             }
+
+        case GET_COURSE_INFO:
+        return{
+            ...state,
+            courseInfo: action.payload
+        }
             
         case CREATE_COURSE:
             return{
