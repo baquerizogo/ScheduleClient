@@ -4,10 +4,11 @@ import { jsPDF } from "jspdf";
 
 //Components
 import scheduleContext from '../../context/schedules/scheduleContext'
+import DeleteModal from './DeleteModal'
 
 const Panel = ({state}) => {
     const schedulesContext = useContext(scheduleContext);
-    const { activeSchedule, inicio, fin } = schedulesContext;
+    const { activeSchedule, clearData, inicio, fin } = schedulesContext;
 
     const table = useRef(null);
     const exportArea = useRef(null);
@@ -21,6 +22,10 @@ const Panel = ({state}) => {
         doc.addImage(image,'JPEG',15,5, 270, 200);
         doc.save();
     }
+
+    useEffect(() => {
+        clearData();
+    },[])
 
     useEffect(() => {
         if(activeSchedule.length > 0) {
@@ -48,50 +53,65 @@ const Panel = ({state}) => {
     }, [activeSchedule]);
 
 
-    return ( 
-        <div className="card">
-            <div className="card-body">
-                <div className="row">
-                    <div className="col-3 offset-md-9">
-                        <button className="btn btn-primary" onClick={generateImage}>Exportar como PDF</button>
+    return (
+        <div>
+            {
+                activeSchedule.length > 0 ?
+                
+                <div className="card">
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-2 offset-md-8">
+                                {activeSchedule.length > 0 ? 
+                                    <div>
+                                        <button className="btn btn-danger" data-toggle="modal" data-target={`#deleteModal0`}>Eliminar horario</button>
+                                        <DeleteModal index={0} data={activeSchedule[0]}/>
+                                    </div>
+                                : null }
+                            </div>
+                            <div className="col-2">
+                                <button className="btn btn-primary" onClick={generateImage}>Exportar como PDF</button>
+                            </div>
+                        </div>
+                        <div className="row" ref={exportArea}>
+                            <div className="col-12">
+                                <h4 className="card-title">Horario - {state ? `${state.curso} ${state.paralelo}`: null}</h4>
+                                <table className="table table-layout" ref={table}>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>LUNES</th>
+                                            <th>MARTES</th>
+                                            <th>MIERCOLES</th>
+                                            <th>JUEVES</th>
+                                            <th>VIERNES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            inicio 
+                                            ?
+                                                inicio.map((element, index) => (
+                                                    <tr key={index}>
+                                                        <td>{element.name} - {fin[index].name}</td>
+                                                        <td className="pos"></td>
+                                                        <td className="pos"></td>
+                                                        <td className="pos"></td>
+                                                        <td className="pos"></td>
+                                                        <td className="pos"></td>
+                                                    </tr>
+                                                )) 
+                                            : null
+                                        }
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="row" ref={exportArea}>
-                    <div className="col-12">
-                        <h4 className="card-title">Horario - {state ? `${state.curso} ${state.paralelo}`: null}</h4>
-                        <table className="table table-layout" ref={table}>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>LUNES</th>
-                                    <th>MARTES</th>
-                                    <th>MIERCOLES</th>
-                                    <th>JUEVES</th>
-                                    <th>VIERNES</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    inicio 
-                                    ?
-                                        inicio.map((element, index) => (
-                                            <tr key={index}>
-                                                <td>{element.name} - {fin[index].name}</td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                            </tr>
-                                        )) 
-                                    : null
-                                }
-                            </tbody>
-                            
-                        </table>
-                    </div>
-                </div>
-            </div>
+                : null
+            }
         </div>
     );
 }

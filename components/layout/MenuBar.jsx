@@ -48,7 +48,10 @@ const MenuBar = () => {
                         <Book/>
                     </NavItem>
                     <NavHeader text="Gestor de horarios"/>
-                    <NavItem path="/g/horarios" text="Administrar horarios">
+                    <NavItem path="/g/horarios" text="Crear horarios">
+                        <Calendar/>
+                    </NavItem>
+                    <NavItem path="/g/modhorarios" text="modificar horarios">
                         <Calendar/>
                     </NavItem>
                     <NavItem path="/g/auto" text="Creación automática">

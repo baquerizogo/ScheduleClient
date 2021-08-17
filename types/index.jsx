@@ -43,6 +43,8 @@ export const DELETE_CLASS = 'DELETE_CLASS';
 //Para Horarios de clases
 export const SET_FORM = 'SET_FORM';
 export const SET_DATA = 'SET_DATA';
+export const SET_MOD_DATA = 'SET_MOD_DATA';
+export const REMOVE_DATA = 'REMOVE_DATA';
 export const CLEAR_DATA = 'CLEAR_DATA';
 export const ERROR_SCHEDULE = 'ERROR_SCHEDULE';
 export const CREATE_SCHEDULE = 'CREATE_SCHEDULE';

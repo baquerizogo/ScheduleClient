@@ -15,7 +15,11 @@ import {
     SET_DATA, 
     SET_FORM,
     CHECK_SCHEDULE,
-    CREATE_AUTO
+    CREATE_AUTO,
+    UPDATE_SCHEDULE,
+    DELETE_SCHEDULE,
+    REMOVE_DATA,
+    SET_MOD_DATA
 } from '../../types'
 
 const ScheduleState = props => {
@@ -58,7 +62,7 @@ const ScheduleState = props => {
             {name: "12:00", value: 12}
         ],                          // Horas de fin
         schedules: [],              // Todos los horarios de clases en el periodo lectivo
-        activeSchedule: [],         // Horario de clase seleccionado por paralelo
+        activeSchedule: [],         // Horario de clase seleccionado por paralelo o profesor
     
         auto: {msg: "", status: 0}
     }
@@ -127,6 +131,13 @@ const ScheduleState = props => {
                 payload: ans.msg
             })   
         }   
+    }
+
+    const removeData = element => {
+        dispatch({
+            type: REMOVE_DATA,
+            payload: element
+        })  
     }
 
     const clearData = () => {
@@ -226,6 +237,38 @@ const ScheduleState = props => {
         })
     }
 
+    const updateSchedule = async (schedule, id_schedule) => {
+        try {
+            const resultado = await clienteAxios.put(`/api/schedule/${id_schedule}`, schedule)
+            console.log(resultado);
+            dispatch({
+                type: UPDATE_SCHEDULE,
+                payload: resultado.data.schedule
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteSchedule = async (schedule) => {
+        try {
+            await clienteAxios.delete(`/api/schedule/${schedule._id}`, {params: {schedule}});
+
+            dispatch({
+                type: DELETE_SCHEDULE,
+                payload: schedule
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const setModData = () => {
+        dispatch({
+            type: SET_MOD_DATA
+        })
+    }
+
     return (
         <scheduleContext.Provider value={{
             modality: state.modality,
@@ -251,6 +294,10 @@ const ScheduleState = props => {
             clearData,
             checkForm,
             createAuto,
+            updateSchedule,
+            deleteSchedule,
+            removeData,
+            setModData
         }}>
             {props.children}
         </scheduleContext.Provider>

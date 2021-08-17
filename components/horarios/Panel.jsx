@@ -3,39 +3,23 @@ import { useEffect, useRef, useContext } from "react";
 //Components
 import scheduleContext from '../../context/schedules/scheduleContext'
 
-
 const Panel = () => {
     const schedulesContext = useContext(scheduleContext);
 
-    const { data, inicio, fin } = schedulesContext;
+    const { data, clearData, removeData, inicio, fin } = schedulesContext;
 
     // Referencia
     const table = useRef(null);
 
-    
-    /*useEffect(() => {
-        setData([
-            {
-                x: 1,
-                y: {
-                    h_inicio: 0,
-                    h_fin: 0,
-                    min_inicio: 0,
-                    min_fin: 2
-                },
-                asignatura: {
-                    name: "Matemáticas"
-                },
-                color: "s-blue"
-            }
-        ])
-    }, [])*/
+    useEffect(()=>{
+        clearData();
+    },[])
 
     useEffect(() => {
         //                                         Accede a tr/hora [i]        Accede a td/Dia [j]
         //                      Accede a tbody ↴             ↓               ↙ 
         //console.log(table.current.childNodes[1].childNodes[0].childNodes[1]);
-        
+        if(false)
         if(data.length > 0){
             for(let i in data) {
                 const height = data[i].y.min_fin - data[i].y.min_inicio;
@@ -50,6 +34,9 @@ const Panel = () => {
         }
     }, [data]);
 
+    const handleRemove = e => {
+        removeData(e);
+    }
 
     return ( 
         <div className="card">
@@ -74,11 +61,110 @@ const Panel = () => {
                                         inicio.map((element, index) => (
                                             <tr key={index}>
                                                 <td>{element.name} - {fin[index].name}</td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
-                                                <td className="pos"></td>
+                                                <td className="pos">
+                                                    { 
+                                                        data.length > 0 ? data.map(e => {
+                                                            
+                                                            if(e.x == 1 && e.y.min_inicio == element.value) {
+                                                                const height = e.y.min_fin - e.y.min_inicio;
+                                                                return(
+                                                                    <div key={e.y.min_inicio} className={`tdata tdata-h-${height} ${e.color}`}>
+                                                                        <button type="button" className='btn btn-secondary-outline close-btn' onClick={()=>{handleRemove(e)}}>
+                                                                            <span aria-hidden="true"> &times; </span>
+                                                                        </button>
+                                                                        <div>
+                                                                            <p>{e.asignatura.name}</p>
+                                                                            <p>{e.teacher.name} {e.teacher.lastname}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        }) : null
+                                                    }
+                                                </td>
+                                                <td className="pos">
+                                                { 
+                                                        data.length > 0 ? data.map(e => {
+                                                            if(e.x == 2 && e.y.min_inicio == element.value) {
+                                                                const height = e.y.min_fin - e.y.min_inicio;
+                                                                return(
+                                                                    <div key={e.y.min_inicio} className={`tdata tdata-h-${height} ${e.color}`}>
+                                                                        <button type="button" className='btn btn-secondary-outline close-btn' onClick={()=>{handleRemove(e)}}>
+                                                                            <span aria-hidden="true"> &times; </span>
+                                                                        </button>
+                                                                        <div>
+                                                                            <p>{e.asignatura.name}</p>
+                                                                            <p>{e.teacher.name} {e.teacher.lastname}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        }) : null
+                                                    }
+                                                </td>
+                                                <td className="pos">
+                                                { 
+                                                        data.length > 0 ? data.map(e => {
+                                                            if(e.x == 3 && e.y.min_inicio == element.value) {
+                                                                const height = e.y.min_fin - e.y.min_inicio;
+                                                                return(
+                                                                    <div key={e.y.min_inicio} className={`tdata tdata-h-${height} ${e.color}`}>
+                                                                        <button type="button" className='btn btn-secondary-outline close-btn' onClick={()=>{handleRemove(e)}}>
+                                                                            <span aria-hidden="true"> &times; </span>
+                                                                        </button>
+                                                                        <div>
+                                                                            <p>{e.asignatura.name}</p>
+                                                                            <p>{e.teacher.name} {e.teacher.lastname}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        }) : null
+                                                    }
+                                                </td>
+                                                <td className="pos">
+                                                { 
+                                                        data.length > 0 ? data.map(e => {
+                                                            if(e.x == 4 && e.y.min_inicio == element.value) {
+                                                                const height = e.y.min_fin - e.y.min_inicio;
+                                                                return(
+                                                                    <div key={e.y.min_inicio} className={`tdata tdata-h-${height} ${e.color}`}>
+                                                                        <button type="button" className='btn btn-secondary-outline close-btn' onClick={()=>{handleRemove(e)}}>
+                                                                            <span aria-hidden="true"> &times; </span>
+                                                                        </button>
+                                                                        <button type="button" className='btn btn-secondary'>
+                                                                            <span aria-hidden="true"> &times; </span>
+                                                                        </button>
+                                                                        <div>
+                                                                            <p>{e.asignatura.name}</p>
+                                                                            <p>{e.teacher.name} {e.teacher.lastname}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        }) : null
+                                                    }
+                                                </td>
+                                                <td className="pos">
+                                                { 
+                                                        data.length > 0 ? data.map(e => {
+                                                            if(e.x == 5 && e.y.min_inicio == element.value) {
+                                                                const height = e.y.min_fin - e.y.min_inicio;
+                                                                return(
+                                                                    <div key={e.y.min_inicio} className={`tdata tdata-h-${height} ${e.color}`}>
+                                                                        <button type="button" className='btn btn-secondary-outline close-btn' onClick={()=>{handleRemove(e)}}>
+                                                                            <span aria-hidden="true"> &times; </span>
+                                                                        </button>
+                                                                        <div>
+                                                                            <p>{e.asignatura.name}</p>
+                                                                            <p>{e.teacher.name} {e.teacher.lastname}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        }) : null
+                                                    }
+                                                </td>
                                             </tr>
                                         )) 
                                     : null

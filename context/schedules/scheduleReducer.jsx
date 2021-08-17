@@ -7,7 +7,11 @@ import {
     SET_DATA, 
     SET_FORM,
     CHECK_SCHEDULE,
-    CREATE_AUTO
+    CREATE_AUTO,
+    UPDATE_SCHEDULE,
+    DELETE_SCHEDULE,
+    REMOVE_DATA,
+    SET_MOD_DATA
 } from '../../types'
 
 const scheduleReducer = (state, action) => {
@@ -182,6 +186,18 @@ const scheduleReducer = (state, action) => {
                 msg: null,
                 errorForm: false
             }
+        
+        case SET_MOD_DATA:
+            return {
+                ...state,
+                data: state.activeSchedule[0].data
+            }
+
+        case REMOVE_DATA:
+            return {
+                ...state,
+                data: state.data.filter(e => (e.x != action.payload.x || e.y.min_inicio != action.payload.y.min_inicio))
+            }
 
         case CREATE_SCHEDULE:
             return{
@@ -195,6 +211,7 @@ const scheduleReducer = (state, action) => {
             return {
                 ...state,
                 data: [],
+                activeSchedule: [],
                 newForm: action.payload,
                 msg: null
             }
@@ -218,6 +235,20 @@ const scheduleReducer = (state, action) => {
                     msg: action.payload.msg,
                     status: action.payload.status
                 }
+            }
+
+        case UPDATE_SCHEDULE:
+            return {
+                ...state,
+                schedules: state.schedules.map(schedule => schedule._id === action.payload._id? schedule = action.payload: schedule),
+                errorForm: false
+            }
+
+        case DELETE_SCHEDULE:
+            return {
+                ...state,
+                schedules: state.schedules.filter(schedule => schedule._id !== action.payload._id),
+                activeSchedule: []
             }
 
         default:
