@@ -1,7 +1,9 @@
 import { 
     CHECK_PARALLEL, 
     CREATE_PARALLEL, 
-    GET_PARALLEL
+    GET_PARALLEL,
+    UPDATE_PARALLEL,
+    DELETE_PARALLEL
 } from '../../types'
 
 const parallelReducer = (state, action) => {
@@ -24,6 +26,19 @@ const parallelReducer = (state, action) => {
             parallels: [...state.parallels, action.payload],
             errorForm: false
         }
+
+        case UPDATE_PARALLEL:
+            return {
+                ...state,
+                parallels: state.parallels.map(parallel => parallel._id === action.payload._id? parallel = action.payload: parallel),
+                errorForm: false
+            }
+
+        case DELETE_PARALLEL:
+            return {
+                ...state,
+                parallels: state.parallels.filter(parallel => parallel._id !== action.payload._id)
+            }
 
         default:
             return state;

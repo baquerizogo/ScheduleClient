@@ -2,7 +2,9 @@ import {
     CHECK_COURSE,
     GET_COURSE_INFO,
     CREATE_COURSE, 
-    GET_COURSE 
+    GET_COURSE,
+    UPDATE_COURSE,
+    DELETE_COURSE
 } from '../../types'
 
 const courseReducer = (state, action) => {
@@ -30,6 +32,19 @@ const courseReducer = (state, action) => {
             return{
                 ...state,
                 errorForm: true
+            }
+
+        case UPDATE_COURSE:
+            return {
+                ...state,
+                courses: state.courses.map(course => course._id === action.payload._id? course = action.payload: course),
+                errorForm: false
+            }
+
+        case DELETE_COURSE:
+            return {
+                ...state,
+                courses: state.courses.filter(course => course._id !== action.payload._id)
             }
 
         default:

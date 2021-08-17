@@ -3,7 +3,9 @@ import {
     CREATE_SCHOOLYEAR,
     CURRENT_SCHOOLYEAR,
     ERROR_SCHOOLYEAR,
-    GET_SCHOOLYEAR
+    GET_SCHOOLYEAR,
+    UPDATE_SCHOOLYEAR,
+    DELETE_SCHOOLYEAR
 } from '../../types'
 
 const schoolyearReducer = (state, action) => {
@@ -37,6 +39,19 @@ const schoolyearReducer = (state, action) => {
             return {
                 ...state,
                 errorForm: true
+            }
+
+        case UPDATE_SCHOOLYEAR:
+            return {
+                ...state,
+                schoolyears: state.schoolyears.map(schoolyear => schoolyear._id === action.payload._id? schoolyear = action.payload: schoolyear),
+                errorForm: false
+            }
+
+        case DELETE_SCHOOLYEAR:
+            return {
+                ...state,
+                schoolyears: state.schoolyears.filter(schoolyear => schoolyear._id !== action.payload._id)
             }
 
         default:

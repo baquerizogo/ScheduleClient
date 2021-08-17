@@ -1,9 +1,12 @@
 import { useContext } from 'react';
+import Link from 'next/link'
 
 //Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
+import DeleteModal from './DeleteModal'
 
 import { MoreVertical } from "react-feather"
+import UpdateModal from './UpdateModal';
 
 const Table = () => {
     //obtener el state del formulario
@@ -30,7 +33,7 @@ const Table = () => {
                         {
                             schoolyears
                             ? 
-                                schoolyears.map((schoolyear) => (
+                                schoolyears.map((schoolyear, index) => (
                                     <tr key={schoolyear._id}>
                                         <td>
                                             <span className="font-weight-bold">{schoolyear.name}</span>
@@ -44,16 +47,22 @@ const Table = () => {
                                                     <MoreVertical/>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                    <a className="dropdown-item" href="#">
-                                                        <i data-feather="edit-2" className="mr-50"></i>
-                                                        <span>Edit</span>
-                                                    </a>
-                                                    <a className="dropdown-item" href="#">
-                                                        <i data-feather="trash" className="mr-50"></i>
-                                                        <span>Delete</span>
-                                                    </a>
+                                                    <Link href="#">
+                                                        <a className="dropdown-item" data-toggle="modal" data-target={`#updateModal${index}`}>
+                                                            <i data-feather="edit-2" className="mr-50"></i>
+                                                            <span>Edit</span>
+                                                        </a>
+                                                    </Link>
+                                                    <Link href="#">
+                                                        <a className="dropdown-item" data-toggle="modal" data-target={`#deleteModal${index}`}>
+                                                            <i data-feather="trash" className="mr-50"></i>
+                                                            <span>Delete</span>
+                                                        </a>
+                                                    </Link>
                                                 </div>
                                             </div>
+                                            <UpdateModal index={index} data={schoolyear}/>
+                                            <DeleteModal index={index} data={schoolyear}/>
                                         </td>
                                     </tr>
                                 ))

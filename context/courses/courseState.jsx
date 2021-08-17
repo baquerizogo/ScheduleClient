@@ -10,7 +10,9 @@ import {
     GET_COURSE,
     GET_COURSE_INFO,
     CREATE_COURSE,
-    CHECK_COURSE
+    CHECK_COURSE,
+    UPDATE_COURSE,
+    DELETE_COURSE
 } from '../../types'
 
 const CourseState = props => {
@@ -69,6 +71,32 @@ const CourseState = props => {
         })
     }
 
+    const updateCourse = async (course) => {
+        try {
+            const resultado = await clienteAxios.put(`/api/course/${course._id}`, course)
+            console.log(resultado)
+            dispatch({
+                type: UPDATE_COURSE,
+                payload: resultado.data.course
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteCourse = async (course) => {
+        try {
+            await clienteAxios.delete(`/api/course/${course._id}`, {params: {course}});
+
+            dispatch({
+                type: DELETE_COURSE,
+                payload: course
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <courseContext.Provider value={{
             courses: state.courses,
@@ -78,7 +106,9 @@ const CourseState = props => {
             getCourse,
             getCourseInfo,
             createCourse,
-            checkForm
+            checkForm,
+            updateCourse,
+            deleteCourse
         }}>
             {props.children}
         </courseContext.Provider>

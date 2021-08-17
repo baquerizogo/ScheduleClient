@@ -10,7 +10,9 @@ import {
     CHECK_TEACHER, 
     CREATE_TEACHER, 
     ERROR_TEACHER, 
-    GET_TEACHER 
+    GET_TEACHER,
+    UPDATE_TEACHER,
+    DELETE_TEACHER
 } from '../../types'
 
 const TeacherState = props => {
@@ -62,6 +64,32 @@ const TeacherState = props => {
         })
     }
 
+    const updateTeacher = async (teacher) => {
+        try {
+            const resultado = await clienteAxios.put(`/api/teacher/${teacher._id}`, teacher)
+            console.log(resultado);
+            dispatch({
+                type: UPDATE_TEACHER,
+                payload: resultado.data.teacher
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteTeacher = async (teacher) => {
+        try {
+            await clienteAxios.delete(`/api/teacher/${teacher._id}`, {params: {teacher}});
+
+            dispatch({
+                type: DELETE_TEACHER,
+                payload: teacher
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <teacherContext.Provider value={{
             errorForm: state.errorForm,
@@ -70,7 +98,9 @@ const TeacherState = props => {
 
             checkForm,
             getTeacher,
-            createTeacher
+            createTeacher,
+            updateTeacher,
+            deleteTeacher
         }}>
             {props.children}
         </teacherContext.Provider>

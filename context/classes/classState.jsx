@@ -10,7 +10,9 @@ import {
     CHECK_CLASS, 
     CREATE_CLASS, 
     GET_ALL_CLASSES, 
-    GET_CLASS 
+    GET_CLASS,
+    UPDATE_CLASS,
+    DELETE_CLASS
 } from '../../types'
 
 const ClassState = props => {
@@ -71,6 +73,32 @@ const ClassState = props => {
         })
     }
 
+    const updateClass = async (xclass) => {
+        try {
+            const resultado = await clienteAxios.put(`/api/class/${xclass._id}`, xclass)
+            console.log(resultado);
+            dispatch({
+                type: UPDATE_CLASS,
+                payload: resultado.data.xclass
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteClass = async (xclass) => {
+        try {
+            await clienteAxios.delete(`/api/class/${xclass._id}`, {params: {xclass}});
+
+            dispatch({
+                type: DELETE_CLASS,
+                payload: xclass
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <classContext.Provider value={{
             classes: state.classes,
@@ -80,7 +108,9 @@ const ClassState = props => {
             checkForm,
             getClass,
             createClass,
-            getAllClasses
+            getAllClasses,
+            updateClass,
+            deleteClass
         }}>
             {props.children}
         </classContext.Provider>

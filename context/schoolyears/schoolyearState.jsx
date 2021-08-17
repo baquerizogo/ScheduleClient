@@ -11,7 +11,9 @@ import {
     CREATE_SCHOOLYEAR,
     CURRENT_SCHOOLYEAR,
     ERROR_SCHOOLYEAR,
-    GET_SCHOOLYEAR
+    GET_SCHOOLYEAR,
+    UPDATE_SCHOOLYEAR,
+    DELETE_SCHOOLYEAR
 } from '../../types'
 
 const SchoolyearState = props => {
@@ -19,7 +21,7 @@ const SchoolyearState = props => {
         schoolyears : [],
         schoolyear : null,
         errorForm: false,
-        msg: null
+        msg: null,
     }
 
     //Dispatch para ejecutar acciones
@@ -86,6 +88,32 @@ const SchoolyearState = props => {
         if(state.schoolyear) return state.schoolyear;
     }
 
+    const updateSchoolyear = async (schoolyear) => {
+        try {
+            const resultado = await clienteAxios.put(`/api/schoolyear/${schoolyear._id}`, schoolyear)
+            console.log(resultado)
+            dispatch({
+                type: UPDATE_SCHOOLYEAR,
+                payload: resultado.data.schoolyear
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteSchoolyear = async (schoolyear) => {
+        try {
+            await clienteAxios.delete(`/api/schoolyear/${schoolyear._id}`, {params: {schoolyear}});
+
+            dispatch({
+                type: DELETE_SCHOOLYEAR,
+                payload: schoolyear
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <schoolyearContext.Provider value={{
             schoolyears: state.schoolyears,
@@ -97,7 +125,9 @@ const SchoolyearState = props => {
             createSchoolyear,
             getSchoolyear,
             currentSchoolyear,
-            getCurrentSchoolyear
+            getCurrentSchoolyear,
+            updateSchoolyear,
+            deleteSchoolyear
         }}>
             {props.children}
         </schoolyearContext.Provider>

@@ -1,9 +1,11 @@
 import { MoreVertical } from "react-feather"
 import { useContext, useEffect } from "react";
-
+import Link from 'next/link'
 
 import teacherContext from '../../context/teachers/teacherContext'
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
+import DeleteModal from "./DeleteModal";
+import UpdateModal from "./UpdateModal";
 
 const Table = () => {
     const teachersContext = useContext(teacherContext);
@@ -39,7 +41,7 @@ const Table = () => {
                         {
                             teachers
                             ?
-                                teachers.map(teacher => (
+                                teachers.map((teacher, index) => (
                                     <tr key={teacher._id}>
                                         <td>
                                             <span className="font-weight-bold">{teacher.name}</span>
@@ -53,16 +55,22 @@ const Table = () => {
                                                     <MoreVertical/>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                    <a className="dropdown-item" href="#">
-                                                        <i data-feather="edit-2" className="mr-50"></i>
-                                                        <span>Edit</span>
-                                                    </a>
-                                                    <a className="dropdown-item" href="#">
-                                                        <i data-feather="trash" className="mr-50"></i>
-                                                        <span>Delete</span>
-                                                    </a>
+                                                    <Link href="#">
+                                                        <a className="dropdown-item" data-toggle="modal" data-target={`#updateModal${index}`}>
+                                                            <i data-feather="edit-2" className="mr-50"></i>
+                                                            <span>Edit</span>
+                                                        </a>
+                                                    </Link>
+                                                    <Link href="#">
+                                                        <a className="dropdown-item" data-toggle="modal" data-target={`#deleteModal${index}`}>
+                                                            <i data-feather="trash" className="mr-50"></i>
+                                                            <span>Delete</span>
+                                                        </a>
+                                                    </Link>
                                                 </div>
                                             </div>
+                                            <UpdateModal index={index} data={teacher}/>
+                                            <DeleteModal index={index} data={teacher}/>
                                         </td>
                                     </tr>
                                 ))

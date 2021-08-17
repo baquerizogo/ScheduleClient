@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import Link from 'next/link'
 
 //Components
 import courseContext from '../../context/courses/courseContext'
@@ -6,6 +7,8 @@ import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import parallelContext from '../../context/parallels/parallelContext'
 
 import { MoreVertical } from "react-feather"
+import UpdateModal from "./UpdateModal";
+import DeleteModal from "./DeleteModal";
 
 const Table = () => {
     const coursesContext = useContext(courseContext);
@@ -85,7 +88,7 @@ const Table = () => {
                         {
                             parallels
                             ?
-                                parallels.map(parallel => (
+                                parallels.map((parallel, index) => (
                                     <tr key={parallel._id}>
                                         <td>
                                             <span className="font-weight-bold">{parallel.name}</span>
@@ -98,16 +101,22 @@ const Table = () => {
                                                     <MoreVertical key={parallel._id}/>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                    <a className="dropdown-item" href="#">
-                                                        <i data-feather="edit-2" className="mr-50"></i>
-                                                        <span>Edit</span>
-                                                    </a>
-                                                    <a className="dropdown-item" href="#">
-                                                        <i data-feather="trash" className="mr-50"></i>
-                                                        <span>Delete</span>
-                                                    </a>
+                                                    <Link href="#">
+                                                        <a className="dropdown-item" data-toggle="modal" data-target={`#updateModal${index}`}>
+                                                            <i data-feather="edit-2" className="mr-50"></i>
+                                                            <span>Edit</span>
+                                                        </a>
+                                                    </Link>
+                                                    <Link href="#">
+                                                        <a className="dropdown-item" data-toggle="modal" data-target={`#deleteModal${index}`}>
+                                                            <i data-feather="trash" className="mr-50"></i>
+                                                            <span>Delete</span>
+                                                        </a>
+                                                    </Link>
                                                 </div>
                                             </div>
+                                            <UpdateModal index={index} data={parallel}/>
+                                            <DeleteModal index={index} data={parallel}/>
                                         </td>
                                     </tr>
                                 ))

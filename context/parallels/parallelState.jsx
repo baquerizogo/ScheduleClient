@@ -9,7 +9,9 @@ import clienteAxios from '../../config/axios'
 import { 
     CHECK_PARALLEL, 
     CREATE_PARALLEL, 
-    GET_PARALLEL
+    GET_PARALLEL,
+    UPDATE_PARALLEL,
+    DELETE_PARALLEL
 } from '../../types'
 
 const ParallelState = props => {
@@ -48,6 +50,31 @@ const ParallelState = props => {
         }
     }
     
+    const updateParallel = async (parallel) => {
+        try {
+            const resultado = await clienteAxios.put(`/api/parallel/${parallel._id}`, parallel)
+            console.log(resultado);
+            dispatch({
+                type: UPDATE_PARALLEL,
+                payload: resultado.data.parallel
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteParallel = async (parallel) => {
+        try {
+            await clienteAxios.delete(`/api/parallel/${parallel._id}`, {params: {parallel}});
+
+            dispatch({
+                type: DELETE_PARALLEL,
+                payload: parallel
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const checkForm = () => {
         dispatch({
@@ -62,7 +89,9 @@ const ParallelState = props => {
 
             checkForm,
             getParallel,
-            createParallel
+            createParallel,
+            updateParallel,
+            deleteParallel
         }}>
             {props.children}
         </parallelContext.Provider>
