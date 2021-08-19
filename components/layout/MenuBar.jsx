@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 //Components
 import NavHeader from '../Menu/NavHeader';
 import NavItem from '../Menu/NavItem';
@@ -30,41 +32,41 @@ const MenuBar = () => {
             <div className="shadow-bottom"></div>
             <div className="main-menu-content">
                 <ul className="navigation">
-                    <NewSchoolyear/>
+                    <NewSchoolyear role={1}/>
                     <NavItem path="/" text="Home">
                         <Home/>
                     </NavItem>
                     <NavHeader text="Administración"/>
-                    <NavItem path="/a/cursos" text="Cursos">
+                    <NavItem path="/a/cursos" text="Cursos" role={1}>
                         <Box/>
                     </NavItem>
-                    <NavItem path="/a/paralelos" text="Paralelos">
+                    <NavItem path="/a/paralelos" text="Paralelos" role={1}>
                         <Columns/>
                     </NavItem>
-                    <NavItem path="/a/profesores" text="Profesores">
+                    <NavItem path="/a/profesores" text="Profesores" role={1}>
                         <Users/>
                     </NavItem>
-                    <NavItem path="/a/asignaturas" text="Asignaturas">
+                    <NavItem path="/a/asignaturas" text="Asignaturas" role={1}>
                         <Book/>
                     </NavItem>
                     <NavHeader text="Gestor de horarios"/>
-                    <NavItem path="/g/horarios" text="Crear horarios">
+                    <NavItem path="/g/horarios" text="Crear horarios" role={1}>
                         <Calendar/>
                     </NavItem>
-                    <NavItem path="/g/modhorarios" text="modificar horarios">
+                    <NavItem path="/g/modhorarios" text="modificar horarios" role={1}>
                         <Calendar/>
                     </NavItem>
-                    <NavItem path="/g/auto" text="Creación automática">
+                    <NavItem path="/g/auto" text="Creación automática" role={1}>
                         <Calendar/>
                     </NavItem>
                     <NavHeader text="Reportes"/>
-                    <NavItem path="/r/carga" text="Cargas horarias">
+                    <NavItem path="/r/carga" text="Cargas horarias" role={2}>
                         <BarChart2/>
                     </NavItem>
-                    <NavItem path="/r/horarioCursos" text="Horarios Cursos">
+                    <NavItem path="/r/horarioCursos" text="Horarios Cursos" role={2}>
                         <Calendar/>
                     </NavItem>
-                    <NavItem path="/r/horarioDocentes" text="Horarios docentes">
+                    <NavItem path="/r/horarioDocentes" text="Horarios docentes" role={2}>
                         <Calendar/>
                     </NavItem>
                 </ul>

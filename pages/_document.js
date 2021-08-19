@@ -44,8 +44,9 @@ class MyDocument extends Document {
                     <link rel="stylesheet" type="text/css" href="/assets/css/style.css"/>
                     
                 </Head>
-                <body className="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
-                    <Main />
+                <body className="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
+                    <Main/>
+
                     <NextScript />
 
                     {/* BEGIN: Vendor JS */}

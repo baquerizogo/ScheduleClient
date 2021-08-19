@@ -2,11 +2,8 @@ import { useEffect, useContext } from 'react'
 
 //Components
 import AutoForm from '../../components/horarios/AutoForm'
-import Panel from '../../components/horarios/panel'
-import ScheduleForm from '../../components/horarios/ScheduleForm'
 import ContentHeader from '../../components/layout/ContentHeader'
 import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear'
-import Alert from '../../components/horarios/Alert'
 
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import scheduleContext from '../../context/schedules/scheduleContext'

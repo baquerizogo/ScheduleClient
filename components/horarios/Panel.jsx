@@ -132,9 +132,6 @@ const Panel = () => {
                                                                         <button type="button" className='btn btn-secondary-outline close-btn' onClick={()=>{handleRemove(e)}}>
                                                                             <span aria-hidden="true"> &times; </span>
                                                                         </button>
-                                                                        <button type="button" className='btn btn-secondary'>
-                                                                            <span aria-hidden="true"> &times; </span>
-                                                                        </button>
                                                                         <div>
                                                                             <p>{e.asignatura.name}</p>
                                                                             <p>{e.teacher.name} {e.teacher.lastname}</p>

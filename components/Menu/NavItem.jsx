@@ -4,15 +4,17 @@ import { useContext } from 'react';
 
 //Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
-
+import authContext from '../../context/auth/authContext';
 
 const NavItem = (props) => {
     const router = useRouter();
+    const AuthContext = useContext(authContext);
+    const { account } = AuthContext;
     const schoolyearsContext = useContext(schoolyearContext);
     const { schoolyear } = schoolyearsContext; //Datos context
 
     return (  
-        <li className={`nav-item ${!schoolyear ? 'disabled' : router.pathname === props.path ? 'active' : null }`}>
+        <li className={`nav-item ${(!schoolyear || account.role > props.role) ? 'disabled' : router.pathname === props.path ? 'active' : null }`}>
             <Link href={props.path}>
                 <a className="d-flex align-items-center" >
                     {props.children}

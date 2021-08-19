@@ -1,8 +1,8 @@
+import HideRoute from '../components/hinder/HideRoute';
+import home from '../components/home/Home';
 
 export default function Home() {
 	return (
-		<>
-			<p>AQUÍ DEBEN IR COSAS MUY IMPORTANTES PARA EL OVERVIEW</p>
-		</>
+		<HideRoute component = {home}/>		
 	)
 }

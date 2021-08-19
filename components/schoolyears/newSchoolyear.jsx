@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 //Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
+import authContext from '../../context/auth/authContext';
 
 import { Plus } from 'react-feather'
 
@@ -10,15 +11,19 @@ const NewSchoolyear = () => {
 
     //obtener el state del formulario
     const schoolyearsContext = useContext(schoolyearContext);
+    const AuthContext = useContext(authContext);
+    const { autenticado } = AuthContext;
     const { getSchoolyear, currentSchoolyear } = schoolyearsContext; //Funciones Context
     const { schoolyears } = schoolyearsContext; // Datos Context
     
     const select = useRef(null);
 
     useEffect(() => {
-        getSchoolyear();
-        select.current.value = "Seleccione";
-    }, [])
+        if(autenticado){
+            getSchoolyear();
+            select.current.value = "Seleccione";
+        }
+    }, [autenticado])
 
     const handleChange = (e) => {
         currentSchoolyear(e.target.value);

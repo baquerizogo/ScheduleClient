@@ -4,10 +4,13 @@ import { jsPDF } from "jspdf";
 
 //Components
 import scheduleContext from '../../context/schedules/scheduleContext'
+import authContext from '../../context/auth/authContext'
 import DeleteModal from './DeleteModal'
 
 const Panel = ({state}) => {
     const schedulesContext = useContext(scheduleContext);
+    const AuthContext = useContext(authContext);
+    const { account } = AuthContext;
     const { activeSchedule, clearData, inicio, fin } = schedulesContext;
 
     const table = useRef(null);
@@ -62,7 +65,7 @@ const Panel = ({state}) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-2 offset-md-8">
-                                {activeSchedule.length > 0 ? 
+                                {activeSchedule.length > 0 && account.role  < 2 ? 
                                     <div>
                                         <button className="btn btn-danger" data-toggle="modal" data-target={`#deleteModal0`}>Eliminar horario</button>
                                         <DeleteModal index={0} data={activeSchedule[0]}/>
