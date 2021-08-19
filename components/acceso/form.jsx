@@ -1,36 +1,33 @@
 import { useState, useContext } from "react";
 
 //Components
-import schoolyearContext from '../../context/schoolyears/schoolyearContext'
-import teacherContext from '../../context/teachers/teacherContext'
+import accountContext from '../../context/accounts/accountContext'
 
 import { Archive, Mail, User, Lock } from "react-feather";
 
 const Form = () => {
     //obtener el state del formulario
-    const teachersContext = useContext(teacherContext);
-    const schoolyearsContext = useContext(schoolyearContext);
+    const accountsContext = useContext(accountContext);
 
-    const { errorForm, msg } = teachersContext; // Datos Context
-    const { schoolyear } = schoolyearsContext; // Datos Context
-    const { checkForm, createTeacher} = teachersContext; //Funciones Context
+    const { errorForm, msg } = accountsContext; // Datos Context
+    const { checkForm, createAccount} = accountsContext; //Funciones Context
 
     //state formulario
-    const [teacher, setTeacher] = useState({
+    const [account, setAccount] = useState({
         name: '',
         lastname: '',
         dni: '',
         email: '',
         password: '',
-        id_schoolyear: schoolyear[0]._id
+        role: 1,
     });
 
-    const {name, lastname, dni, email, password} = teacher;
+    const {name, lastname, dni, email, password, role} = account;
 
     //Leer valores del form
     const handleChange = e => {
-        setTeacher({
-            ...teacher,
+        setAccount({
+            ...account,
             [e.target.name] : e.target.value
         })
     }
@@ -39,26 +36,26 @@ const Form = () => {
         e.preventDefault();
 
         //Validar
-        if(name.trim() === '' || lastname.trim() === '' || dni==='') {
+        if(name.trim() === '' || lastname.trim() === '' || dni==='' || role===null || password.trim() === '' || email.trim() === '' || password.length < 8) {
             checkForm();
             return;
         }
         
         //Agregar al context
-        createTeacher(teacher);
+        createAccount(account);
 
         //Reiniciar el form
         reset();
     }
     
     const reset = () => {
-        setTeacher({
+        setAccount({
             name: '',
             lastname: '',
             dni: '',
             email: '',
             password: '',
-            id_schoolyear: schoolyear[0]._id
+            role: 1,
         })
     }
 
@@ -138,7 +135,7 @@ const Form = () => {
                                 <div className="col-sm-3">
                                     <div className="input-group input-group-merge">
                                         <div className="input-group-prepend">
-                                            <span className="input-group-text"><Mail size="16"/></span>
+                                            <span className="input-group-text"><Lock size="16"/></span>
                                         </div>
                                         <input type="password" id="paswword" className="form-control" name="password" placeholder="********" value={password} onChange={handleChange}/>
                                     </div>
@@ -149,7 +146,7 @@ const Form = () => {
                                 </div>
                                 <div className="col-sm-3">
                                     <div className="input-group input-group-merge">
-                                        <select className="form-control" name="role" id="role" onChange={handleChange}>
+                                        <select className="form-control" name="role" id="role" onChange={handleChange} value={role}>
                                             <option value="1">Colaborador</option>
                                             <option value="2">Obervador</option>
                                         </select>

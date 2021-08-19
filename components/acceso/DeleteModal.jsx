@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 
-import teacherContext from '../../context/teachers/teacherContext';
+import accountContext from '../../context/accounts/accountContext';
 
 const DeleteModal = ({data, index}) => {
     //obtener el state del formulario
-    const teachersContext = useContext(teacherContext);
-    const { deleteTeacher } = teachersContext; //Funciones Context
+    const accountsContext = useContext(accountContext);
+    const { deleteAccount } = accountsContext; //Funciones Context
 
     const onDeleteClick = e => {
-        deleteTeacher(data);
+        deleteAccount(data);
     }
 
     return (  
@@ -16,13 +16,13 @@ const DeleteModal = ({data, index}) => {
             <div className="modal-dialog modal-dialog-centered" role="document" >
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title text-danger" id="exampleModalLongTitle" > Eliminar profesor</h5>
+                        <h5 className="modal-title text-danger" id="exampleModalLongTitle" > Eliminar cuenta</h5>
                         <button type="button" className='close text-danger' data-dismiss="modal" aria-label="Close" >
                             <span aria-hidden="true"> &times; </span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        {`¿Está seguro que desea eliminar al profesor: ${data.name}?`}
+                        {`¿Está seguro que desea eliminar al profesor: ${data.name} ${data.lastname}?`}
                     </div>
                     <div className="modal-footer">
                         <button type="button" className='btn btn-danger' data-dismiss="modal" onClick={onDeleteClick}>

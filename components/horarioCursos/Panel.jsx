@@ -65,12 +65,12 @@ const Panel = ({state}) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-2 offset-md-8">
-                                {activeSchedule.length > 0 && account.role  < 2 ? 
+                                { account ? (activeSchedule.length > 0 && account.role  < 2) ? 
                                     <div>
                                         <button className="btn btn-danger" data-toggle="modal" data-target={`#deleteModal0`}>Eliminar horario</button>
                                         <DeleteModal index={0} data={activeSchedule[0]}/>
                                     </div>
-                                : null }
+                                : null : null }
                             </div>
                             <div className="col-2">
                                 <button className="btn btn-primary" onClick={generateImage}>Exportar como PDF</button>

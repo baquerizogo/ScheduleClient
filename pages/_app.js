@@ -10,6 +10,7 @@ import ClassState from '../context/classes/classState'
 import ScheduleState from "../context/schedules/scheduleState";
 import ReportState from "../context/reports/reportState";
 import AuthState from "../context/auth/authState";
+import AccountState from "../context/accounts/accountState";
 import Layout from "../components/layout/Layout"
 
 import TokenAuth from "../config/tokenAuth";
@@ -23,51 +24,55 @@ function MyApp({ Component, pageProps }) {
     if(router.pathname === '/login') {
         return (
             <AuthState>
-                <SchoolyearState>
-                    <CourseState>
-                        <ParallelState>
-                            <TeacherState>
-                                <ClassState>
-                                    <ScheduleState>
-                                        <ReportState>
-                                            <Head>
-                                                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
-                                                <title> Gestor de horarios </title>
-                                            </Head>
-                                                    <Component {...pageProps} />
-                                        </ReportState>
-                                    </ScheduleState>
-                                </ClassState>
-                            </TeacherState>
-                        </ParallelState>
-                    </CourseState>
-                </SchoolyearState>
+                <AccountState>
+                    <SchoolyearState>
+                        <CourseState>
+                            <ParallelState>
+                                <TeacherState>
+                                    <ClassState>
+                                        <ScheduleState>
+                                            <ReportState>
+                                                <Head>
+                                                    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
+                                                    <title> Gestor de horarios </title>
+                                                </Head>
+                                                        <Component {...pageProps} />
+                                            </ReportState>
+                                        </ScheduleState>
+                                    </ClassState>
+                                </TeacherState>
+                            </ParallelState>
+                        </CourseState>
+                    </SchoolyearState>
+                </AccountState>
             </AuthState>
         );
     } else {
         return (
             <AuthState>
-                <SchoolyearState>
-                    <CourseState>
-                        <ParallelState>
-                            <TeacherState>
-                                <ClassState>
-                                    <ScheduleState>
-                                        <ReportState>
-                                            <Head>
-                                                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
-                                                <title> Gestor de horarios </title>
-                                            </Head>
-                                            <Layout>
-                                                <Component {...pageProps} />
-                                            </Layout>
-                                        </ReportState>
-                                    </ScheduleState>
-                                </ClassState>
-                            </TeacherState>
-                        </ParallelState>
-                    </CourseState>
-                </SchoolyearState>
+                <AccountState>
+                    <SchoolyearState>
+                        <CourseState>
+                            <ParallelState>
+                                <TeacherState>
+                                    <ClassState>
+                                        <ScheduleState>
+                                            <ReportState>
+                                                <Head>
+                                                    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
+                                                    <title> Gestor de horarios </title>
+                                                </Head>
+                                                <Layout>
+                                                    <Component {...pageProps} />
+                                                </Layout>
+                                            </ReportState>
+                                        </ScheduleState>
+                                    </ClassState>
+                                </TeacherState>
+                            </ParallelState>
+                        </CourseState>
+                    </SchoolyearState>
+                </AccountState>
             </AuthState>
         );
     }

@@ -22,7 +22,7 @@ const DeleteModal = ({data, index}) => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        {`¿Está seguro que desea eliminar al profesor: ${data.name}?`}
+                        {`¿Está seguro que desea eliminar la asignatura: ${data.name}?`}
                     </div>
                     <div className="modal-footer">
                         <button type="button" className='btn btn-danger' data-dismiss="modal" onClick={onDeleteClick}>

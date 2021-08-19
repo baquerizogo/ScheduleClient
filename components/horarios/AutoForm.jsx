@@ -10,7 +10,6 @@ import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import scheduleContext from '../../context/schedules/scheduleContext'
 import AccordionItem from './AccordionItem';
 import SimpleModal from '../layout/SimpleModal';
-import { User } from 'react-feather';
 
 const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: "white" }),

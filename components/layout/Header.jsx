@@ -31,11 +31,11 @@ const Header = () => {
                 <ul className="nav navbar-nav align-items-center ml-auto"> 
                     <li className="nav-item d-none d-lg-block"><a className="nav-link nav-link-style"><Moon className="ficon"/></a></li>
                     <li className="nav-item dropdown dropdown-user"><a className="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div className="user-nav d-sm-flex d-none"><span className="user-name font-weight-bolder">Administrador</span><span className="user-status">Admin</span></div><span className="avatar"><img className="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"/><span className="avatar-status-online"></span></span>
+                            <div className="user-nav d-sm-flex d-none"><span className="user-name font-weight-bolder">{account ? `${account.name} ${account.lastname}` : null}</span><span className="user-status">{account ? account.role == 0 ? "Admin" : account.role == 1 ? "Colaborador" : "Observador" : null}</span></div><span className="avatar"><img className="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"/><span className="avatar-status-online"></span></span>
                         </a>
                         <div className="dropdown-menu dropdown-menu-right">
-                            <a className="dropdown-item" href="page-account-settings.html"><Settings className="mr-50"/> Configuración</a>
-                            {account ? account.role < 1 ? <Link href="/c/acceso"><a className="dropdown-item"><Lock className="mr-50"/>Acceso</a></Link> : null : null}
+                            {/*<a className="dropdown-item" href="page-account-settings.html"><Settings className="mr-50"/> Configuración</a>*/}
+                            {account ? account.role < 1 ? <Link href="/c/acceso"><a className="dropdown-item"><Lock className="mr-50"/>Accesos</a></Link> : null : null}
                             <a className="dropdown-item btn" onClick={()=>{
                                 cerrarSesion();
                                 router.push('/login');

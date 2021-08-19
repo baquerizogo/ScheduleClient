@@ -1,58 +1,58 @@
 import React, { useReducer } from 'react';
 
 //Components
-import teacherContext from './teacherContext'
-import teacherReducer from './teacherReducer'
+import accountContext from './accountContext'
+import accountReducer from './accountReducer'
 import clienteAxios from '../../config/axios'
 
 //Types
 import { 
-    CHECK_TEACHER, 
-    CREATE_TEACHER, 
-    ERROR_TEACHER, 
-    GET_TEACHER,
-    UPDATE_TEACHER,
-    DELETE_TEACHER
+    CHECK_ACCOUNT, 
+    CREATE_ACCOUNT, 
+    ERROR_ACCOUNT, 
+    GET_ACCOUNT,
+    UPDATE_ACCOUNT,
+    DELETE_ACCOUNT
 } from '../../types'
 
-const TeacherState = props => {
+const AccountState = props => {
     const initialState = {
-        teachers: [],
+        accounts: [],
         errorForm: false,
         msg: null
     }
 
     //Dispatch para ejecutar acciones
-    const [state, dispatch] = useReducer(teacherReducer, initialState)
+    const [state, dispatch] = useReducer(accountReducer, initialState)
 
     //funciones para el CRUD
-    const getTeacher = async schoolyear => {
+    const getAccount = async () => {
         try {
-            const resultado = await clienteAxios.get('/api/teacher', {params: schoolyear});
+            const resultado = await clienteAxios.get('/api/account');
             console.log(resultado);
             dispatch({
-                type: GET_TEACHER,
-                payload: resultado.data.teachers
+                type: GET_ACCOUNT,
+                payload: resultado.data.accounts
             })
         } catch(error) {
             console.log(error);
         }
     }
 
-    const createTeacher = async teacher => {
+    const createAccount = async account => {
         try{
-            const resultado = await clienteAxios.post('/api/teacher', teacher);
+            const resultado = await clienteAxios.post('/api/account', account);
             console.log(resultado);
             dispatch({
-                type: CREATE_TEACHER,
-                payload: teacher
+                type: CREATE_ACCOUNT,
+                payload: account
             })
         }catch(error){
             console.log(error.response);
             const msg = error.response.data.msg;
 
             dispatch({
-                type: ERROR_TEACHER,
+                type: ERROR_ACCOUNT,
                 payload: msg
             })
         }
@@ -60,30 +60,30 @@ const TeacherState = props => {
 
     const checkForm = () => {
         dispatch({
-            type: CHECK_TEACHER
+            type: CHECK_ACCOUNT
         })
     }
 
-    const updateTeacher = async (teacher) => {
+    const updateAccount = async (account) => {
         try {
-            const resultado = await clienteAxios.put(`/api/teacher/${teacher._id}`, teacher)
+            const resultado = await clienteAxios.put(`/api/account/${account._id}`, account)
             console.log(resultado);
             dispatch({
-                type: UPDATE_TEACHER,
-                payload: resultado.data.teacher
+                type: UPDATE_ACCOUNT,
+                payload: resultado.data.account
             })
         } catch (error) {
             console.log(error)
         }
     }
 
-    const deleteTeacher = async (teacher) => {
+    const deleteAccount = async (account) => {
         try {
-            await clienteAxios.delete(`/api/teacher/${teacher._id}`, {params: {teacher}});
+            await clienteAxios.delete(`/api/account/${account._id}`, {params: {account}});
 
             dispatch({
-                type: DELETE_TEACHER,
-                payload: teacher
+                type: DELETE_ACCOUNT,
+                payload: account
             })
         } catch (error) {
             console.log(error);
@@ -91,20 +91,20 @@ const TeacherState = props => {
     }
 
     return (
-        <teacherContext.Provider value={{
+        <accountContext.Provider value={{
             errorForm: state.errorForm,
-            teachers: state.teachers,
+            accounts: state.accounts,
             msg: state.msg,
 
             checkForm,
-            getTeacher,
-            createTeacher,
-            updateTeacher,
-            deleteTeacher
+            getAccount,
+            createAccount,
+            updateAccount,
+            deleteAccount
         }}>
             {props.children}
-        </teacherContext.Provider>
+        </accountContext.Provider>
     )
 }
 
-export default TeacherState;
+export default AccountState;

@@ -2,24 +2,18 @@ import { MoreVertical } from "react-feather"
 import { useContext, useEffect } from "react";
 import Link from 'next/link'
 
-import teacherContext from '../../context/teachers/teacherContext'
-import schoolyearContext from '../../context/schoolyears/schoolyearContext'
+import accountContext from '../../context/accounts/accountContext'
 import DeleteModal from "./DeleteModal";
-import UpdateModal from "./UpdateModal";
 
 const Table = () => {
-    const teachersContext = useContext(teacherContext);
-    const schoolyearsContext = useContext(schoolyearContext);
+    const accountsContext = useContext(accountContext);
 
-    const { getTeacher } = teachersContext; //Funciones Context
-    const { teachers } = teachersContext; // Datos Context
-    const { schoolyear } = schoolyearsContext; // Datos Context
+    const { getAccount } = accountsContext; //Funciones Context
+    const { accounts } = accountsContext; // Datos Context
 
     useEffect(() => {
-        getTeacher({
-            id_schoolyear : schoolyear[0]._id
-        });
-    }, [schoolyear])
+        getAccount();
+    }, [])
 
     return (  
         <div className="card">
@@ -39,16 +33,16 @@ const Table = () => {
                     </thead>
                     <tbody>
                         {
-                            teachers
+                            accounts
                             ?
-                                teachers.map((teacher, index) => (
-                                    <tr key={teacher._id}>
+                                accounts.map((account, index) => (
+                                    <tr key={index}>
                                         <td>
-                                            <span className="font-weight-bold">{teacher.name}</span>
+                                            <span className="font-weight-bold">{account.name}</span>
                                         </td>
-                                        <td>{teacher.lastname}</td>
-                                        <td>{teacher.dni}</td>
-                                        <td>{teacher.email}</td>
+                                        <td>{account.lastname}</td>
+                                        <td>{account.dni}</td>
+                                        <td>{account.email}</td>
                                         <td>
                                             <div className="dropdown">
                                                 <button type="button" className="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
@@ -63,7 +57,7 @@ const Table = () => {
                                                     </Link>
                                                 </div>
                                             </div>
-                                            <DeleteModal index={index} data={teacher}/>
+                                            <DeleteModal index={index} data={account}/>
                                         </td>
                                     </tr>
                                 ))

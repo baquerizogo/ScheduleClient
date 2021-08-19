@@ -1,51 +1,51 @@
 import { 
-    CHECK_TEACHER, 
-    CREATE_TEACHER, 
-    ERROR_TEACHER, 
-    GET_TEACHER,
-    UPDATE_TEACHER,
-    DELETE_TEACHER
+    CHECK_ACCOUNT, 
+    CREATE_ACCOUNT, 
+    ERROR_ACCOUNT, 
+    GET_ACCOUNT,
+    UPDATE_ACCOUNT,
+    DELETE_ACCOUNT
 } from '../../types'
 
-const teacherReducer = (state, action) => {
+const accountReducer = (state, action) => {
     switch (action.type) {
-        case GET_TEACHER:
+        case GET_ACCOUNT:
             return{
                 ...state,
-                teachers: action.payload
+                accounts: action.payload
             }
 
-        case CREATE_TEACHER:
+        case CREATE_ACCOUNT:
             return{
                 ...state,
-                teachers: [...state.teachers, action.payload],
+                accounts: [...state.accounts, action.payload],
                 errorForm: false,
                 msg: null
             }
         
-        case ERROR_TEACHER:
+        case ERROR_ACCOUNT:
             return {
                 ...state,
                 msg: action.payload
             }
         
-        case CHECK_TEACHER:
+        case CHECK_ACCOUNT:
             return{
                 ...state,
                 errorForm: true
             }
 
-        case UPDATE_TEACHER:
+        case UPDATE_ACCOUNT:
             return {
                 ...state,
-                teachers: state.teachers.map(teacher => teacher._id === action.payload._id? teacher = action.payload: teacher),
+                accounts: state.accounts.map(account => account._id === action.payload._id? account = action.payload: account),
                 errorForm: false
             }
 
-        case DELETE_TEACHER:
+        case DELETE_ACCOUNT:
             return {
                 ...state,
-                teachers: state.teachers.filter(teacher => teacher._id !== action.payload._id)
+                accounts: state.accounts.filter(account => account._id !== action.payload._id)
             }
 
         default:
@@ -53,4 +53,4 @@ const teacherReducer = (state, action) => {
     }
 }
 
-export default teacherReducer;
+export default accountReducer;

@@ -14,7 +14,7 @@ const NavItem = (props) => {
     const { schoolyear } = schoolyearsContext; //Datos context
 
     return (  
-        <li className={`nav-item ${(!schoolyear || account.role > props.role) ? 'disabled' : router.pathname === props.path ? 'active' : null }`}>
+        <li className={`nav-item ${account ? (!schoolyear || account.role > props.role) ? 'disabled' : router.pathname === props.path ? 'active' : null : null }`}>
             <Link href={props.path}>
                 <a className="d-flex align-items-center" >
                     {props.children}
