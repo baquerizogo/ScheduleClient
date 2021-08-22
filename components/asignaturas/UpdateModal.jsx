@@ -138,7 +138,7 @@ const UpdateModal = ({xdata, index}) => {
         show: false,
     })
 
-    const { name, description, n_hours, hours_week } = data;
+    const { name, description, hours_week } = data;
 
 
     const handleChangeTeacher = event => {
@@ -214,7 +214,7 @@ const UpdateModal = ({xdata, index}) => {
             <div className="modal-dialog modal-dialog-centered modal-lg" role="document" >
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title text-primary" id="exampleModalLongTitle" > Actualizar paralelo </h5>
+                        <h5 className="modal-title text-primary" id="exampleModalLongTitle" > Actualizar asignatura </h5>
                         <button type="button" className='close text-primary' data-dismiss="modal" aria-label="Close" >
                             <span aria-hidden="true"> &times; </span>
                         </button>
@@ -225,14 +225,14 @@ const UpdateModal = ({xdata, index}) => {
                                 <div className="col-6">
                                     <div className="form-group row">
                                         <div className="col-sm-2 col-form-label">
-                                            <label htmlFor="name">Nombre:</label>
+                                            <label htmlFor={`name${index}`}>Nombre:</label>
                                         </div>
                                         <div className="col-sm-10">
                                             <div className="input-group input-group-merge">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><Box size="16"/></span>
                                                 </div>
-                                                <input type="text" id="name" className="form-control" name="name" placeholder="Nombres" value={name} onChange={handleChange} />
+                                                <input type="text" id={`name${index}`} className="form-control" name="name" placeholder="Nombres" value={name} onChange={handleChange} />
                                             </div>
                                         </div>
                                     </div>
@@ -241,11 +241,11 @@ const UpdateModal = ({xdata, index}) => {
                                 <div className="col-4">
                                     <div className="form-group row">
                                         <div className="col-sm-5 col-form-label">
-                                            <label htmlFor="hours_week">Horas semanales:</label>
+                                            <label htmlFor={`hours_week${index}`}>Horas semanales:</label>
                                         </div>
                                         <div className="col-sm-4">
                                             <div className="input-group input-group-merge">
-                                                <input type="number" id="hours_week" className="form-control" name="hours_week" placeholder="10" value={hours_week} onChange={handleChange} />
+                                                <input type="number" id={`hours_week${index}`} className="form-control" name="hours_week" placeholder="10" value={hours_week} onChange={handleChange} />
                                             </div>
                                         </div>
                                     </div>
@@ -255,11 +255,11 @@ const UpdateModal = ({xdata, index}) => {
                                 <div className="col-6">
                                     <div className="form-group row">
                                         <div className="col-sm-2 col-form-label">
-                                            <label htmlFor="description">Descripción:</label>
+                                            <label htmlFor={`description${index}`}>Descripción:</label>
                                         </div>
                                         <div className="col-sm-10">
                                             <div className="input-group input-group-merge">
-                                                <textarea className="form-control" id="description" rows="4" placeholder="Descripción" name="description" value={description} onChange={handleChange}></textarea>
+                                                <textarea className="form-control" id={`description${index}`} rows="4" placeholder="Descripción" name="description" value={description} onChange={handleChange}></textarea>
                                             </div>
                                         </div>
                                     </div>

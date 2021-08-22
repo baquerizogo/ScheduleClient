@@ -78,14 +78,14 @@ const UpdateModal = ({data, index}) => {
                                 <div className="col-12">
                                     <div className="form-group row">
                                         <div className="col-sm-3 col-form-label">
-                                            <label htmlFor="name">Nombre:</label>
+                                            <label htmlFor={`name${index}`}>Nombre:</label>
                                         </div>
                                         <div className="col-sm-9">
                                             <div className="input-group input-group-merge">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><Box size="16"/></span>
                                                 </div>
-                                                <input type="text" id="name" className="form-control" name="name" placeholder="First Name" value={name} onChange={handleChange} />
+                                                <input type="text" id={`name${index}`} className="form-control" name="name" placeholder="First Name" value={name} onChange={handleChange} />
                                             </div>
                                         </div>
                                     </div>
@@ -93,11 +93,11 @@ const UpdateModal = ({data, index}) => {
                                 <div className="col-12">
                                     <div className="form-group row">
                                         <div className="col-sm-3 col-form-label">
-                                            <label htmlFor="description">Descripción:</label>
+                                            <label htmlFor={`description${index}`}>Descripción:</label>
                                         </div>
                                         <div className="col-sm-9">
                                             <div className="input-group input-group-merge">
-                                                <textarea className="form-control" id="description" rows="4" placeholder="Descripción" name="description" value={description} onChange={handleChange}></textarea>
+                                                <textarea className="form-control" id={`description${index}`} rows="4" placeholder="Descripción" name="description" value={description} onChange={handleChange}></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -67,7 +67,7 @@ const UpdateModal = ({data, index}) => {
             <div className="modal-dialog modal-dialog-centered modal-lg" role="document" >
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title text-primary" id="exampleModalLongTitle" > Actualizar paralelo </h5>
+                        <h5 className="modal-title text-primary" id="exampleModalLongTitle" > Actualizar profesor </h5>
                         <button type="button" className='close text-primary' data-dismiss="modal" aria-label="Close" >
                             <span aria-hidden="true"> &times; </span>
                         </button>
@@ -78,14 +78,14 @@ const UpdateModal = ({data, index}) => {
                                 <div className="col-12">
                                     <div className="form-group row">
                                         <div className="col-sm-3 col-form-label">
-                                            <label htmlFor="name">Nombres:</label>
+                                            <label htmlFor={`name${index}`}>Nombres:</label>
                                         </div>
                                         <div className="col-sm-9">
                                             <div className="input-group input-group-merge">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><Box size="16"/></span>
                                                 </div>
-                                                <input type="text" id="name" className="form-control" name="name" placeholder="First Name" value={name} onChange={handleChange} />
+                                                <input type="text" id={`name${index}`} className="form-control" name="name" placeholder="First Name" value={name} onChange={handleChange} />
                                             </div>
                                         </div>
                                     </div>
@@ -93,14 +93,14 @@ const UpdateModal = ({data, index}) => {
                                 <div className="col-12">
                                     <div className="form-group row">
                                         <div className="col-sm-3 col-form-label">
-                                            <label htmlFor="lastname">Apellidos:</label>
+                                            <label htmlFor={`lastname${index}`}>Apellidos:</label>
                                         </div>
                                         <div className="col-sm-9">
                                             <div className="input-group input-group-merge">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><Box size="16"/></span>
                                                 </div>
-                                                <input type="text" id="lastname" className="form-control" name="lastname" placeholder="Last name" value={lastname} onChange={handleChange} />
+                                                <input type="text" id={`lastname${index}`} className="form-control" name="lastname" placeholder="Last name" value={lastname} onChange={handleChange} />
                                             </div>
                                         </div>
                                     </div>

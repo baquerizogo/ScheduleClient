@@ -21,12 +21,10 @@ const Panel = ({state}) => {
             {name: "9:00", value: 3},
             {name: "9:20", value: 4},
             {name: "9:40", value: 5},
-            {name: "10:00", value: 6},
-            {name: "10:20", value: 7},
-            {name: "10:40", value: 8},
-            {name: "11:00", value: 9},
-            {name: "11:20", value: 10},
-            {name: "11:40", value: 11}
+            {name: "10:40", value: 6},
+            {name: "11:00", value: 7},
+            {name: "11:20", value: 8},
+            {name: "11:40", value: 9}
         ],
 
         fin : [
@@ -36,12 +34,10 @@ const Panel = ({state}) => {
             {name: "9:20", value: 4},
             {name: "9:40", value: 5},
             {name: "10:00", value: 6},
-            {name: "10:20", value: 7},
-            {name: "10:40", value: 8},
-            {name: "11:00", value: 9},
-            {name: "11:20", value: 10},
-            {name: "11:40", value: 11},
-            {name: "12:00", value: 12}
+            {name: "11:00", value: 7},
+            {name: "11:20", value: 8},
+            {name: "11:40", value: 9},
+            {name: "12:00", value: 10}
         ]
     })
 
@@ -104,12 +100,10 @@ const Panel = ({state}) => {
                             {name: "9:00", value: 3},
                             {name: "9:20", value: 4},
                             {name: "9:40", value: 5},
-                            {name: "10:00", value: 6},
-                            {name: "10:20", value: 7},
-                            {name: "10:40", value: 8},
-                            {name: "11:00", value: 9},
-                            {name: "11:20", value: 10},
-                            {name: "11:40", value: 11}
+                            {name: "10:40", value: 6},
+                            {name: "11:00", value: 7},
+                            {name: "11:20", value: 8},
+                            {name: "11:40", value: 9}
                         ],
             
                         fin : [
@@ -119,12 +113,10 @@ const Panel = ({state}) => {
                             {name: "9:20", value: 4},
                             {name: "9:40", value: 5},
                             {name: "10:00", value: 6},
-                            {name: "10:20", value: 7},
-                            {name: "10:40", value: 8},
-                            {name: "11:00", value: 9},
-                            {name: "11:20", value: 10},
-                            {name: "11:40", value: 11},
-                            {name: "12:00", value: 12}
+                            {name: "11:00", value: 7},
+                            {name: "11:20", value: 8},
+                            {name: "11:40", value: 9},
+                            {name: "12:00", value: 10}
                         ]
                     })
                     break;
@@ -137,12 +129,10 @@ const Panel = ({state}) => {
                             {name: "14:00", value: 3},
                             {name: "14:20", value: 4},
                             {name: "14:40", value: 5},
-                            {name: "15:00", value: 6},
-                            {name: "15:20", value: 7},
-                            {name: "15:40", value: 8},
-                            {name: "16:00", value: 9},
-                            {name: "16:20", value: 10},
-                            {name: "16:40", value: 11}
+                            {name: "15:40", value: 6},
+                            {name: "16:00", value: 7},
+                            {name: "16:20", value: 8},
+                            {name: "16:40", value: 9}
                         ],
             
                         fin : [
@@ -152,12 +142,10 @@ const Panel = ({state}) => {
                             {name: "14:20", value: 4},
                             {name: "14:40", value: 5},
                             {name: "15:00", value: 6},
-                            {name: "15:20", value: 7},
-                            {name: "15:40", value: 8},
-                            {name: "16:00", value: 9},
-                            {name: "16:20", value: 10},
-                            {name: "16:40", value: 11},
-                            {name: "17:00", value: 12}
+                            {name: "16:00", value: 7},
+                            {name: "16:20", value: 8},
+                            {name: "16:40", value: 9},
+                            {name: "17:00", value: 10}
                         ] 
                     })
                     break;
@@ -170,24 +158,20 @@ const Panel = ({state}) => {
                             {name: "9:00", value: 3},
                             {name: "9:20", value: 4},
                             {name: "9:40", value: 5},
-                            {name: "10:00", value: 6},
-                            {name: "10:20", value: 7},
-                            {name: "10:40", value: 8},
-                            {name: "11:00", value: 9},
-                            {name: "11:20", value: 10},
-                            {name: "11:40", value: 11},
-                            {name: "13:00", value: 12},
-                            {name: "13:20", value: 13},
-                            {name: "13:40", value: 14},
-                            {name: "14:00", value: 15},
-                            {name: "14:20", value: 16},
-                            {name: "14:40", value: 17},
-                            {name: "15:00", value: 18},
-                            {name: "15:20", value: 19},
-                            {name: "15:40", value: 20},
-                            {name: "16:00", value: 21},
-                            {name: "16:20", value: 22},
-                            {name: "16:40", value: 23}
+                            {name: "10:40", value: 6},
+                            {name: "11:00", value: 7},
+                            {name: "11:20", value: 8},
+                            {name: "11:40", value: 9},
+                            {name: "13:00", value: 10},
+                            {name: "13:20", value: 11},
+                            {name: "13:40", value: 12},
+                            {name: "14:00", value: 13},
+                            {name: "14:20", value: 14},
+                            {name: "14:40", value: 15},
+                            {name: "15:40", value: 16},
+                            {name: "16:00", value: 17},
+                            {name: "16:20", value: 18},
+                            {name: "16:40", value: 19}
                         ],
             
                         fin : [
@@ -197,24 +181,20 @@ const Panel = ({state}) => {
                             {name: "9:20", value: 4},
                             {name: "9:40", value: 5},
                             {name: "10:00", value: 6},
-                            {name: "10:20", value: 7},
-                            {name: "10:40", value: 8},
-                            {name: "11:00", value: 9},
-                            {name: "11:20", value: 10},
-                            {name: "11:40", value: 11},
-                            {name: "12:00", value: 12},
-                            {name: "13:20", value: 13},
-                            {name: "13:40", value: 14},
-                            {name: "14:00", value: 15},
-                            {name: "14:20", value: 16},
-                            {name: "14:40", value: 17},
-                            {name: "15:00", value: 18},
-                            {name: "15:20", value: 19},
-                            {name: "15:40", value: 20},
-                            {name: "16:00", value: 21},
-                            {name: "16:20", value: 22},
-                            {name: "16:40", value: 23},
-                            {name: "17:00", value: 24}
+                            {name: "11:00", value: 7},
+                            {name: "11:20", value: 8},
+                            {name: "11:40", value: 9},
+                            {name: "12:00", value: 10},
+                            {name: "13:20", value: 11},
+                            {name: "13:40", value: 12},
+                            {name: "14:00", value: 13},
+                            {name: "14:20", value: 14},
+                            {name: "14:40", value: 15},
+                            {name: "15:00", value: 16},
+                            {name: "16:00", value: 17},
+                            {name: "16:20", value: 18},
+                            {name: "16:40", value: 19},
+                            {name: "17:00", value: 20}
                         ]
                     })
                     break;

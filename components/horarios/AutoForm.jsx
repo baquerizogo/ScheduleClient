@@ -109,7 +109,7 @@ const CourseForm = () => {
     const { schoolyear } = schoolyearsContext; // Datos Context
 
     //Obtener datos necesarios para los horarios
-    const { setForm, createAuto, inicio, fin, auto} = schedulesContext;
+    const { setForm, createAuto, inicio, fin, auto, schedules } = schedulesContext;
 
     //Referencias
     const modality = useRef(null);
@@ -147,6 +147,49 @@ const CourseForm = () => {
         })
     }, [inicio])
 
+    useEffect(() => {
+        let matutino = false;
+        let vespertino = false;
+
+        for(let i in schedules) {
+            if(schedules[i].modality == 0) matutino = true;
+            if(schedules[i].modality == 1) vespertino = true;
+        }
+
+        if(matutino && vespertino) {
+            setModalities([])
+            setParams({
+                ...params,
+                modality: ''
+            })
+            setDisabled(true)
+        } else if(matutino) {
+            setModalities(modalities.filter(m => m.value !== 0))
+            setParams({
+                ...params,
+                modality: 1
+            })
+            setForm({
+                modality: 1
+            })
+        } else if(vespertino) {
+            setModalities(modalities.filter(m => m.value !== 1))
+            setParams({
+                ...params,
+                modality: 0
+            })
+            setForm({
+                modality: 0
+            })
+        }
+    }, [schedules])
+
+    useEffect(() => {
+        if(modalities.length === 0) {
+            setDisabled(true)
+        }
+    }, [modalities])
+
     //Llenar los cursos en select
     useEffect(() => {
         if(courseOptions.length > 0) courseOptions = []
@@ -161,7 +204,6 @@ const CourseForm = () => {
                     })
                 }
             }
-            
         }
     }, [courseInfo])
 
@@ -181,6 +223,16 @@ const CourseForm = () => {
     //State de los cursos seleccionados
     const [current, setCurrent] = useState([])
     const [selected, setSelected] = useState([])
+    const [modalities, setModalities] = useState([
+        {
+            value: 0,
+            text: "Matutino"
+        },
+        {
+            value: 1,
+            text: "Vespertino"
+        }
+    ])
 
     //Obtener información de cada curso que se selecciono
     const handleAccordion = course => {
@@ -200,7 +252,7 @@ const CourseForm = () => {
             [e.target.name]: e.target.value
         })
         
-        setForm({
+        if(e.target.name == "modality") setForm({
             modality: e.target.value,
             id_course: "",
             id_parallel: "",
@@ -291,9 +343,13 @@ const CourseForm = () => {
                         </div>
                         <div className="col-2">
                             <div className="input-group input-group-merge">
-                                <select className="form-control" id="modalidad" name="modality" onChange={handleChange} disabled={disabled ? "disabled": null}>
-                                    <option value={0}> Matutina </option>
-                                    <option value={1}> Vespertina </option>
+                                <select className="form-control" id="modalidad" name="modality" onChange={handleChange} disabled={disabled ? "disabled": null}>            
+                                    {
+                                        modalities.map(m => (
+                                            <option key={m.value} value={m.value}> {m.text} </option>
+
+                                        ))
+                                    }
                                 </select>
                             </div>
                         </div>

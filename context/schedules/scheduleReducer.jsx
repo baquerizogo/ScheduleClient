@@ -27,12 +27,10 @@ const scheduleReducer = (state, action) => {
                 {name: "9:00", value: 3},
                 {name: "9:20", value: 4},
                 {name: "9:40", value: 5},
-                {name: "10:00", value: 6},
-                {name: "10:20", value: 7},
-                {name: "10:40", value: 8},
-                {name: "11:00", value: 9},
-                {name: "11:20", value: 10},
-                {name: "11:40", value: 11}
+                {name: "10:40", value: 6},
+                {name: "11:00", value: 7},
+                {name: "11:20", value: 8},
+                {name: "11:40", value: 9}
             ]
 
             h_end = [
@@ -42,12 +40,10 @@ const scheduleReducer = (state, action) => {
                 {name: "9:20", value: 4},
                 {name: "9:40", value: 5},
                 {name: "10:00", value: 6},
-                {name: "10:20", value: 7},
-                {name: "10:40", value: 8},
-                {name: "11:00", value: 9},
-                {name: "11:20", value: 10},
-                {name: "11:40", value: 11},
-                {name: "12:00", value: 12}
+                {name: "11:00", value: 7},
+                {name: "11:20", value: 8},
+                {name: "11:40", value: 9},
+                {name: "12:00", value: 10}
             ]
         } else if (action.payload[0].modality == 1){
             h_start = [
@@ -57,12 +53,10 @@ const scheduleReducer = (state, action) => {
                 {name: "14:00", value: 3},
                 {name: "14:20", value: 4},
                 {name: "14:40", value: 5},
-                {name: "15:00", value: 6},
-                {name: "15:20", value: 7},
-                {name: "15:40", value: 8},
-                {name: "16:00", value: 9},
-                {name: "16:20", value: 10},
-                {name: "16:40", value: 11}
+                {name: "15:40", value: 6},
+                {name: "16:00", value: 7},
+                {name: "16:20", value: 8},
+                {name: "16:40", value: 9}
             ]
 
             h_end = [
@@ -72,12 +66,10 @@ const scheduleReducer = (state, action) => {
                 {name: "14:20", value: 4},
                 {name: "14:40", value: 5},
                 {name: "15:00", value: 6},
-                {name: "15:20", value: 7},
-                {name: "15:40", value: 8},
-                {name: "16:00", value: 9},
-                {name: "16:20", value: 10},
-                {name: "16:40", value: 11},
-                {name: "17:00", value: 12}
+                {name: "16:00", value: 7},
+                {name: "16:20", value: 8},
+                {name: "16:40", value: 9},
+                {name: "17:00", value: 10}
             ]
         }
     }
@@ -91,12 +83,10 @@ const scheduleReducer = (state, action) => {
                 {name: "9:00", value: 3},
                 {name: "9:20", value: 4},
                 {name: "9:40", value: 5},
-                {name: "10:00", value: 6},
-                {name: "10:20", value: 7},
-                {name: "10:40", value: 8},
-                {name: "11:00", value: 9},
-                {name: "11:20", value: 10},
-                {name: "11:40", value: 11}
+                {name: "10:40", value: 6},
+                {name: "11:00", value: 7},
+                {name: "11:20", value: 8},
+                {name: "11:40", value: 9}
             ]
 
             h_end = [
@@ -106,12 +96,10 @@ const scheduleReducer = (state, action) => {
                 {name: "9:20", value: 4},
                 {name: "9:40", value: 5},
                 {name: "10:00", value: 6},
-                {name: "10:20", value: 7},
-                {name: "10:40", value: 8},
-                {name: "11:00", value: 9},
-                {name: "11:20", value: 10},
-                {name: "11:40", value: 11},
-                {name: "12:00", value: 12}
+                {name: "11:00", value: 7},
+                {name: "11:20", value: 8},
+                {name: "11:40", value: 9},
+                {name: "12:00", value: 10}
             ]
         } else if (action.payload.modality == 1){
             h_start = [
@@ -121,12 +109,10 @@ const scheduleReducer = (state, action) => {
                 {name: "14:00", value: 3},
                 {name: "14:20", value: 4},
                 {name: "14:40", value: 5},
-                {name: "15:00", value: 6},
-                {name: "15:20", value: 7},
-                {name: "15:40", value: 8},
-                {name: "16:00", value: 9},
-                {name: "16:20", value: 10},
-                {name: "16:40", value: 11}
+                {name: "15:40", value: 6},
+                {name: "16:00", value: 7},
+                {name: "16:20", value: 8},
+                {name: "16:40", value: 9}
             ]
 
             h_end = [
@@ -136,12 +122,10 @@ const scheduleReducer = (state, action) => {
                 {name: "14:20", value: 4},
                 {name: "14:40", value: 5},
                 {name: "15:00", value: 6},
-                {name: "15:20", value: 7},
-                {name: "15:40", value: 8},
-                {name: "16:00", value: 9},
-                {name: "16:20", value: 10},
-                {name: "16:40", value: 11},
-                {name: "17:00", value: 12}
+                {name: "16:00", value: 7},
+                {name: "16:20", value: 8},
+                {name: "16:40", value: 9},
+                {name: "17:00", value: 10}
             ]
         }
     }

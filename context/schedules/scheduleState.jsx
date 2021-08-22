@@ -40,12 +40,10 @@ const ScheduleState = props => {
             {name: "9:00", value: 3},
             {name: "9:20", value: 4},
             {name: "9:40", value: 5},
-            {name: "10:00", value: 6},
-            {name: "10:20", value: 7},
-            {name: "10:40", value: 8},
-            {name: "11:00", value: 9},
-            {name: "11:20", value: 10},
-            {name: "11:40", value: 11}
+            {name: "10:40", value: 6},
+            {name: "11:00", value: 7},
+            {name: "11:20", value: 8},
+            {name: "11:40", value: 9}
         ],                          // Horas de inicio
         fin: [
             {name: "8:20", value: 1},
@@ -54,12 +52,10 @@ const ScheduleState = props => {
             {name: "9:20", value: 4},
             {name: "9:40", value: 5},
             {name: "10:00", value: 6},
-            {name: "10:20", value: 7},
-            {name: "10:40", value: 8},
-            {name: "11:00", value: 9},
-            {name: "11:20", value: 10},
-            {name: "11:40", value: 11},
-            {name: "12:00", value: 12}
+            {name: "11:00", value: 7},
+            {name: "11:20", value: 8},
+            {name: "11:40", value: 9},
+            {name: "12:00", value: 10}
         ],                          // Horas de fin
         schedules: [],              // Todos los horarios de clases en el periodo lectivo
         activeSchedule: [],         // Horario de clase seleccionado por paralelo o profesor
@@ -165,6 +161,30 @@ const ScheduleState = props => {
         const data = state.data;
         const schedules = state.schedules;
         let ans;
+        console.log(element.asignatura.hours_week);
+
+        //Comprobar que no exceda el numero de horas max
+        let h_actual = 0;
+        for(let i in data) {
+            if(data[i].asignatura._id == element.asignatura._id) {
+                h_actual = h_actual + data[i].y.min_fin - data[i].y.min_inicio;
+                console.log(h_actual);
+            }
+        }
+
+        h_actual = h_actual + element.y.min_fin - element.y.min_inicio;
+        console.log(h_actual);
+        console.log(element)
+        if(h_actual > element.asignatura.hours_week) {
+            ans = {
+                value: false,
+                msg: {
+                    text: "Excede el número de horas máxima"
+                }
+                
+            }
+            return ans;
+        }
 
         //Comprobar que no se crucen los horarios de forma local
         if(data.length > 0) {
