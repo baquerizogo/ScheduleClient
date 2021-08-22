@@ -2,12 +2,12 @@ import { useEffect, useContext, useState } from 'react'
 
 //Components
 import CourseForm from '../../components/horarioCursos/CourseForm'
-import Panel from '../../components/horarioCursos/panel'
+import Panel from '../../components/horarioCursos/Panel'
 import ContentHeader from '../../components/layout/ContentHeader'
+import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear'
 
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import scheduleContext from '../../context/schedules/scheduleContext'
-import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear'
 
 const horarioCurso = () => {
     const schoolyearsContext = useContext(schoolyearContext);

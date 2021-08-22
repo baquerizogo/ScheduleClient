@@ -4,9 +4,9 @@ import Link from 'next/link'
 //Components
 import schoolyearContext from '../../context/schoolyears/schoolyearContext'
 import DeleteModal from './DeleteModal'
+import UpdateModal from './UpdateModal';
 
 import { MoreVertical } from "react-feather"
-import UpdateModal from './UpdateModal';
 
 const Table = () => {
     //obtener el state del formulario

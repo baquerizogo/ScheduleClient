@@ -3,7 +3,7 @@ import { useContext } from 'react';
 //Components
 import NavHeader from '../Menu/NavHeader';
 import NavItem from '../Menu/NavItem';
-import NewSchoolyear from '../schoolyears/newSchoolyear';
+import NewSchoolyear from '../schoolyears/NewSchoolyear';
 
 import {
     Home,

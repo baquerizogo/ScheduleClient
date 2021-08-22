@@ -1,5 +1,5 @@
 import ContentHeader from "../../components/layout/ContentHeader";
-import Form from "../../components/configuracion/form";
+import Form from "../../components/configuracion/Form";
 
 const Configuracion = () => {
     return (  
