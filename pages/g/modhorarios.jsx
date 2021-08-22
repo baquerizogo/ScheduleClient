@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react'
 
 //Components
 import ModForm from '../../components/horarios/ModForm'
-import Panel from '../../components/horarios/panel'
+import Panel from '../../components/horarios/Panel'
 import ScheduleModForm from '../../components/horarios/ScheduleModForm'
 import ContentHeader from '../../components/layout/ContentHeader'
 import RedirectSchoolyear from '../../components/redirect/RedirectSchoolyear'
