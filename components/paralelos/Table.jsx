@@ -66,8 +66,8 @@ const Table = () => {
                     {
                         courses
                         ?
-                            courses.map(course => (
-                                <option key={course._id} value={`{"id":"${course._id}", "name":"${course.name}"}`}>{course.name}</option>
+                            courses.map((course, index) => (
+                                <option key={index} value={`{"id":"${course._id}", "name":"${course.name}"}`}>{course.name}</option>
                             ))
                         : null 
                     }

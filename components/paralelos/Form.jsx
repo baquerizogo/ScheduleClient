@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 
 //Components
 import courseContext from '../../context/courses/courseContext'
@@ -22,6 +22,9 @@ const Form = () => {
     //Obtener datos necesarios para paralelos
     const { checkForm, createParallel } = parallelsContext; // Funciones Context
     const { errorForm } = parallelsContext; // Datos Context
+
+    //Referencia
+    const course = useRef(null);
 
     useEffect(() => {
         getCourse({
@@ -50,7 +53,7 @@ const Form = () => {
         e.preventDefault();
 
         //Validar
-        if(name.trim() === '' || id_course === '') {
+        if(name.trim() === '' || id_course === '' || id_course == null) {
             checkForm();
             return;
         }
@@ -66,8 +69,9 @@ const Form = () => {
         setParallel({
             name: '',
             description: '',
-            id_course: ''
+            id_course: null
         })
+        course.current.value = ""
     }
 
 
@@ -102,7 +106,7 @@ const Form = () => {
                                 <div className="col-sm-9">
                                     <div className="input-group input-group-merge">
                                         <div className="input-group-prepend">
-                                            <select className="form-control" id="course" name="id_course" onChange={handleChange}>
+                                            <select className="form-control" id="course" name="id_course" onChange={handleChange} ref={course}>
                                                 <option value="">Seleccione</option>
                                                 {
                                                     courses

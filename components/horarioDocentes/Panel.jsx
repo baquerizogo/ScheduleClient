@@ -13,6 +13,7 @@ const Panel = ({state}) => {
     const exportArea = useRef(null);
 
     const [teacherSchedule, setTeacherSchedule] = useState({});
+    const [horas, setHoras] = useState();
     const [times, setTimes] = useState({
         inicio : [
             {name: "8:00", value: 0},
@@ -211,8 +212,20 @@ const Panel = ({state}) => {
     },[state])
 
     useEffect(() => {
-
+        
         if(teacherSchedule.data && inicio) {
+            let h = 0
+
+            for(let i in teacherSchedule.data) {
+                h = h + (teacherSchedule.data[i].y.min_fin - teacherSchedule.data[i].y.min_inicio);
+            }
+
+            h = h/3;
+
+            if(h % 1 == 0) setHoras(h) 
+            else setHoras(h.toFixed(2));
+
+
             for (let i in inicio) {
                 for(let j=1 ; j<=5; j++) {
                     table.current.childNodes[1].childNodes[i].childNodes[j].innerHTML = ""
@@ -251,7 +264,7 @@ const Panel = ({state}) => {
                 </div>
                 <div className="row" ref={exportArea}>
                     <div className="col-12">
-                        <h4 className="card-title">Horario - {state ? `${state.teacher}`: null}</h4>
+                        <h4 className="card-title">Horario - {state ? `${state.teacher}`: null} {`(${horas ? horas : 0} Horas asignadas)`}</h4>
                         <table className="table table-layout" ref={table}>
                             <thead>
                                 <tr>

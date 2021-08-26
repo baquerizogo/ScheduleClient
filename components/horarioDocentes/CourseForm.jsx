@@ -45,7 +45,12 @@ const CourseForm = ({dataCallback}) => {
                 "id_teacher": localForm.id_teacher
             }
             dataCallback(data);
+            reset();
         }
+    }
+
+    const reset = () => {
+        setLocalForm({});
     }
 
     return (
@@ -75,7 +80,7 @@ const CourseForm = ({dataCallback}) => {
                     <div className="row mt-1">
                         <div className="col-2"></div>
                         <div className="col-10">
-                            <button type="button" className="btn btn-primary" onClick={submitForm}>Buscar Horario</button>
+                            <button type="button" className="btn btn-primary" onClick={submitForm} disabled={!localForm.id_teacher ? "disabled" : null}>Buscar Horario</button>
                         </div>
                     </div>
                 </div>

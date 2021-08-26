@@ -44,6 +44,8 @@ const ScheduleForm = () => {
     useEffect(()=>{
         clear();
     },[newForm])
+
+    const [msg, setMsg] = useState();
     
     const handleChangeClass = e => {
         const data = JSON.parse(e.target.value);
@@ -128,6 +130,7 @@ const ScheduleForm = () => {
         createSchedule(object);
         clear();
         clearData();
+        showMsg();
     }
 
     const clear = () => {
@@ -138,6 +141,13 @@ const ScheduleForm = () => {
         selectHstart.current.value = "Seleccione";
 
         setElement({});
+    }
+
+    const showMsg = () => {
+        setMsg("Horario guargado con exito");
+        setTimeout(() => {
+            setMsg();
+        }, 3000);   
     }
 
     return (
@@ -259,6 +269,7 @@ const ScheduleForm = () => {
                     <div className="row">
                         <div className="col-3 offset-sm-2">
                             {errorForm == true ? <span className="badge badge-pill badge-light-danger mt-1">Todos los campos son obligatorios</span> : null }
+                            {msg ? <span className="badge badge-pill badge-light-success mt-1">{msg}</span> : null }
                         </div>
                     </div>
                 </div>
