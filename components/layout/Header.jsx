@@ -29,7 +29,6 @@ const Header = () => {
                     </ul>
                 </div>
                 <ul className="nav navbar-nav align-items-center ml-auto"> 
-                    <li className="nav-item d-none d-lg-block"><a className="nav-link nav-link-style"><Moon className="ficon"/></a></li>
                     <li className="nav-item dropdown dropdown-user"><a className="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div className="user-nav d-sm-flex d-none"><span className="user-name font-weight-bolder">{account ? `${account.name} ${account.lastname}` : null}</span><span className="user-status">{account ? account.role == 0 ? "Admin" : account.role == 1 ? "Colaborador" : "Observador" : null}</span></div><span className="avatar"><img className="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"/><span className="avatar-status-online"></span></span>
                         </a>

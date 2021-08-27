@@ -22,6 +22,11 @@ const Form = () => {
         role: 1,
     });
 
+    const [pswd, setPswd] = useState({
+        status: 0,
+        msg: ''
+    });
+
     const {name, lastname, dni, email, password, role} = account;
 
     //Leer valores del form
@@ -36,10 +41,31 @@ const Form = () => {
         e.preventDefault();
 
         //Validar
-        if(name.trim() === '' || lastname.trim() === '' || dni==='' || role===null || password.trim() === '' || email.trim() === '' || password.length < 8) {
+        if(name.trim() === '' || lastname.trim() === '' || dni==='' || role===null || password.trim() === '' || email.trim() === '') {
             checkForm();
             return;
         }
+
+        if(password.length < 8) {
+            setPswd({
+                status: 1,
+                msg: "La contraseña debe contener al menos 8 dígitos"
+            });
+            return;
+        }
+
+        //Mostrar mensaje exito
+        setPswd({
+            status: 5,
+            msg: "usuario guardado con éxito"
+        });
+
+        setTimeout(() => {
+            setPswd({
+                status: 0,
+                msg: ""
+            });
+        }, 3000);
         
         //Agregar al context
         createAccount(account);
@@ -161,11 +187,13 @@ const Form = () => {
                     </div>
                     <div className="row">
                         <div className="col-1 offset-sm-3">
-                            {errorForm && !msg 
+                            {errorForm && !msg && pswd.status == 0
                                 ? <span className="badge badge-pill badge-light-danger mt-1">Todos los campos son obligatorios</span> 
                                 : msg
                                 ? <span className="badge badge-pill badge-light-danger mt-1">{msg}</span> 
-                                : null 
+                                : pswd.status != 0
+                                ? <span className={`badge badge-pill ${pswd.status === 1 ? 'badge-light-danger' : 'badge-light-success'} mt-1`}>{pswd.msg}</span> 
+                                : null
                             }
                         </div>
                     </div>

@@ -130,7 +130,7 @@ const Form = () => {
         id_schoolyear: schoolyear[0]._id 
     });
 
-    const { name, description, n_hours, hours_week } = data;
+    const { name, description, hours_week} = data;
 
 
     const handleChangeTeacher = event => {
@@ -173,7 +173,7 @@ const Form = () => {
         e.preventDefault();
 
         //Validar
-        if(name.trim() === '' ||  hours_week <= 0) {
+        if(name.trim() === '' ||  hours_week <= 0 || data.courses.length <= 0 || data.teachers.length <= 0) {
             checkForm();
             return;
         }
@@ -187,12 +187,11 @@ const Form = () => {
 
     const reset = () => {
         setData({
+            ...data,
             name: '',
             description: '',
             n_hours: 0,
             hours_week: 0,
-            parallels: [],
-            teachers: [],
             id_schoolyear: schoolyear[0]._id 
         })
     }
