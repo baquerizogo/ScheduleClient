@@ -12,10 +12,9 @@ class MyDocument extends Document {
                 <Head>
                     <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8"/>
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
-                    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities."/>
-                    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app"/>
+                    <meta name="description" content="Gestor de horarios de la escuela Angélica Villón Lindao"/>
+                    <meta name="keywords" content="gestor de horarios"/>
                     <meta name="author" content="PIXINVENT"/>
-                    <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png"/>
                     <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico"/>
                     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet"/>
 
